@@ -1,0 +1,216 @@
+package com.jh.entity;
+
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.jh.util.DateUtil;
+
+/**
+ * 项目信息
+ * 
+ * @author 董权
+ * 
+ */
+@Entity
+@Table(name = "t_project")
+public class Project {
+	@Id
+	@Basic(optional = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "projecId", nullable = false)
+	private Integer projecId;
+
+	/**
+	 * 项目名称
+	 */
+	@Column(name = "projectName", nullable = false, length = 100)
+	private String projectName;
+	/**
+	 * 批准文号
+	 */
+	@Column(name = "referenceNumber", nullable = false, length = 100)
+	private String referenceNumber;
+	/**
+	 * 建设规模
+	 */
+	@Column(name = "construction", nullable = false, length = 100)
+	private String construction;
+	/**
+	 * 建设地点
+	 */
+	@Column(name = "makeAddress", nullable = false, length = 100)
+	private String makeAddress;
+	/**
+	 * 总投资
+	 */
+	@Column(name = "total", nullable = false)
+	private float total;
+	/**
+	 * 批准日期
+	 */
+	@Column(name = "approveDate", nullable = false)
+	private Date approveDate;
+	/**
+	 * 项目类型
+	 */
+	@Column(name = "pojectStuts", nullable = false)
+	private int pojectStuts;
+	/**
+	 * 项目內容
+	 */
+	@Column(name = "memo",  columnDefinition = "TEXT",nullable = false)
+	private String memo;
+	/**
+	 * 发布人
+	 */
+	@Column(name = "publicUser", nullable = false, length = 50)
+	private String publicUser;
+	/**
+	 * 发布时间
+	 */
+	@Column(name = "publicTime", nullable = false)
+	private Date publicTime;
+	/**
+	 * 浏览次数
+	 */
+	@Column(name = "views", nullable = false, length = 50)
+	private Integer views;
+	
+	/**
+	 * 状态 0 正常  1变更 2删除
+	 */
+	@Column(name = "status", nullable = true)
+	private Integer status;
+
+	
+
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getProjectStatusName(){
+		switch (this.pojectStuts) {
+		case 0:
+			return "招标方案";
+		case 1:
+			return "审批核准";
+		case 2:
+			return "备案项目";
+		default:
+			return "其它";
+		}
+	}
+
+	public String getPublicTimeStr(){
+		return DateUtil.date2String(this.publicTime, DateUtil.PATTERN_DATE);
+	}
+	public Integer getProjecId() {
+		return projecId;
+	}
+
+	public void setProjecId(Integer projecId) {
+		this.projecId = projecId;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getReferenceNumber() {
+		return referenceNumber;
+	}
+
+	public void setReferenceNumber(String referenceNumber) {
+		this.referenceNumber = referenceNumber;
+	}
+
+	public String getConstruction() {
+		return construction;
+	}
+
+	public void setConstruction(String construction) {
+		this.construction = construction;
+	}
+
+	public String getMakeAddress() {
+		return makeAddress;
+	}
+
+	public void setMakeAddress(String makeAddress) {
+		this.makeAddress = makeAddress;
+	}
+
+	public float getTotal() {
+		return total;
+	}
+
+	public void setTotal(float total) {
+		this.total = total;
+	}
+
+	public Date getApproveDate() {
+		return approveDate;
+	}
+
+	public void setApproveDate(Date approveDate) {
+		this.approveDate = approveDate;
+	}
+
+	public int getPojectStuts() {
+		return pojectStuts;
+	}
+
+	public void setPojectStuts(int pojectStuts) {
+		this.pojectStuts = pojectStuts;
+	}
+
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	public String getPublicUser() {
+		return publicUser;
+	}
+
+	public void setPublicUser(String publicUser) {
+		this.publicUser = publicUser;
+	}
+
+	public Date getPublicTime() {
+		return publicTime;
+	}
+
+	public void setPublicTime(Date publicTime) {
+		this.publicTime = publicTime;
+	}
+
+	public Integer getViews() {
+		return views;
+	}
+
+	public void setViews(Integer views) {
+		this.views = views;
+	}
+
+}

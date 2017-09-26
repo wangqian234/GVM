@@ -1,0 +1,102 @@
+package com.jh.controller;
+
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.jh.entity.LinkUrl;
+import com.jh.entity.SystemUser;
+import com.jh.service.LinkUrlService;
+import com.jh.util.Paging;
+
+/**
+ * 标书管理 
+ * @author 
+ */
+@Controller  
+@RequestMapping("/linkUrl")  
+public class LinkUrlAction {
+	@Autowired
+	private LinkUrlService linkUrlService;
+	private int pageSize = 10;
+	
+	/**
+	 * 修改友情链接页面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="initUpdate/{id}")
+	public String initUpdate(ModelMap modelMap,@PathVariable("id") Integer id){ 
+		LinkUrl linkUrl=linkUrlService.getLinkUrlById(id);
+		modelMap.put("linkUrl", linkUrl);
+		return "linkUrl/add";
+	}
+	
+	/**
+	 * 添加友情链接页面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="initAdd")
+	 public String initAdd(ModelMap modelMap){ 
+		
+		return "linkUrl/add";
+	}
+	/**
+	 * 删除友情链接
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="delete/{id}")
+	 public String delete(ModelMap modelMap,@PathVariable("id") Integer id){ 
+		LinkUrl linkUrl=linkUrlService.getLinkUrlById(id);
+		linkUrlService.delete(linkUrl);
+		return "redirect:/linkUrl/list.html";
+	}
+	/**
+	 * 友情链接列表
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="list")
+	 public String list(ModelMap modelMap,
+			 HttpServletRequest request,@RequestParam(value = "curPage",required=false,defaultValue="0") Integer curPage){ 
+		Paging paging=linkUrlService.getLinkUrls(curPage, pageSize);
+		modelMap.put("paging", paging);
+		return "linkUrl/list";
+	}
+	/**
+	 * 添加友情链接
+	 * @param modelMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="saveLinkUrl")
+	 public String saveLinkUrl(ModelMap modelMap,HttpServletRequest request,
+			 @RequestParam(value = "name",required=true) String name,
+			 @RequestParam(value = "url",required=true) String url,
+			 @RequestParam(value = "orderCondition",required=false) Integer orderCondition,
+			 @RequestParam(value = "id",required=false) Integer id){ 
+		LinkUrl linkUrl=null;
+		if(id!=null && id.intValue()>0){
+			linkUrl=linkUrlService.getLinkUrlById(id);
+		}else{
+			linkUrl=new LinkUrl();
+		}
+		linkUrl.setName(name);
+		linkUrl.setUrl(url);
+		linkUrl.setOrderCondition(orderCondition);
+		
+		linkUrlService.saveOrUpdate(linkUrl);
+		return "redirect:/linkUrl/list.html";
+	}
+	
+
+}

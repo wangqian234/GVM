@@ -1,0 +1,183 @@
+package com.jh.controller;
+
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.jh.entity.SystemUser;
+import com.jh.service.SystemUserService;
+import com.jh.util.Paging;
+
+/**
+ * 
+ * @author 
+ *
+ */
+@Controller  
+@RequestMapping("/sysUser")  
+public class SysUserAction {
+	
+	@Autowired
+	private SystemUserService systemUserService;
+	private int pageSize = 10;
+	
+	
+	@RequestMapping(value="login")
+	public String login(ModelMap modelMap,HttpServletRequest request,
+			 @RequestParam(value = "userName",required=false) String userName,
+			 @RequestParam(value = "passWord",required=false) String passWord){ 
+		SystemUser systemUser=systemUserService.login(userName, passWord);
+		if(systemUser==null){
+			modelMap.put("final", "用户名或密码错误");
+			return "../index";   
+		}else{
+			systemUser.setLoginDate(new Date());
+			systemUserService.saveOrUpdate(systemUser);
+			request.getSession().setAttribute("systemUser", systemUser);
+			return "redirect:/sysUser/main.html";
+		}
+		
+	}
+	@RequestMapping(value="main")
+	public String main(ModelMap modelMap){
+		return "main";
+	}
+	/**
+	 * 进入修改密码页
+	 * @param modelMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="initPw")
+	 public String initPw(ModelMap modelMap){ 
+		return "systemUser/password";
+	}
+	
+	/**
+	 * 密码修改成功
+	 * @param modelMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="pwSuccess")
+	 public String pwSuccess(ModelMap modelMap){ 
+		modelMap.put("final", "密码修改成功请牢记");
+		return "systemUser/password";
+	}
+	
+	/**
+	 * 修改密码
+	 * @param modelMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="updatePassWord")
+	 public String updatePassWord(ModelMap modelMap,HttpServletRequest request,
+			 @RequestParam(value = "qrPassWord",required=true) String qrPassWord,
+			 @RequestParam(value = "passWord",required=true) String passWord){ 
+		SystemUser systemUser=(SystemUser)request.getSession().getAttribute("systemUser");
+		systemUser.setLoginPassword(passWord);
+		systemUserService.saveOrUpdate(systemUser);
+		request.getSession().setAttribute("systemUser", systemUser);
+		return "redirect:/sysUser/pwSuccess.html";
+	}
+	/**
+	 * 退出 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="quit")
+	 public String quit(HttpServletRequest request){ 
+		request.getSession().removeAttribute("systemUser");
+		return "../index";   
+	}
+	/**
+	 * 管理员列表
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="list")
+	 public String list(ModelMap modelMap,
+			 HttpServletRequest request,@RequestParam(value = "curPage",required=false,defaultValue="0") Integer curPage){ 
+		String userName = request.getParameter("userName");
+		modelMap.put("userName",userName);
+		String phone = request.getParameter("phone");
+		modelMap.put("phone",phone);
+		Paging paging=systemUserService.getSystemUserList(userName,phone,curPage, pageSize);
+		modelMap.put("paging", paging);
+		return "systemUser/list";
+	}
+	
+	/**
+	 * 进入添加管理员页面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="initAdd")
+	 public String initAdd(ModelMap modelMap){ 
+		
+		return "systemUser/add";
+	}
+	
+	/**
+	 * 添加管理员
+	 * @param modelMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="saveSystemUser")
+	 public String saveSystemUser(ModelMap modelMap,HttpServletRequest request,
+			 @RequestParam(value = "userName",required=true) String userName,
+			 @RequestParam(value = "passWord",required=true) String passWord,
+			 @RequestParam(value = "qrPassWord",required=false) String qrPassWord,
+			 @RequestParam(value = "fullName",required=true) String fullName,
+			 @RequestParam(value = "phone",required=true) String phone,
+			 @RequestParam(value = "systemUserId",required=false) Integer systemUserId){ 
+		SystemUser systemUser=null;
+		if(systemUserId!=null && systemUserId.intValue()>0){
+			systemUser=systemUserService.getSystemUserById(systemUserId);
+		}else{
+			systemUser=new SystemUser();
+		}
+		systemUser.setUserName(userName);
+		systemUser.setFullName(fullName);
+		systemUser.setPhone(phone);
+		systemUser.setLoginPassword(passWord);
+		systemUser.setCreateDate(new Date());
+		systemUser.setIsHidden(1);
+		systemUserService.saveOrUpdate(systemUser);
+		return "redirect:/sysUser/list.html";
+	}
+	
+	/**
+	 * 删除管理员
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="delete/{id}")
+	 public String delete(ModelMap modelMap,@PathVariable("id") Integer id){ 
+		SystemUser systemUser=systemUserService.getSystemUserById(id);
+		systemUser.setIsHidden(0);
+		systemUserService.saveOrUpdate(systemUser);
+		return "redirect:/sysUser/list.html";
+	}
+
+	/**
+	 * 进入修改管理员页面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="initUpdate/{id}")
+	 public String initUpdate(ModelMap modelMap,@PathVariable("id") Integer id){ 
+		SystemUser systemUser=systemUserService.getSystemUserById(id);
+		modelMap.put("upSystemUser", systemUser);
+		return "systemUser/add";
+	}
+}

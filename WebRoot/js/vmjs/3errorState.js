@@ -102,7 +102,10 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 
 			// 换页
 			function pageTurn(totalPage, page, Func) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 				var $pages = $(".tcdPageCode");
 				if ($pages.length != 0) {
 					$(".tcdPageCode").createPage({
@@ -120,7 +123,11 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 					endTime : ""
 			}
 			
+<<<<<<< HEAD
 			errorState.selectErrorList = function(){
+=======
+			function selectErrorListpage(p){
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 				if (errorState.limit.startTime == "") {
 					alert("请选择开始时间！");
 					return false;
@@ -137,12 +144,49 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				}
 				var expendErrorLimit = JSON.stringify(errorState.limit);
 				services.selectErrorList({
+<<<<<<< HEAD
 					limit:expendErrorLimit
+=======
+					limit:expendErrorLimit,
+					page : p
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 				}).success(function(data){
 					errorState.erroeList = data.list
 				})
 			}
 			
+<<<<<<< HEAD
+=======
+			errorState.selectErrorListpage = function(){
+				if (errorState.limit.startTime == "") {
+					alert("请选择开始时间！");
+					return false;
+				}
+				if (errorState.limit.endTime == "") {
+					alert("请选择截止时间！");
+					return false;
+				}
+				if (compareDateTime(
+						errorState.limit.startTime,
+						errorState.limit.endTime)) {
+					alert("截止时间不能大于开始时间！");
+					return false;
+				}
+				var expendErrorLimit = JSON.stringify(errorState.limit);
+				services.selectErrorList({
+					limit:expendErrorLimit,
+					page : p
+				}).success(function(data){
+					errorState.erroeList = data.list;
+					errorState.totalPage = data.totalPage;
+					pageTurn(
+							errorState.totalPage,
+							1,
+							selectErrorList);
+				})
+			}
+			
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 			function compareDateTime(startDate, endDate) {
 				var date1 = new Date(startDate);
 				var date2 = new Date(endDate);
@@ -158,9 +202,15 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				console.log("初始化页面信息");
 				if ($location.path().indexOf('/Expend') == 0) {
 					services.selectErrorList({
+<<<<<<< HEAD
 						
 					}).success(function(data){
 						errorState.erroeList = data.list
+=======
+						page:1
+					}).success(function(data){
+						errorState.erroeList = data.list;
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 					})
 				} else if ($location.path().indexOf('/Analyse') == 0) {
 					

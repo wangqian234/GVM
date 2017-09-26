@@ -1,0 +1,10 @@
+package com.jh.entity;
+
+/**
+ * 新会员,免费会员,付费会员
+ * @author Administrator
+ *
+ */
+public enum UserType {
+	
+}

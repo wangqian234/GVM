@@ -1,0 +1,104 @@
+package com.jh.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.jh.dao.EntityDao;
+import com.jh.entity.Company;
+import com.jh.entity.FileDownload;
+import com.jh.util.Paging;
+
+/**
+ * 资料下载
+ * @author 
+ * 
+ */
+@Service
+@Transactional
+public class FileDownloadService {
+
+	@Autowired
+	private EntityDao entityDao;
+	
+	public FileDownload getFileDownloadById(Integer id){
+		return (FileDownload)entityDao.getObjectById(FileDownload.class, id);
+	}
+	
+	
+	/***
+	 * 资料下载 信息页分页
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public Paging getFileDownloadListByPage(Integer curPage,Integer pageSize){
+		final Map<String,Object> ordermap = new HashMap<String,Object>();
+		ordermap.put("orderCondition", "desc");
+		final Map<String,Object> wheremap = new HashMap<String,Object>();
+		wheremap.put("fielType", 1);
+		Paging list = entityDao.createQueryPaging(FileDownload.class, wheremap, ordermap, curPage, pageSize);
+		return list;
+	}
+	public Paging getFileDownloadListByPage(String fileName,Integer curPage,Integer pageSize){
+		String qStr = "from FileDownload where fielType = 1 ";
+		if(fileName != null && !"".equals(fileName)) {
+			qStr += " and fileName like '%"+fileName+"%'";
+		}
+		qStr += " order by orderCondition ";
+		
+		String countStr = "select count(*) from FileDownload where fielType = 1 ";
+		if(fileName != null && !"".equals(fileName)) {
+			countStr += " and fileName like '%"+fileName+"%'";
+		}
+		Paging list = entityDao.createQueryPaging(qStr, countStr, "HQL", curPage, pageSize);
+		return list;
+	}
+	
+	/***
+	 * 资料下载 信息页分页
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public Paging getFileDownloadListByJoinPage(Integer curPage,Integer pageSize){
+		final Map<String,Object> ordermap = new HashMap<String,Object>();
+		ordermap.put("orderCondition", "desc");
+		final Map<String,Object> wheremap = new HashMap<String,Object>();
+		wheremap.put("fielType", 2);
+		Paging list = entityDao.createQueryPaging(FileDownload.class, wheremap, ordermap, curPage, pageSize);
+		return list;
+	}
+	public Paging getFileDownloadListByJoinPage(String fileName,Integer curPage,Integer pageSize){
+		String qStr = "from FileDownload where fielType = 2 ";
+		if(fileName != null && !"".equals(fileName)) {
+			qStr += " and fileName like '%"+fileName+"%'";
+		}
+		qStr += " order by orderCondition ";
+		
+		String countStr = "select count(*) from FileDownload where fielType = 2 ";
+		if(fileName != null && !"".equals(fileName)) {
+			countStr += " and fileName like '%"+fileName+"%'";
+		}
+		Paging list = entityDao.createQueryPaging(qStr, countStr, "HQL", curPage, pageSize);
+		return list;
+	}
+	
+	public void saveOrUpdate(String str,String type) {
+		entityDao.updateBySQL(str,type);
+	}
+	
+	public void saveOrUpdate(FileDownload company){
+		entityDao.saveOrUpdate(company);
+	}
+	
+	public int getFileOrder(int ordertype){
+		final Map<String,Object> wheremap = new HashMap<String,Object>();
+		wheremap.put("fielType", ordertype);
+		List<FileDownload> list = (List<FileDownload>)entityDao.createCriteria(FileDownload.class, wheremap, null);
+		int num = list.size()+1;
+		return num;
+	}
+
+}

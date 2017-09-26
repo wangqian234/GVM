@@ -1,0 +1,49 @@
+package com.jh.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.Advertisement;
+
+/**
+ * 广告
+ * @author 蒋世维
+ *
+ */
+@Service
+@Transactional
+public class AdvertisementService {
+	@Autowired
+	private EntityDao entityDao;
+	
+	public Advertisement getAdvertisementById(Integer id){
+		return (Advertisement)entityDao.getObjectById(Advertisement.class, id);
+	}
+	@SuppressWarnings("unchecked")
+	public List<Advertisement> getAdvertisementList(Integer type){
+		Map<String,Object> queryMap = new HashMap<String,Object>();
+		if(type != null) {
+			queryMap.put("type", type);
+		}
+		List<Advertisement> list = (List<Advertisement>)entityDao.createCriteria(Advertisement.class, queryMap, null);
+		return list;
+	}
+	
+	public Object getObjectById(Class cl ,Integer id){
+		Object obj = entityDao.getObjectById(cl, id);
+		return obj;
+	}
+
+	public void saveInfo(Object obj){
+		entityDao.saveOrUpdate(obj);
+	}
+	public void saveOrUpdate(String str,String type) {
+		entityDao.updateBySQL(str,type);
+	}
+}

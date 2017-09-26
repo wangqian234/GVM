@@ -1,0 +1,39 @@
+package com.jh.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jh.entity.Contact;
+import com.jh.service.ContactService;
+
+/**
+ * 企业联系方式
+ * 
+ * @author wys
+ * 
+ */
+@Controller
+@RequestMapping("/contact")
+public class ContactAction {
+	@Autowired
+	private ContactService contactService;
+
+	@RequestMapping(value = "initEdit")
+	public String managePage(ModelMap modelMap, HttpServletRequest request) {
+		Contact contact = contactService.getContact();
+		modelMap.put("contact", contact);
+		return "contact/add";
+	}
+
+	@RequestMapping(value = "save")
+	public String save(ModelMap modelMap, HttpServletRequest request,
+			Contact conn) {
+		contactService.saveOrUpdate(conn);
+		modelMap.put("success", "y");
+		return "contact/add";
+	}
+}

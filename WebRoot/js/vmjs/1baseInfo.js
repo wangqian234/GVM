@@ -66,15 +66,26 @@ app.run([ '$rootScope', '$location', function($rootScope, $location) {
 // 路由配置
 app.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/testIndex', {
+<<<<<<< HEAD
 		templateUrl : '/GVM/jsp/1baseInfo/test.html',
 		controller : 'baseInfoController'
 	}).when('/qingyuan', {
 		templateUrl : '/GVM/jsp/1baseInfo/baseInfo.html',
+=======
+		templateUrl : '/VM/jsp/1baseInfo/test.html',
+		controller : 'baseInfoController'
+	}).when('/qingyuan', {
+		templateUrl : '/VM/jsp/1baseInfo/baseInfo.html',
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 		controller : 'baseInfoController'
 	})
 } ]);
 
+<<<<<<< HEAD
 app.constant('baseUrl', '/GVM/');
+=======
+app.constant('baseUrl', '/VM/');
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 	var services = {};
 	// zq添加班车定制需求
@@ -96,7 +107,11 @@ app.controller('baseInfoController', [ '$scope', 'services', '$location',
 				services.selectBaseList({
 
 				}).success(function(data) {
+<<<<<<< HEAD
 					baseInfo.list=data.list;
+=======
+
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 				});
 			}
 
@@ -117,6 +132,13 @@ app.controller('baseInfoController', [ '$scope', 'services', '$location',
 					oTr.tag = true;
 				}
 			}
+<<<<<<< HEAD
+=======
+			baseInfo.selectEquipList=function(data){
+				
+				alert(data);
+			}
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 			// zq初始化
 			function initPage() {
 				console.log("初始化页面信息");
@@ -129,8 +151,12 @@ app.controller('baseInfoController', [ '$scope', 'services', '$location',
 						isActive2 : false,
 						isActive3 : false,
 						isActive4 : false
+<<<<<<< HEAD
 					};
 					baseInfo.selectBaseList();
+=======
+					}
+>>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 				}
 			}
 			initPage();

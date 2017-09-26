@@ -5,7 +5,7 @@
 		<div class="side-menu-container">
 			<div class="navbar-header"  style="background-color:rgba(124, 189, 187, 1)" >
 				<a class="navbar-brand" href="#">
-					<div class="icon"><img src="/VM/img/lg2-50.png"  height="25" width="25"/></div>
+					<div class="icon"><img src="/GVM/img/lg2-50.png"  height="25" width="25"/></div>
 					<div class="title">公元物业管理平台</div>
 				</a>
 				<button type="button"
@@ -64,9 +64,9 @@
 					<div id="component-example" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
-								<li><a href="${ctx}/routeController/toPrePage.do#/testIndex">展会演示</a></li>
-								<li><a href="${ctx}/routeController/toPrePage.do#/qingyuan">清远凤城郦都</a></li>
-								<li><a href="${ctx}/routeController/toPrePage.do#/guangming">光明迈瑞</a></li>
+								<li><a href="/GVM/routeController/toPrePage.do#/testIndex">展会演示</a></li>
+								<li><a href="/GVM/routeController/toPrePage.do#/qingyuan">清远凤城郦都</a></li>
+								<li><a href="/GVM/routeController/toPrePage.do#/guangming">光明迈瑞</a></li>
 							</ul>
 						</div>
 					</div></li>
@@ -78,9 +78,9 @@
 					<div id="dropdown-example" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
-								<li><a href="${ctx}/routeController/toEvalPage.do#/testIndex">展会演示</a></li>
-								<li><a href="${ctx}/routeController/toEvalPage.do#/qingyuan">清远凤城郦都</a></li>
-								<li><a href="${ctx}/routeController/toEvalPage.do#/guangming">光明迈瑞</a></li>
+								<li><a href="/GVM/routeController/toEvalPage.do#/testIndex">展会演示</a></li>
+								<li><a href="/GVM/routeController/toEvalPage.do#/qingyuan">清远凤城郦都</a></li>
+								<li><a href="/GVM/routeController/toEvalPage.do#/guangming">光明迈瑞</a></li>
 							</ul>
 						</div>
 					</div></li>

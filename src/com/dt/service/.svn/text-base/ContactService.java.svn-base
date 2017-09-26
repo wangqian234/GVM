@@ -1,0 +1,42 @@
+package com.jh.service;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.Contact;
+
+/**
+ * ��ϵ��ʽ
+ * 
+ * @author ����ά
+ * 
+ */
+@Service
+@Transactional
+public class ContactService {
+
+	@Autowired
+	private EntityDao entityDao;
+	
+	public Contact getContact(){
+		Contact con = new Contact();
+		List<Object> list = entityDao.createCriteria(Contact.class, (new HashMap<String,Object>()), new HashMap<String,Object>());
+		for(Object obj:list){
+			con = (Contact)obj;
+			break;
+		}
+		return con;
+	}
+	
+	
+	
+	
+	public void  saveOrUpdate(Contact contact){
+		entityDao.saveOrUpdate(contact);
+	}
+}

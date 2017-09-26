@@ -1,0 +1,136 @@
+package com.jh.entity;
+
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 系统用户
+ * @author 蒋世维
+ */
+@Entity
+@Table(name = "t_system_user")
+public class SystemUser {
+
+	public SystemUser(){
+		
+	}
+	public SystemUser(Integer id){
+		this.id=id;
+	}
+	@Id
+	@Basic(optional = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
+	private Integer id;
+	
+	/**
+	 * 用户名
+	 */
+	@Column(name = "user_name", nullable = false, length = 50)
+	private String userName;
+	
+	/**
+	 * 登陆密码
+	 */
+	@Column(name = "login_password", nullable = false, length = 200)
+	private String loginPassword;
+
+	/**
+	 * 姓名
+	 */
+	@Column(name = "full_name", nullable = false, length = 30)
+	private String fullName;
+	
+	/**
+	 * 手机号
+	 */
+	@Column(name = "phone", nullable = false, length = 30)
+	private String phone;
+	
+	/**
+	 * 创建日期
+	 */
+	@Column(name = "create_date" , nullable=true)
+	private Date createDate;
+	
+	/**
+	 * 登陆日期
+	 */
+	@Column(name = "login_date" , nullable=true)
+	private Date loginDate;
+	
+	/**
+	 * 是否可见（删除用）
+	 */
+	@Column(name = "is_hidden", nullable = false)
+	private Integer isHidden;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public Date getLoginDate() {
+		return loginDate;
+	}
+	public void setLoginDate(Date loginDate) {
+		this.loginDate = loginDate;
+	}
+	public Integer getIsHidden() {
+		return isHidden;
+	}
+	public void setIsHidden(Integer isHidden) {
+		this.isHidden = isHidden;
+	}
+	
+	
+}

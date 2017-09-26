@@ -1,0 +1,70 @@
+package com.jh.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.CustomService;
+import com.jh.util.Paging;
+
+/**
+ * 客服中心
+ * @author wys
+ *
+ */
+@Service
+@Transactional
+public class CustomServiceService {
+	@Autowired
+	private EntityDao entityDao;
+	
+	/**
+	 * 获取列表
+	 * @return
+	 */
+	public List<CustomService> getCustomServiceList(){
+		List<CustomService> list=(List<CustomService>)entityDao.createCriteria(CustomService.class, null, null);
+		return list;
+	}
+	
+	public Paging getCustomServicePaging(Map<String, Object> queryMap ,Integer curPage,Integer pageSize) {
+		final Map<String,Object> ordermap = new HashMap<String,Object>();
+		Paging p = entityDao.createQueryPaging(CustomService.class, queryMap, ordermap, curPage, pageSize) ;
+		return p;
+		
+	}
+	
+	public Paging getCustomServicePaging(String name ,Integer curPage,Integer pageSize) {
+		String qStr = "from CustomService where status = 0 ";
+		if(name != null && !"".equals(name)) {
+			qStr += " and name like '%"+name+"%'";
+		}
+		
+		String countStr = "select count(*) from CustomService where status = 0 ";
+		if(name != null && !"".equals(name)) {
+			countStr += " and name like '%"+name+"%'";
+		}
+		Paging p = entityDao.createQueryPaging(qStr, countStr, "HQL", curPage, pageSize);
+		return p;
+		
+	}
+
+	public void saveOrUpdate(CustomService customService){
+		entityDao.saveOrUpdate(customService);
+	}
+	
+	public CustomService getCustomServiceById(Integer id){
+		return (CustomService)entityDao.getObjectById(CustomService.class, id);
+	}
+
+	public void saveOrUpdate(String str,String type) {
+		entityDao.updateBySQL(str,type);
+	}
+	
+	
+}

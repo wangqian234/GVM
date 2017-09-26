@@ -1,0 +1,9 @@
+dataSource.password=root  
+dataSource.username=root   
+dataSource.databaseName=test   
+dataSource.driverClassName=com.mysql.jdbc.Driver
+dataSource.dialect=org.hibernate.dialect.MySQLDialect 
+dataSource.serverName=192.168.1.135\:3306  
+dataSource.url=jdbc\:mysql\://127.0.0.1\:3306/test   
+dataSource.properties=user\=${dataSource.username};databaseName\=${dataSource.databaseName};serverName\=${dataSource.serverName};password\=${dataSource.password}   
+dataSource.hbm2ddl.auto=update  

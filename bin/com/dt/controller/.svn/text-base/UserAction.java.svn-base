@@ -1,0 +1,343 @@
+package com.jh.controller;
+
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.jh.entity.SystemUser;
+import com.jh.service.UserService;
+import com.jh.util.DateUtil;
+import com.jh.util.Paging;
+import com.jh.util.StringUtil;
+
+/**
+ * 用户管理action
+ * @author wys
+ *
+ */
+@Controller  
+@RequestMapping("/user")  
+public class UserAction {
+
+	@Autowired
+	private UserService userService;
+	private int pageSize = 10;
+	
+	/**
+	 * 用户列表
+	 * @param modelMap
+	 * @param request
+	 * @param curPage
+	 * @return
+	 */
+	@RequestMapping(value="dshlist")
+	public String dshlist(ModelMap modelMap,HttpServletRequest request,
+			@RequestParam(value = "curPage",required=false,defaultValue="0") Integer curPage){ 
+		// 用户名
+		String userName = request.getParameter("userName");
+		modelMap.put("userName", userName);
+		
+		if(StringUtils.isNotEmpty(userName) && !"".equals(userName)) {
+			userName = StringUtil.replaceStr(userName);
+		}
+		// 手机号
+		String phone = request.getParameter("phone");
+		modelMap.put("phone", phone);
+		
+		if(StringUtils.isNotEmpty(phone) && !"".equals(phone)) {
+			phone = StringUtil.replaceStr(phone);
+		}
+		// 状态只查询待审批
+		String userType = "0";
+		if(curPage == null) {
+			curPage = 0;
+		}
+		
+		Paging paging = userService.getUserList(userName, phone, userType,curPage, pageSize);
+		modelMap.put("paging", paging);
+		return "user/dshlist";   
+	}
+	
+	@RequestMapping(value="list")
+	public String list(ModelMap modelMap,HttpServletRequest request,
+			@RequestParam(value = "curPage",required=false,defaultValue="0") Integer curPage){ 
+		// 用户名
+		String userName = request.getParameter("userName");
+		modelMap.put("userName", userName);
+		
+		if(StringUtils.isNotEmpty(userName) && !"".equals(userName)) {
+			userName = StringUtil.replaceStr(userName);
+		}
+		// 手机号
+		String phone = request.getParameter("phone");
+		modelMap.put("phone", phone);
+		
+		if(StringUtils.isNotEmpty(phone) && !"".equals(phone)) {
+			phone = StringUtil.replaceStr(phone);
+		}
+		
+		// 状态只查询免费的和付费的
+		String userType = "1,2";
+		modelMap.put("userType", userType);
+		if(curPage == null) {
+			curPage = 0;
+		}
+		
+		Paging paging = userService.getUserList(userName, phone,userType,curPage, pageSize);
+		modelMap.put("paging", paging);
+		return "user/list";   
+	}
+	/**
+	 * 弹出处理窗体
+	 * @param modelMap
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/showWindow/{id}") 
+	public String showWindow(ModelMap modelMap,HttpServletRequest request,
+			@PathVariable("id") Integer id) { 
+		modelMap.put("id", id);
+		return "user/ffwindow";   
+	}
+	/**
+	 * 审批用户
+	 * @param modelMap
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/approval/{id}") 
+	public String approval(ModelMap modelMap,HttpServletRequest request,
+			@PathVariable("id") Integer id) { 
+		
+		if(request.getSession().getAttribute("systemUser") !=null){
+			SystemUser user = (SystemUser)request.getSession().getAttribute("systemUser");
+			String upStr = "update User set userType = 1, approveUser='"+user.getFullName()+"',approveTime='"+DateUtil.format(new Date())+"' " +
+			" where id="+id+"";
+			userService.saveOrUpdate(upStr, "HQL");
+		}
+		
+		return "redirect:/user/dshlist.html";   
+	}
+	/**
+	 * 删除用户
+	 * @param modelMap
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/del/{id}") 
+	public String del(ModelMap modelMap,HttpServletRequest request,
+			@PathVariable("id") Integer id) { 
+		
+		if(id !=null) {
+			String upStr = "update User set status = 1  where id="+id+"";
+			userService.saveOrUpdate(upStr, "HQL");
+		}
+		
+		return "redirect:/user/dshlist.html";   
+	}
+	/**
+	 * 删除用户
+	 * @param modelMap
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/deluser/{id}") 
+	public String deluser(ModelMap modelMap,HttpServletRequest request,
+			@PathVariable("id") Integer id) { 
+		
+		if(id !=null) {
+			String upStr = "update User set status = 1  where id="+id+"";
+			userService.saveOrUpdate(upStr, "HQL");
+		}
+		
+		return "redirect:/user/list.html";   
+	}
+	/**
+	 * 升级付费会员
+	 * @param modelMap
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/userPay") 
+	public String userPay(ModelMap modelMap,HttpServletRequest request) { 
+		String id = request.getParameter("id");
+		String validityTime = request.getParameter("validityTime");// 过期时间
+		if(id !=null && !"".equals(id)) {
+			String upStr = "update User set  userType = 2,validityTime='"+validityTime+"'  where id="+id+"";
+			userService.saveOrUpdate(upStr, "HQL");
+		}
+		modelMap.put("type", "FFCG");
+		// return "user/successPage";  
+		return "redirect:/user/list.html";   
+	}
+	/**
+	 * 标书列表
+	 * @param modelMap
+	 * @param request
+	 * @param curPage
+	 * @return
+	 */
+	@RequestMapping(value="infolist/{uid}")
+	public String infolist(ModelMap modelMap,HttpServletRequest request,
+			@PathVariable("uid") Integer uid
+			,@RequestParam(value = "curPage",required=false,defaultValue="0") Integer curPage
+			){ 
+		modelMap.put("uid", uid);// 用户id
+		// 行业
+		String strInfoType = request.getParameter("infoTypeId");
+		// 性质
+		String infoProperty = request.getParameter("infoProperty");
+		// 省份CODE
+		String province = request.getParameter("province");
+		// 查询截止时间
+		String endTime = request.getParameter("endTime");
+		// 查询关键字
+		String queryWord = request.getParameter("queryWord");
+		/**
+		 * 时间进行处理
+		 */
+		if(StringUtils.isNotEmpty(endTime)) {
+			modelMap.put("endTime", endTime);
+			if(endTime.equals("WW")) {// 近一周
+				endTime = DateUtil.format(DateUtil.addDate(new Date(), -7, "D"));
+			}
+			else if(endTime.equals("MM")) {// 近一月
+				endTime = DateUtil.format(DateUtil.addDate(new Date(), -1, "M"));
+			}
+			else if(endTime.equals("TMM")) {// 近三月
+				endTime = DateUtil.format(DateUtil.addDate(new Date(), -3, "M"));
+			}
+			else if(endTime.equals("YY")) {// 近一年
+				endTime = DateUtil.format(DateUtil.addDate(new Date(), -1, "Y"));
+			}
+		}
+		modelMap.put("infoTypeId", strInfoType);
+		modelMap.put("infoProperty", infoProperty);
+		modelMap.put("province", province);
+		modelMap.put("queryWord", queryWord);
+		
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			queryWord = StringUtil.replaceStr(queryWord);
+		}
+		if(curPage == null) {
+			curPage = 0;
+		}
+		Paging paging = userService.pageInfoPaging(queryWord, strInfoType, infoProperty, province, endTime,uid, curPage, pageSize);
+		modelMap.put("paging", paging);
+		
+		return "user/infolist";   
+	}
+	/**
+	 * 保存下载标本的权限
+	 * @param modelMap
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/saveInfos") 
+	public String saveInfos(ModelMap modelMap,HttpServletRequest request) { 
+		String uid = request.getParameter("userid");// 用户id
+		String[] ids = request.getParameterValues("infoid");// 招标id
+		String validityTime = request.getParameter("validityTime");// 过期时间
+		if(ids !=null && ids.length > 0) {
+			SystemUser user = (SystemUser)request.getSession().getAttribute("systemUser");
+			userService.saveOrUpdate(ids, uid, validityTime, user.getFullName());
+		}
+		modelMap.put("type", "ZBXZSZCG");
+		return "user/successPage";   
+		//return "redirect:/user/list.html";     
+	}
+	
+	/**
+	 * 已设置下载的标书列表
+	 * @param modelMap
+	 * @param request
+	 * @param curPage
+	 * @return
+	 */
+	@RequestMapping(value="showinfolist/{uid}")
+	public String showinfolist(ModelMap modelMap,HttpServletRequest request,
+			@PathVariable("uid") Integer uid
+			,@RequestParam(value = "curPage",required=false,defaultValue="0") Integer curPage
+			){ 
+		modelMap.put("uid", uid);// 用户id
+		// 行业
+		String strInfoType = request.getParameter("infoTypeId");
+		// 性质
+		String infoProperty = request.getParameter("infoProperty");
+		// 省份CODE
+		String province = request.getParameter("province");
+		// 查询截止时间
+		String endTime = request.getParameter("endTime");
+		// 查询关键字
+		String queryWord = request.getParameter("queryWord");
+		/**
+		 * 时间进行处理
+		 */
+		if(StringUtils.isNotEmpty(endTime)) {
+			modelMap.put("endTime", endTime);
+			if(endTime.equals("WW")) {// 近一周
+				endTime = DateUtil.format(DateUtil.addDate(new Date(), -7, "D"));
+			}
+			else if(endTime.equals("MM")) {// 近一月
+				endTime = DateUtil.format(DateUtil.addDate(new Date(), -1, "M"));
+			}
+			else if(endTime.equals("TMM")) {// 近三月
+				endTime = DateUtil.format(DateUtil.addDate(new Date(), -3, "M"));
+			}
+			else if(endTime.equals("YY")) {// 近一年
+				endTime = DateUtil.format(DateUtil.addDate(new Date(), -1, "Y"));
+			}
+		}
+		modelMap.put("infoTypeId", strInfoType);
+		modelMap.put("infoProperty", infoProperty);
+		modelMap.put("province", province);
+		modelMap.put("queryWord", queryWord);
+		
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			queryWord = StringUtil.replaceStr(queryWord);
+		}
+		if(curPage == null) {
+			curPage = 0;
+		}
+		Paging paging = userService.showInfoPaging(queryWord, strInfoType, infoProperty, province, endTime,uid, curPage, pageSize);
+		modelMap.put("paging", paging);
+		
+		return "user/showinfolist";   
+	}
+	
+	/**
+	 * 删除已设置的标书
+	 * @param modelMap
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/delinfo/{uid}/{id}") 
+	public String delinfo(ModelMap modelMap,HttpServletRequest request,
+			@PathVariable("id") Integer id
+			,@PathVariable("uid") Integer uid
+			) { 
+		
+		if(id !=null) {
+			String upStr = "delete from VipUserInfos where id="+id+"";
+			userService.saveOrUpdate(upStr, "HQL");
+		}
+		
+		return "redirect:/user/showinfolist/"+uid+".html";   
+	}
+	
+}

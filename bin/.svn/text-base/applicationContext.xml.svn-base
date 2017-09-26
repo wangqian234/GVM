@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:aop="http://www.springframework.org/schema/aop"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:p="http://www.springframework.org/schema/p"
+ xmlns:tx="http://www.springframework.org/schema/tx"
+ xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/aop 
+  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+  http://www.springframework.org/schema/context 
+  http://www.springframework.org/schema/context/spring-context-3.0.xsd
+  http://www.springframework.org/schema/tx 
+  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+  http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring   
+  http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
+
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.jh" />
+	<!-- 自动扫描所有注解该路径 -->
+
+	<context:property-placeholder
+		location="classpath:/hibernate.properties" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.jh.entity</value><!-- 扫描实体类，也就是平时所说的model -->
+			</list>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://192.168.1.114:3306/zbw?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+	
+	<!-- Dao的实现 -->
+	<bean id="entityDao" class="com.jh.dao.EntityDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<tx:annotation-driven mode="aspectj" />
+	<aop:aspectj-autoproxy/>   
+
+	<ehcache:annotation-driven cache-manager="ehCacheManager" /> 
+ 
+ 	<bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">  
+       <property name="configLocation" value="classpath:ehcache.xml" />  
+    </bean> 
+    
+    <!-- 生成注册码 -->
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  
+            <property name="config">  
+                    <bean class="com.google.code.kaptcha.util.Config">  
+                            <!--通过构造函数注入属性值 -->  
+                            <constructor-arg type="java.util.Properties">  
+                                    <props>  
+                                        <!-- 验证码宽度 -->  
+                                        <prop key="kaptcha.image.width">116</prop>   
+                                        <!-- 验证码高度 -->  
+                                        <prop key="kaptcha.image.height">36</prop>  
+                                        <!-- 生成验证码内容范围 -->  
+                                        <prop key="kaptcha.textproducer.char.string">0123456789</prop>  
+                                        <!-- 验证码个数 -->  
+                                        <prop key="kaptcha.textproducer.char.length">4</prop>  
+                                        <!-- 是否有边框 -->  
+                                        <prop key="kaptcha.border">yes</prop>  
+                                        <!-- 边框颜色 -->  
+                                        <prop key="kaptcha.border.color">105,179,90</prop>  
+                                        <!-- 边框厚度 -->  
+                                        <prop key="kaptcha.border.thickness">1</prop>  
+                                        <!-- 验证码字体颜色 -->  
+                                        <prop key="kaptcha.textproducer.font.color">red</prop>  
+                                        <!-- 验证码字体大小 -->  
+                                        <prop key="kaptcha.textproducer.font.size">40</prop>  
+                                        <!-- 验证码所属字体样式 -->  
+                                        <prop key="kaptcha.textproducer.font.names">BKamrnBd</prop>  
+                                           <!-- 干扰线颜色 -->  
+                                        <prop key="kaptcha.noise.color">blue</prop>  
+                                        <!-- 验证码文本字符间距 -->  
+                                        <prop key="kaptcha.textproducer.char.space">3</prop>  
+                                       </props>  
+                            </constructor-arg>  
+                    </bean>  
+            </property>  
+     </bean>  
+
+</beans>

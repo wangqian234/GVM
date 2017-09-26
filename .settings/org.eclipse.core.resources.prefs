@@ -1,5 +1,9 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=74331bf230b3910074a29d726b5e640184ae3e1f
 eclipse.preferences.version=1
 encoding//WebRoot/jsp/1baseInfo/baseInfo.html=UTF-8
+encoding//WebRoot/jsp/3errorState/Expend.html=UTF-8
 encoding//WebRoot/jsp/404.html=UTF-8
 encoding//WebRoot/jsp/left.jsp=UTF-8
 encoding//WebRoot/jsp/top.jsp=UTF-8

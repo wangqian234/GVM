@@ -1,0 +1,92 @@
+package com.jh.service;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.Project;
+import com.jh.util.DateUtil;
+import com.jh.util.Paging;
+
+/**
+ * 项目
+ * @author dq
+ *
+ */
+@Service
+@Transactional
+public class ProjectService {
+	@Autowired
+	private EntityDao entityDao;
+	
+	/**
+	 * 项目查询列表
+	 * @param queryMap
+	 * @param curPage
+	 * @param pageSize
+	 * @return
+	 */
+	public Paging pageInfos(Map<String, Object> queryMap ,Integer curPage,Integer pageSize){
+		final Map<String,Object> ordermap = new HashMap<String,Object>();
+		ordermap.put("publicTime", "desc");
+		Paging p = entityDao.createQueryPaging(Project.class, queryMap, ordermap, curPage, pageSize) ;
+		return p;
+	}
+
+	
+
+
+	public Paging pageProjectPaging(String queryWord,String pojectStuts,String endTime
+			,Integer curPage,Integer pageSize) {
+		String qStr = "from Project where status!=2 ";
+		if(StringUtils.isNotEmpty(pojectStuts) && !"".equals(pojectStuts)) {// 项目类型
+			qStr += " and pojectStuts = "+pojectStuts+"";
+		}
+
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			qStr += " and projectName like '%"+queryWord+"%'";
+		}
+		if(StringUtils.isNotEmpty(endTime) && !"".equals(endTime)) {// 发布时间
+			qStr += " and publicTime >= '"+endTime+"' and publicTime <= '"+DateUtil.format(new Date())+"'";
+		}
+		qStr += " order by publicTime desc ";
+		
+		String countStr = "select count(*) from Project where status!=2 ";
+		if(StringUtils.isNotEmpty(pojectStuts) && !"".equals(pojectStuts)) {// 标书类型
+			countStr += " and pojectStuts = "+pojectStuts+"";
+		}
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			countStr += " and projectName like '%"+queryWord+"%'";
+		}
+		if(StringUtils.isNotEmpty(endTime) && !"".equals(endTime)) {// 发布时间
+			countStr += " and publicTime >= '"+endTime+"' and publicTime <= '"+DateUtil.format(new Date())+"'";
+		}
+		
+		Paging p = entityDao.createQueryPaging(qStr, countStr, "HQL", curPage, pageSize);
+		return p;
+	}
+	
+	public Project getProject(Integer id){
+		Project project= (Project)entityDao.getObjectById(Project.class, id);
+		return project;
+	}
+	
+
+	public void saveProject(Project project){
+		entityDao.saveOrUpdate(project);
+	}
+	
+	
+	public void saveOrUpdate(String str,String type) {
+		entityDao.updateBySQL(str,type);
+	}
+	
+	
+	
+}
