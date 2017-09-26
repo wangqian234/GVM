@@ -1,0 +1,72 @@
+package com.jh.service;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.ChannelList;
+import com.jh.entity.ChannelList;
+import com.jh.util.Paging;
+
+/**
+ * 列表栏目
+ * @author 蒋世维
+ *
+ */
+@Service
+@Transactional
+public class ChannelListService {
+
+	@Autowired
+	private EntityDao entityDao;
+	
+	public Paging getChannelList(Integer channelType,Integer curPage,Integer pageSize){
+		final Map<String,Object> tjmap = new HashMap<String,Object>();
+		tjmap.put("channelType", channelType);
+		Paging paging=entityDao.createQueryFy(ChannelList.class, tjmap, null, curPage, pageSize);
+		return paging;
+	}
+	
+
+	public Paging getChannelPaging(String queryWord,String channelType
+			,Integer curPage,Integer pageSize) {
+		String qStr = "from ChannelList where status=0 ";
+		if(StringUtils.isNotEmpty(channelType) && !"".equals(channelType)) {// 标书类型
+			qStr += " and channelType = '"+channelType+"'";
+		}
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			qStr += " and channelName like '%"+queryWord+"%'";
+		}
+		qStr += " ";
+		
+		String countStr = "select count(*) from ChannelList where status=0 ";
+		if(StringUtils.isNotEmpty(channelType) && !"".equals(channelType)) {// 标书类型
+			qStr += " and channelType = '"+channelType+"'";
+		}
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			qStr += " and channelName like '%"+queryWord+"%'";
+		}
+		
+		Paging p = entityDao.createQueryPaging(qStr, countStr, "HQL", curPage, pageSize);
+		return p;
+	}
+	
+
+	public void saveOrUpdate(ChannelList channelList){
+		entityDao.saveOrUpdate(channelList);
+	}
+	
+	public ChannelList getChannelListById(Integer id){
+		return (ChannelList)entityDao.getObjectById(ChannelList.class, id);
+	}
+
+	public void saveOrUpdate(String str,String type) {
+		entityDao.updateBySQL(str,type);
+	}
+	
+}

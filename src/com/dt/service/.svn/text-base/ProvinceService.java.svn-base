@@ -1,0 +1,48 @@
+package com.jh.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.Province;
+
+/**
+ * 省份
+ * @author 蒋世维
+ *
+ */
+@Service
+@Transactional
+public class ProvinceService {
+
+	@Autowired
+	private EntityDao entityDao;
+	
+
+	
+	public Province getProvinceId(String code){
+		return (Province)entityDao.getObjectById(Province.class, Integer.parseInt(code));
+	}
+	
+	/**
+	 * 省份
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Province> getProvinceList(){
+		List<Province> list=(List<Province>)entityDao.createCriteria(Province.class, null, null);
+		return list;
+	}
+	/**
+	 * 
+	 * @param user
+	 */
+	public void saveOrUpdate(Province pro){
+		entityDao.saveOrUpdate(pro);
+		//entityDao.saveOrUpdate(linkUrl);
+	}
+	
+}

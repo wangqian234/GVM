@@ -1,0 +1,29 @@
+package com.jh.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.jh.dao.EntityDao;
+import com.jh.entity.City;
+import com.jh.entity.Province;
+
+/**
+ * 省份/城市
+ * @author 蒋世维
+ *
+ */
+@Service
+@Transactional
+public class CityService {
+
+	@Autowired
+	private EntityDao entityDao;
+	
+	public City getCityById(Integer id){
+		return (City)entityDao.getObjectById(City.class, id);
+	}
+	
+	public Province getProvinceId(Integer id){
+		return (Province)entityDao.getObjectById(Province.class, id);
+	}
+}

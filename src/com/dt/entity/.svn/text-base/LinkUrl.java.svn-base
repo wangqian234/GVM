@@ -1,0 +1,121 @@
+package com.jh.entity;
+
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 友情链接
+ * @author 蒋世维
+ *
+ */
+@Entity
+@Table(name = "t_linkUrl")
+public class LinkUrl {
+
+	@Id
+	@Basic(optional = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
+	private Integer id;
+	
+	/**
+	 * 名称
+	 */
+	@Column(name = "name", nullable = false, length = 50)
+	private String name;
+	/**
+	 * 类型 0 文字 1 图片
+	 */
+	@Column(name = "type", nullable = true)
+	private Integer type;
+	
+	/**
+	 * url
+	 */
+	@Column(name = "url", nullable = false, length =200)
+	private String url;
+	
+	/**
+	 * 图片地址
+	 */
+	@Column(name = "picUrl", nullable = true, length =200)
+	private String picUrl;
+	
+	/**
+	 * 排序
+	 */
+	@Column(name = "orderCondition" , nullable=true)
+	private int orderCondition;
+	/**
+	 * 添加日期
+	 */
+	@Column(name = "created_date" , nullable=true)
+	private Date createdDate;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getPicUrl() {
+		return picUrl;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
+
+	public int getOrderCondition() {
+		return orderCondition;
+	}
+
+	public void setOrderCondition(int orderCondition) {
+		this.orderCondition = orderCondition;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+	
+	
+}

@@ -1,0 +1,28 @@
+.active{
+	color: rgba(124, 189, 187, 1) !important
+}
+.inactive{
+	color: rgba(124, 189, 187, 1) !important
+}
+.dfselect {
+	width: 280px;
+	height: 36px;
+	margin-right: 12px;
+	line-height: 32px;
+	border-top: solid 1px #a7b5bc;
+	border-left: solid 1px #a7b5bc;
+	border-right: solid 1px #ced9df;
+	border-bottom: solid 1px #ced9df;
+	background: url(../images/inputbg.gif) repeat-x;
+	text-indent: 4px;
+}
+
+.dfselect option {
+	word-space: 2px;
+	margin: 8px 12px;
+}
+.dateLayoutStyle {
+	width: 280px;
+	height: 32px;
+	margin-left: 0px;
+}

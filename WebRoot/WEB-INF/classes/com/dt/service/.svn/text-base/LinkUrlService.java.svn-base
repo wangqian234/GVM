@@ -1,0 +1,55 @@
+package com.jh.service;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.LinkUrl;
+import com.jh.util.Paging;
+
+/**
+ * 友情链接管理
+ * @author 董权
+ *
+ */
+@Service
+@Transactional
+public class LinkUrlService {
+
+	@Autowired
+	private EntityDao entityDao;
+	
+	public LinkUrl getLinkUrlById(Integer id){
+		return (LinkUrl)entityDao.getObjectById(LinkUrl.class, id);
+	}
+	
+	/**
+	 *  友情链接列表
+	 * @return
+	 */
+	public Paging getLinkUrls(Integer curPage,Integer pageSize){
+		Map<String,Object> queryMap = new HashMap<String,Object>();
+		Map<String,Object> orderMap = new LinkedHashMap<String,Object>();
+		orderMap.put("orderCondition", "desc");
+		orderMap.put("id", "asc");
+		Paging paging=entityDao.createQueryPaging(LinkUrl.class, queryMap, orderMap,curPage,pageSize);
+		return paging;
+	}
+	
+	
+	
+	public void delete(LinkUrl linkUrl){
+		entityDao.delete(linkUrl);
+	}
+	
+	public void saveOrUpdate(LinkUrl linkUrl){
+		entityDao.saveOrUpdate(linkUrl);
+	}
+	
+	
+}

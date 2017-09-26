@@ -1,0 +1,73 @@
+package com.jh.service;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.SystemUser;
+import com.jh.util.Paging;
+
+/**
+ * 系统用户service
+ */
+@Service
+@Transactional
+public class SystemUserService {
+
+	@Autowired
+	private EntityDao entityDao;
+	
+	/**
+	 * 验证系统用户登陆
+	 * @param userName
+	 * @param passWord
+	 * @return 
+	 */
+	@SuppressWarnings("unchecked")
+	public SystemUser login(String userName,String passWord){
+		Map<String, Object> queryMap = new LinkedHashMap<String, Object>();
+		queryMap.put("userName", userName);
+		queryMap.put("loginPassword", passWord);
+		List<SystemUser> sysUserList=(List<SystemUser>)entityDao.createCriteria(SystemUser.class,queryMap,null);
+		SystemUser systemUser=null;
+		if(sysUserList!=null && sysUserList.size()>0){
+			systemUser=sysUserList.get(0);
+		}
+		return systemUser;
+	}
+	
+	public void saveOrUpdate(SystemUser systemUser){
+		entityDao.saveOrUpdate(systemUser);
+	}
+	
+	/**
+	 *  管理员列表
+	 * @return
+	 */
+	public Paging getSystemUserList(
+			String userName,String phone,
+			Integer curPage,Integer pageSize){
+		Map<String, Object> tjMap = new LinkedHashMap<String, Object>();
+		tjMap.put("isHidden", 1);
+		if(userName != null && !"".equals(userName)) {
+			tjMap.put("userName", userName);
+		}
+		if(phone != null && !"".equals(phone)) {
+			tjMap.put("phone", phone);
+		}
+		
+		Map<String, Object> orderMap = new LinkedHashMap<String, Object>();
+		orderMap.put("createDate", "desc");
+		Paging paging=entityDao.createQueryPaging(SystemUser.class, tjMap, orderMap,curPage,pageSize);
+		return paging;
+	}
+	
+	public SystemUser getSystemUserById(Integer id){
+		return (SystemUser)entityDao.getObjectById(SystemUser.class, id);
+	}
+}

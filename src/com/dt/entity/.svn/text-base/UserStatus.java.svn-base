@@ -1,0 +1,10 @@
+package com.jh.entity;
+
+/**
+ * 正常,删除
+ * @author Administrator
+ *
+ */
+public enum UserStatus {
+	
+}

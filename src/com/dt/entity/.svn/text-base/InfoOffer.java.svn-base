@@ -1,0 +1,84 @@
+package com.jh.entity;
+
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+/**
+ * 招标信息报价
+ * 
+ * @author wys
+ * 
+ */
+@Entity
+@Table(name = "t_info_offer")
+public class InfoOffer {
+
+	@Id
+	@Basic(optional = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
+	private Integer id;
+
+	/**
+	 * 报价日期
+	 */
+	@Column(name = "addDate", nullable = true)
+	private Date addDate;
+	/**
+	 * 报价费用
+	 */
+	@Column(name = "offerFee", nullable = true,length=200)
+	private String offerFee;
+	/**
+	 * 用户
+	 */
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id", nullable=false)
+	private User user;
+	/**
+	 * 信息id
+	 */
+	@Column(name="info_id", nullable=false)
+	private Integer infoId;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Date getAddDate() {
+		return addDate;
+	}
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
+	}
+	public String getOfferFee() {
+		return offerFee;
+	}
+	public void setOfferFee(String offerFee) {
+		this.offerFee = offerFee;
+	}
+	public Integer getInfoId() {
+		return infoId;
+	}
+	public void setInfoId(Integer infoId) {
+		this.infoId = infoId;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+}

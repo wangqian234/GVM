@@ -1,0 +1,102 @@
+package com.jh.entity;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 列表栏目
+ * 
+ * @author 蒋世维
+ * 
+ */
+@Entity
+@Table(name = "t_cannel_list")
+public class ChannelList {
+
+	@Id
+	@Basic(optional = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "channelId", nullable = false)
+	private Integer channelId;
+
+	/**
+	 * 栏目名称
+	 */
+	@Column(name = "channelName", nullable = false, length = 50)
+	private String channelName;
+
+	/**
+	 * 栏目类型 1:违规公告 2:招标声明
+	 */
+	@Column(name = "channelType", nullable = false)
+	private int channelType;
+
+	
+	/**
+	 * 栏目内容
+	 */
+	@Column(name = "channelContent", columnDefinition = "TEXT", nullable = true)
+	private String channelContent;
+
+	/**
+	 * 状态 0 正常  1删除
+	 */
+	@Column(name = "status", nullable = true)
+	private Integer status;
+	
+	public Integer getChannelId() {
+		return channelId;
+	}
+
+
+	public void setChannelId(Integer channelId) {
+		this.channelId = channelId;
+	}
+
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+
+	public int getChannelType() {
+		return channelType;
+	}
+
+
+	public void setChannelType(int channelType) {
+		this.channelType = channelType;
+	}
+
+
+	public String getChannelContent() {
+		return channelContent;
+	}
+
+
+	public void setChannelContent(String channelContent) {
+		this.channelContent = channelContent;
+	}
+
+
+	public Integer getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	
+}

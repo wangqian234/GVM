@@ -1,0 +1,132 @@
+package com.jh.entity;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 联系方式
+ * 
+ * @author 蒋世维
+ * 
+ */
+@Entity
+@Table(name = "t_contact")
+public class Contact {
+
+	@Id
+	@Basic(optional = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
+	private Integer id;
+	/**
+	 * 电话
+	 */
+	@Column(name = "phone", nullable = false, length = 40)
+	private String phone;
+
+	/**
+	 * 传真
+	 */
+	@Column(name = "fax", nullable = true, length = 40)
+	private String fax;
+	/**
+	 * 地址
+	 */
+	@Column(name = "address", nullable = false, length = 200)
+	private String address;
+	/**
+	 * 邮编
+	 */
+	@Column(name = "zip", nullable = false, length = 20)
+	private String zip;
+
+	/**
+	 * 网站
+	 */
+	@Column(name = "web", nullable = true, length = 200)
+	private String web;
+	/**
+	 * 邮箱
+	 */
+	@Column(name = "mail", nullable = false, length = 100)
+	private String mail;
+
+	/**
+	 * 备注
+	 */
+	@Column(name = "memo", columnDefinition = "TEXT", nullable = true)
+	private String memo;
+
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getWeb() {
+		return web;
+	}
+
+	public void setWeb(String web) {
+		this.web = web;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+
+
+}

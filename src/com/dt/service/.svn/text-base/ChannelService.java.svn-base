@@ -1,0 +1,43 @@
+package com.jh.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.jh.dao.EntityDao;
+import com.jh.entity.Channel;
+
+/**
+ * 栏目
+ * 
+ * @author 蒋世维
+ * 
+ */
+@Service
+@Transactional
+public class ChannelService {
+	@Autowired
+	private EntityDao entityDao;
+	
+	public Channel getChannelById(Integer id){
+		return (Channel)entityDao.getObjectById(Channel.class, id);
+	}
+	
+	public Channel getChannel(Integer channelType){
+		final Map<String,Object> tjmap = new HashMap<String,Object>();
+		tjmap.put("channelType", channelType);
+		List<Channel> list=(List<Channel>)entityDao.createCriteria(Channel.class, tjmap, null);
+		Channel channel=null;
+		if(list!=null && list.size()>0){
+			channel=(Channel)list.get(0);
+		}
+		return channel;
+	}
+	
+	public void saveOrUpdate(Channel channel){
+		entityDao.saveOrUpdate(channel);
+	}
+}

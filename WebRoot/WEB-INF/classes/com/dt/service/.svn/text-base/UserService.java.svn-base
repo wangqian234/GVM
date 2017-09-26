@@ -1,0 +1,247 @@
+package com.jh.service;
+
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jh.dao.EntityDao;
+import com.jh.entity.User;
+import com.jh.entity.VipUserInfos;
+import com.jh.util.DateUtil;
+import com.jh.util.Paging;
+
+/**
+ * 用户service
+ */
+@Service
+@Transactional
+public class UserService {
+
+	@Autowired
+	private EntityDao entityDao;
+	
+	/**
+	 * 
+	 * @param user
+	 */
+	public void saveOrUpdate(User user){
+		entityDao.saveOrUpdate(user);
+	}
+	
+	/**
+	 * 验证用户登陆
+	 * @param userName
+	 * @param passWord
+	 * @return 
+	 */
+	@SuppressWarnings("unchecked")
+	public User login(String userName,String passWord){
+		Map<String, Object> queryMap = new LinkedHashMap<String, Object>();
+		queryMap.put("userName", userName);
+		queryMap.put("passWord", passWord);
+		List<User> adminUsersList=(List<User>)entityDao.createCriteria(User.class,queryMap,null);
+		User adminUsers=null;
+		if(adminUsersList!=null && adminUsersList.size()>0){
+			adminUsers=adminUsersList.get(0);
+		}
+		return adminUsers;
+	}
+	
+	/**
+	 * 用户
+	 * @param userId
+	 * @return
+	 */
+	public User getUserById(Integer userId){
+		User user=(User)entityDao.getObjectById(User.class, userId);
+		return user;
+	}
+	
+	/**
+	 * 用户列表
+	 * @param myUserId
+	 * @param curPage
+	 * @param pageSize
+	 * @return
+	 */
+	public Paging getUserList(String userName,String phone,String userType
+			,Integer curPage,Integer pageSize){
+		String qStr = "from User where status=0 ";
+		if(StringUtils.isNotEmpty(userName) && !"".equals(userName)) {// 用户名
+			qStr += " and userName like '%"+userName+"%'";
+		}
+		if(StringUtils.isNotEmpty(phone) && !"".equals(phone)) {// 手机号
+			qStr += " and mobile = '"+phone+"'";
+		}
+		if(StringUtils.isNotEmpty(userType) && !"".equals(userType)) {// 手机号
+			qStr += " and userType in ("+userType+")";
+		}
+		qStr += " order by userType asc ";
+		
+		String countStr = "select count(*) from User where status=0 ";
+		if(StringUtils.isNotEmpty(userName) && !"".equals(userName)) {
+			countStr += " and userName like '%"+userName+"%'";
+		}
+		if(StringUtils.isNotEmpty(phone) && !"".equals(phone)) {
+			countStr += " and phone = '"+phone+"'";
+		}
+		if(StringUtils.isNotEmpty(userType) && !"".equals(userType)) {// 手机号
+			countStr += " and userType = '"+userType+"'";
+		}
+		
+		Paging p = entityDao.createQueryPaging(qStr, countStr, "HQL", curPage, pageSize);
+		return p;
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 */
+	public void saveOrUpdate(String str,String type) {
+		entityDao.updateBySQL(str,type);
+	}
+	
+	
+	/**
+	 * 标书列表
+	 * @param queryWord
+	 * @param strInfoType
+	 * @param infoProperty
+	 * @param province
+	 * @param endTime
+	 * @param curPage
+	 * @param pageSize
+	 * @return
+	 */
+	public Paging pageInfoPaging(String queryWord,String strInfoType,String infoProperty,String province,String endTime
+			,Integer userId
+			,Integer curPage,Integer pageSize) {
+		String qStr = "select i.infoID ,i.infoTitle,(select t_p.name from t_province t_p where i.provinceCode =t_p.code ) pname" +
+				" ,i.infoTypeId,i.isFee,i.infoPrex,i.postFee,i.emailFee " +
+				" from t_info i left join (select * from t_vipuserinfos where user_id = "+userId+") vui on vui.info_id = i.infoID " +
+				" where  i.status!=2 and (vui.info_id is null or  vui.validityTime < '"+DateUtil.format(new Date())+"') ";
+		if(StringUtils.isNotEmpty(strInfoType) && !"".equals(strInfoType)) {// 标书类型
+			qStr += " and i.infoTypeId = '"+strInfoType+"'";
+		}
+		if(StringUtils.isNotEmpty(infoProperty) && !"".equals(infoProperty)) {// 招标性质：0公告、1结果
+			qStr += " and i.infoProperty = '"+infoProperty+"'";
+		}
+		if(StringUtils.isNotEmpty(province)  && !"".equals(province)) {// 地区
+			qStr += " and i.provinceCode = '"+province+"'";
+		}
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			qStr += " and i.infoTitle like '%"+queryWord+"%'";
+		}
+		if(StringUtils.isNotEmpty(endTime) && !"".equals(endTime)) {// 发布时间
+			qStr += " and i.publicTime >= '"+endTime+"' and publicTime <= '"+DateUtil.format(new Date())+"'";
+		}
+		qStr += " order by i.publicTime desc ";
+		
+		String countStr = "select count(*)" +
+				" from (" +
+				" select i.infoID ,i.infoTitle " +
+				" from t_info i left join (select * from t_vipuserinfos where user_id = "+userId+") vui on vui.info_id = i.infoID " +
+				" where i.status!=2 and (vui.info_id is null or  vui.validityTime < '"+DateUtil.format(new Date())+"') ";
+		if(StringUtils.isNotEmpty(strInfoType) && !"".equals(strInfoType)) {// 标书类型
+			countStr += " and i.infoTypeId = '"+strInfoType+"'";
+		}
+		if(StringUtils.isNotEmpty(infoProperty) && !"".equals(infoProperty)) {// 招标性质：0公告、1结果
+			countStr += " and i.infoProperty = '"+infoProperty+"'";
+		}
+		if(StringUtils.isNotEmpty(province)  && !"".equals(province)) {// 地区
+			countStr += " and i.provinceCode = '"+province+"'";
+		}
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			countStr += " and i.infoTitle like '%"+queryWord+"%'";
+		}
+		if(StringUtils.isNotEmpty(endTime) && !"".equals(endTime)) {// 发布时间
+			countStr += " and i.publicTime >= '"+endTime+"' and publicTime <= '"+DateUtil.format(new Date())+"'";
+		}
+		countStr += ") table0 ";
+		Paging p = entityDao.createQueryPaging(qStr, countStr, "SQL", curPage, pageSize);
+		return p;
+	}
+	
+	/**
+	 * 保存现在招标文件权限
+	 * @param user
+	 */
+	public void saveOrUpdate(String[] ids,String userId,String validityTime,String setUser) {
+		try {
+			for(int i = 0 ; i< ids.length ;i++) {
+				String insertStr = "insert into t_vipUserInfos(validityTime,setUser,setTime,user_id,info_id)" +
+						" values('"+validityTime+"','"+setUser+"','"+DateUtil.format(new Date())+"','"+userId+"','"+ids[i]+"')";
+				entityDao.updateBySQL(insertStr, "SQL");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 已设置的标书列表
+	 * @param queryWord
+	 * @param strInfoType
+	 * @param infoProperty
+	 * @param province
+	 * @param endTime
+	 * @param curPage
+	 * @param pageSize
+	 * @return
+	 */
+	public Paging showInfoPaging(String queryWord,String strInfoType,String infoProperty,String province,String endTime
+			,Integer userId
+			,Integer curPage,Integer pageSize) {
+		String qStr = "select i.infoID ,i.infoTitle,(select t_p.name from t_province t_p where i.provinceCode =t_p.code ) pname" +
+				" ,i.infoTypeId,i.isFee,i.infoPrex,vui.validityTime,vui.id " +
+				" from t_info i inner join (select * from t_vipuserinfos where user_id = "+userId+") vui on vui.info_id = i.infoID " +
+				" where i.status!=2 and  ( vui.validityTime >= '"+DateUtil.format(new Date())+"') ";
+		if(StringUtils.isNotEmpty(strInfoType) && !"".equals(strInfoType)) {// 标书类型
+			qStr += " and i.infoTypeId = '"+strInfoType+"'";
+		}
+		if(StringUtils.isNotEmpty(infoProperty) && !"".equals(infoProperty)) {// 招标性质：0公告、1结果
+			qStr += " and i.infoProperty = '"+infoProperty+"'";
+		}
+		if(StringUtils.isNotEmpty(province)  && !"".equals(province)) {// 地区
+			qStr += " and i.provinceCode = '"+province+"'";
+		}
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			qStr += " and i.infoTitle like '%"+queryWord+"%'";
+		}
+		if(StringUtils.isNotEmpty(endTime) && !"".equals(endTime)) {// 发布时间
+			qStr += " and i.publicTime >= '"+endTime+"' and publicTime <= '"+DateUtil.format(new Date())+"'";
+		}
+		qStr += " order by i.publicTime desc ";
+		
+		String countStr = "select count(*)" +
+				" from (" +
+				" select i.infoID ,i.infoTitle " +
+				" from t_info i inner join (select * from t_vipuserinfos where user_id = "+userId+") vui on vui.info_id = i.infoID " +
+				" where i.status!=2 and  vui.validityTime >= '"+DateUtil.format(new Date())+"' ";
+		if(StringUtils.isNotEmpty(strInfoType) && !"".equals(strInfoType)) {// 标书类型
+			countStr += " and i.infoTypeId = '"+strInfoType+"'";
+		}
+		if(StringUtils.isNotEmpty(infoProperty) && !"".equals(infoProperty)) {// 招标性质：0公告、1结果
+			countStr += " and i.infoProperty = '"+infoProperty+"'";
+		}
+		if(StringUtils.isNotEmpty(province)  && !"".equals(province)) {// 地区
+			countStr += " and i.provinceCode = '"+province+"'";
+		}
+		if(StringUtils.isNotEmpty(queryWord) && !"".equals(queryWord)) {// 关键字
+			countStr += " and i.infoTitle like '%"+queryWord+"%'";
+		}
+		if(StringUtils.isNotEmpty(endTime) && !"".equals(endTime)) {// 发布时间
+			countStr += " and i.publicTime >= '"+endTime+"' and publicTime <= '"+DateUtil.format(new Date())+"'";
+		}
+		countStr += ") table0 ";
+		Paging p = entityDao.createQueryPaging(qStr, countStr, "SQL", curPage, pageSize);
+		return p;
+	}
+	
+}

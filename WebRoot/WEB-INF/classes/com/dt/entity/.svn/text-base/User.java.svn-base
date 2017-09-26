@@ -1,0 +1,222 @@
+package com.jh.entity;
+
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 用户
+ * 
+ * @author 董权
+ * 
+ */
+@Entity
+@Table(name = "t_user")
+public class User {
+
+	@Id
+	@Basic(optional = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
+	private Integer id;
+	/**
+	 * 用户名
+	 */
+	@Column(name = "userName", nullable = false, length = 40)
+	private String userName;
+
+	/**
+	 * 密码
+	 */
+	@Column(name = "password", nullable = false, length = 40)
+	private String password;
+
+	/**
+	 * 公司名称
+	 */
+	@Column(name = "company", nullable = false, length = 80)
+	private String company;
+
+	/**
+	 * 联系人
+	 */
+	@Column(name = "contacts", nullable = false, length = 20)
+	private String contacts;
+
+	/**
+	 * 固定电话
+	 */
+	@Column(name = "phone", nullable = true, length = 30)
+	private String phone;
+
+	/**
+	 * 手机号
+	 */
+	@Column(name = "mobile", nullable = false, length = 30)
+	private String mobile;
+	/**
+	 * 邮箱
+	 */
+	@Column(name = "email", nullable = false, length = 100)
+	private String email;
+
+	/**
+	 * 会员类型 0未审核用户 1免费用户 2付费用户
+	 */
+	@Column(name = "userType", nullable = false)
+	private int userType;
+
+	/**
+	 * 注册日期  新注册用户为当前系统时间
+	 */
+	@Column(name = "joinDate", nullable = false)
+	private Date joinDate;
+
+	/**
+	 * 状态 0正常 1删除  新注册用户为0
+	 */
+	@Column(name = "status", nullable = false)
+	private int status;
+
+	/**
+	 * 审批人  后台审批的时候填写 直接填写后台用户的名字
+	 */
+	@Column(name = "approveUser", nullable = true)
+	private String approveUser;
+
+	/**
+	 * 审批时间 后台审批的时候填写 
+	 */
+	@Column(name = "approveTime", nullable = true)
+	private Date approveTime;
+
+	/**
+	 * 有效期 付费用户才有的状态  有效期还剩一周时，后台用户提醒。
+	 */
+	@Column(name = "validityTime", nullable = true)
+	private Date validityTime;
+
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(String contacts) {
+		this.contacts = contacts;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public Date getJoinDate() {
+		return joinDate;
+	}
+
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
+	}
+
+
+
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getApproveUser() {
+		return approveUser;
+	}
+
+	public void setApproveUser(String approveUser) {
+		this.approveUser = approveUser;
+	}
+
+	public Date getApproveTime() {
+		return approveTime;
+	}
+
+	public void setApproveTime(Date approveTime) {
+		this.approveTime = approveTime;
+	}
+
+	public Date getValidityTime() {
+		return validityTime;
+	}
+
+	public void setValidityTime(Date validityTime) {
+		this.validityTime = validityTime;
+	}
+
+}
