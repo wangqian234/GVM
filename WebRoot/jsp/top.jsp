@@ -20,8 +20,7 @@
 <!-- CSS App -->
 <link rel="stylesheet" type="text/css" href="/GVM/css/style.css">
 <link rel="stylesheet" type="text/css" href="/GVM/css/vmcss.css">
-<link rel="stylesheet" type="text/css"
-	href="css/themes/flat-blue.css">
+<link rel="stylesheet" type="text/css" href="/GVM/css/themes/flat-blue.css">
 </head>
 
 <body class="flat-blue">

@@ -102,7 +102,6 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 
 			// 换页
 			function pageTurn(totalPage, page, Func) {
-
 				var $pages = $(".tcdPageCode");
 				if ($pages.length != 0) {
 					$(".tcdPageCode").createPage({
@@ -120,7 +119,7 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 					endTime : ""
 			}
 			
-			errorState.selectErrorList = function(){
+			function selectErrorListpage(p){
 				if (errorState.limit.startTime == "") {
 					alert("请选择开始时间！");
 					return false;
@@ -137,9 +136,39 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				}
 				var expendErrorLimit = JSON.stringify(errorState.limit);
 				services.selectErrorList({
-					limit:expendErrorLimit
+					limit:expendErrorLimit,
+					page : p
 				}).success(function(data){
 					errorState.erroeList = data.list
+				})
+			}
+			
+			errorState.selectErrorListpage = function(){
+				if (errorState.limit.startTime == "") {
+					alert("请选择开始时间！");
+					return false;
+				}
+				if (errorState.limit.endTime == "") {
+					alert("请选择截止时间！");
+					return false;
+				}
+				if (compareDateTime(
+						errorState.limit.startTime,
+						errorState.limit.endTime)) {
+					alert("截止时间不能大于开始时间！");
+					return false;
+				}
+				var expendErrorLimit = JSON.stringify(errorState.limit);
+				services.selectErrorList({
+					limit:expendErrorLimit,
+					page : p
+				}).success(function(data){
+					errorState.erroeList = data.list;
+					errorState.totalPage = data.totalPage;
+					pageTurn(
+							errorState.totalPage,
+							1,
+							selectErrorList);
 				})
 			}
 			
@@ -158,9 +187,9 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				console.log("初始化页面信息");
 				if ($location.path().indexOf('/Expend') == 0) {
 					services.selectErrorList({
-						
+						page:1
 					}).success(function(data){
-						errorState.erroeList = data.list
+						errorState.erroeList = data.list;
 					})
 				} else if ($location.path().indexOf('/Analyse') == 0) {
 					
