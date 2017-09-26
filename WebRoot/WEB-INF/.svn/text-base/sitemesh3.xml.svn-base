@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<mapping path="/*" decorator="/WEB-INF/view-template.jsp" />
+	
+	<mapping path="/index.jsp" exclue="true"/> 
+	<mapping path="/sysUser/login.html" exclue="true"/>
+	<mapping path="/sysUser/quit.html" exclue="true"/>
+	<mapping path="/user/showWindow/*" exclue="true"/>
+	<mapping path="/city/sellist.html" exclue="true"/>
+	<mapping path="/user/infolist/*.html" exclue="true"/>
+	<mapping path="/user/showinfolist/*.html" exclue="true"/>
+	
+	<!--文本编辑器，上传图片插件-->
+	<mapping path="/kindeditor/jsp/file_manager_json.jsp" exclue="true"/>
+	<!--文本编辑器，上传图片插件-->
+	<mapping path="/kindeditor/jsp/upload_json.jsp" exclue="true"/>
+	
+</sitemesh>
