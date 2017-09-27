@@ -23,13 +23,18 @@ public class BaseInfoDaoImpl extends HibernateDaoSupport implements BaseInfoDao 
 	public List<Object> selectBaseList() {
 		// TODO Auto-generated method stub
 		return (List<Object>) getHibernateTemplate().execute(new HibernateCallback<Object>() {
+			
 			public Object doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException {
-				String sql = "select * from Detector_Equipment";
-				SQLQuery qObj = session.createSQLQuery(sql);
+				StringBuilder sb=new StringBuilder();
+				sb.append("select e.Detector_Equipment_No,e.Detector_Equipment_Name,er.Detector_EquipmentRoom_name,et.Detector_EquipmentType_name from Detector_Equipment e");
+				sb.append(" LEFT JOIN Detector_EquipmentRoom er ON e.Detector_EquipmentRoom_Id=er.Detector_EquipmentRoom_Id");
+				sb.append(" LEFT JOIN Detector_EquipmentType et ON e.Detector_EquipmentType_Id=et.Detector_EquipmentType_Id");
+				SQLQuery qObj = session.createSQLQuery(sb.toString());
 				List<Object> list = qObj.list();
 				return list;
 			}
 		});
+		
 
 	}
 

@@ -6,16 +6,21 @@
 				<div role="tabpanel">
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
-						<li ng-click="selectEquipList(0)" role="presentation" class="active"><a href=""
-							aria-controls="home" role="tab" data-toggle="tab">供配电系统</a></li>
-						<li ng-click="selectEquipList(1)" role="presentation"><a ng-click="" href=""
-							aria-controls="profile" role="tab" data-toggle="tab">给排水系统</a></li>
-						<li ng-click="selectEquipList(2)" role="presentation"><a ng-click="" href=""
-							aria-controls="messages" role="tab" data-toggle="tab">中央空调系统</a></li>
-						<li ng-click="selectEquipList(3)" role="presentation"><a ng-click="" href=""
-							aria-controls="settings" role="tab" data-toggle="tab">电梯系统</a></li>
-						<li ng-click="selectEquipList(4)" role="presentation"><a ng-click="" href=""
-							aria-controls="settings" role="tab" data-toggle="tab">消防系统</a></li>
+						<li ng-click="selectEquipList(0)" role="presentation"
+							class="active"><a href="" aria-controls="home" role="tab"
+							data-toggle="tab">供配电系统</a></li>
+						<li ng-click="selectEquipList(1)" role="presentation"><a
+							ng-click="" href="" aria-controls="profile" role="tab"
+							data-toggle="tab">给排水系统</a></li>
+						<li ng-click="selectEquipList(2)" role="presentation"><a
+							ng-click="" href="" aria-controls="messages" role="tab"
+							data-toggle="tab">中央空调系统</a></li>
+						<li ng-click="selectEquipList(3)" role="presentation"><a
+							ng-click="" href="" aria-controls="settings" role="tab"
+							data-toggle="tab">电梯系统</a></li>
+						<li ng-click="selectEquipList(4)" role="presentation"><a
+							ng-click="" href="" aria-controls="settings" role="tab"
+							data-toggle="tab">消防系统</a></li>
 					</ul>
 					<!-- Tab panes -->
 					<div class="tab-content">
@@ -29,6 +34,7 @@
 										<th>序号</th>
 										<th>设备名称</th>
 										<th>设备类型</th>
+										<th>设备区域</th>
 										<th>下次维修日期</th>
 										<th>预测寿命</th>
 
@@ -38,12 +44,13 @@
 									<tr ng-click="change(1)" ng-repeat="e in list">
 										<th scope="row">{{e.equipment_No}}</th>
 										<td>{{e.equipment_Name}}</td>
-										<td>{{e.equipment_State}}</td>
 										<td>{{e.equipment_Type}}</td>
 										<td>{{e.equipment_Room}}</td>
+										<td>2019-15-12</td>
+										<td>5</td>
 
 									</tr>
-									
+
 								</tbody>
 							</table>
 						</div>
