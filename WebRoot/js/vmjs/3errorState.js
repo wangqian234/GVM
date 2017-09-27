@@ -119,7 +119,7 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 					endTime : ""
 			}
 			
-			function selectErrorListpage(p){
+/*			function selectErrorListpage(p){
 				if (errorState.limit.startTime == "") {
 					alert("请选择开始时间！");
 					return false;
@@ -141,7 +141,7 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				}).success(function(data){
 					errorState.erroeList = data.list
 				})
-			}
+			}*/
 			
 			errorState.selectErrorListpage = function(){
 				if (errorState.limit.startTime == "") {
@@ -161,7 +161,7 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				var expendErrorLimit = JSON.stringify(errorState.limit);
 				services.selectErrorList({
 					limit:expendErrorLimit,
-					page : p
+					page : 1
 				}).success(function(data){
 					errorState.erroeList = data.list;
 					errorState.totalPage = data.totalPage;
@@ -190,6 +190,11 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 						page:1
 					}).success(function(data){
 						errorState.erroeList = data.list;
+						errorState.totalPage = data.totalPage;
+						pageTurn(
+								errorState.totalPage,
+								1,
+								selectErrorList);
 					})
 				} else if ($location.path().indexOf('/Analyse') == 0) {
 					

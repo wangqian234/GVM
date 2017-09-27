@@ -17,7 +17,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.dt.util.Paging;
 
-public class BaseInfoDaoImpl extends HibernateDaoSupport implements EntityDao {
+public class BaseInfoDaoImpl extends HibernateDaoSupport implements BaseInfoDao {
 	
 	//按HQL对数据的保存及更新操作
 	public Object saveOrUpdate(final Object model) {
