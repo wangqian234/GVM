@@ -2,6 +2,9 @@ package com.dt.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +28,11 @@ public class OperaStateController {
 	 * 
 	 * */
 	@RequestMapping("/getOperaState.do")
-	public @ResponseBody String getBaseInfo(){
-//		String project = request.getParameter("project");
-//		String facility = request.getParameter("facility");
+	public @ResponseBody String getBaseInfo(HttpServletRequest request, HttpServletResponse response){
+		String project = request.getParameter("project");
+		String facility = request.getParameter("facility");
 		JSONObject jsonObject = new JSONObject();
-		List<Object> listObject = operaStateService.getbaseInfo("", "");
+		List<Object> listObject = operaStateService.getbaseInfo(project, facility);
 		System.out.println(listObject);
 //		
 //		//首先判断Detector_Sensor_Type是否为状态值:1为运行状态信息、2为报警信息

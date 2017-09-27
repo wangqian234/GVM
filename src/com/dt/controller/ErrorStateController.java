@@ -1,15 +1,19 @@
 package com.dt.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.util.TempFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dt.entity.DetectorTriggerLog;
 import com.dt.service.ErrorStateService;
 import com.dt.util.Pager;
 
@@ -22,8 +26,8 @@ public class ErrorStateController {
 	@Autowired
 	ErrorStateService errorStateService;
 	
-	@RequestMapping("/selectErrorList")
-	public @ResponseBody String selectErrorList(HttpServletRequest request, HttpSession session){
+	@RequestMapping(value="/selectErrorList")
+	public @ResponseBody String selectErrorList(HttpServletRequest request, HttpServletResponse response, HttpSession session){
 		JSONObject jsonObject = JSONObject.fromObject(request.getParameter("limit"));
 		String startDate = "";
 		String endDate = "";
@@ -38,14 +42,40 @@ public class ErrorStateController {
 			}
 		}
 		List totalRow = errorStateService.getErrorTotalRow(startDate, endDate);
-		System.out.println(totalRow);
 		Pager pager = new Pager();
 		pager.setPage(Integer.parseInt(request.getParameter("page")));// 指定页码
 		pager.setTotalRow(Integer.parseInt(totalRow.get(0).toString()));
 		
-		jsonObject.put("totalRow", totalRow.get(0).toString());
-		jsonObject.put("list", "list");
-		return jsonObject.toString();
+		List<DetectorTriggerLog> list = errorStateService.findErrorList(startDate, endDate, pager.getOffset(), pager.getLimit());
+		JSONObject json = new JSONObject();
+		json.put("totalPage", pager.getTotalPage());
+		json.put("list", list);
+		System.out.println(json);
+		return json.toString();
+	}
+	
+	@RequestMapping(value="/analyseError.do")
+	public @ResponseBody String analyseError(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+		JSONObject jsonObject = JSONObject.fromObject(request.getParameter("limit"));
+		String startDate = "";
+		String endDate = "";
+		if (jsonObject.containsKey("startTime")) {
+			if (strIsNotEmpty(jsonObject.getString("startTime"))) {
+				startDate = dayFirstTime(jsonObject.getString("startTime"));
+			}
+		}
+		if (jsonObject.containsKey("endTime")) {
+			if (strIsNotEmpty(jsonObject.getString("endTime"))) {
+				endDate = dayLastTime(jsonObject.getString("endTime"));
+			}
+		}
+		
+		//List<List<Map<String, String>>> listPie = errorStateService.analyseErrorPie(startDate, endDate);
+		//List<Map<String, String>> listLine = errorStateService.analyseErrorLine(startDate, endDate);
+		JSONObject json = new JSONObject();
+		json.put("listPie", "");
+		json.put("listLine", "");
+		return json.toString();
 	}
 	
 	public  Boolean strIsNotEmpty(String s) {
