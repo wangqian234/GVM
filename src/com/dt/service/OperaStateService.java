@@ -10,12 +10,7 @@ import com.dt.dao.OperaStateDao;
 
 @Service("OperaStateService")
 @Transactional
-public class OperaStateService {
-	@Autowired
-	private OperaStateDao operaStateDao;
+public interface OperaStateService {
 
-	public List<Object> getbaseInfo(String project, String facility){
-		//List<Object> listObject = operaStateDao.getbaseInfo(project, facility);
-		return null;
-}
+	public List<Object> getbaseInfo(String project, String facility);
 }

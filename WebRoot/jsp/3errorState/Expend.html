@@ -33,15 +33,14 @@
                         </tr>
                     </thead>
                     
-                    <tbody>
+                    <tbody ng-repeat="el in errorList">
                         <tr>
-                            <td>1</td>       
-                            <td>报警了报警了报警了报警了报警了报警了报警了报警了报警了报警了报警了</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            <td>查看</td>
+                            <td>{{$index + 1}}</td>       
+                            <td>{{el.detector_TriggerLog_Memo}}</td> 
+                            <td>{{el.detector_TriggerLog_Time|dateType}}</td> 
+                            <td>{{el.detector_Trigger_AlarmMode}}</td>
+                            <td>{{el.detector_Trigger_AlarmUser}}</td>
+                            <td>{{el.detector_TriggerLog_State}}</td>
                         </tr>
 
                     </tbody>
@@ -50,4 +49,4 @@
         </div>
     </div>
 </div>
-<div  class="tcdPageCode">页码容器</div>
+<div class="tcdPageCode">页码容器</div>
