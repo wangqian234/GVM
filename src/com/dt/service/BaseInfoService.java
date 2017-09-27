@@ -1,39 +1,11 @@
 package com.dt.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
-import com.dt.util.Paging;
+import com.dt.entity.EquipmentInfo;
 
-/**
- * 用户service
- */
-@Service("BaseInfoService")
-@Transactional
 public interface BaseInfoService {
 
-//	@Autowired
-//	private EntityDao entityDao;
-//	
-//	/**
-//	 * 
-//	 * @param user
-//	 */
-//	public void saveOrUpdate(User user){
-//		entityDao.saveOrUpdate(user);
-//	}
-//	public Paging getList(Integer curPage,Integer pageSize){
-//		String hqlStr="from User";
-//		String countStr="select count(*) from User";
-//		Paging p = entityDao.createQueryPaging(hqlStr, countStr, "HQL", curPage, pageSize);
-//		return p;
-//	}
-//	public User getById(Integer id){
-//		return (User)entityDao.getObjectById(User.class, id);
-//	}
-//	public void del(Integer id){
-//		User user=getById(id);
-//		entityDao.delete(user);
-//	}
+	List<EquipmentInfo> selectBaseList();
+
 }
