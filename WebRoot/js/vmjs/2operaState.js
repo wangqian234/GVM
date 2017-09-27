@@ -153,3 +153,4 @@ app.filter('isOrNotNull', function() {
 		return type;
 	}
 });
+

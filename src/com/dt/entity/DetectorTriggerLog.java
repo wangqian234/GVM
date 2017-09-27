@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class DetectorTriggerLog implements Serializable{
 	private Integer Detector_TriggerLog_Id;
 	private String Detector_Trigger;
-	private String Detector_Sensor;
+	private String Detector_Sensor_Id;
 	private String Detector_Trigger_AlarmMode;
 	private String Detector_Trigger_AlarmUser;
 	private String CRM_List_Id;
@@ -38,11 +38,11 @@ public class DetectorTriggerLog implements Serializable{
 	public void setDetector_Trigger(String detector_Trigger) {
 		Detector_Trigger = detector_Trigger;
 	}
-	public String getDetector_Sensor() {
-		return Detector_Sensor;
+	public String getDetector_Sensor_Id() {
+		return Detector_Sensor_Id;
 	}
-	public void setDetector_Sensor(String detector_Sensor) {
-		Detector_Sensor = detector_Sensor;
+	public void setDetector_Sensor_Id(String detector_Sensor_Id) {
+		Detector_Sensor_Id = detector_Sensor_Id;
 	}
 	public String getDetector_Trigger_AlarmMode() {
 		return Detector_Trigger_AlarmMode;
