@@ -20,10 +20,6 @@
 
 </div>
 </div>
-<<<<<<< HEAD
 <script src="/GVM/js/vmjs/1baseInfo.js"></script>
-=======
-<script src="${ctx}/js/vmjs/1baseInfo.js"></script>
->>>>>>> 74331bf230b3910074a29d726b5e640184ae3e1f
 </body>
 </html>
