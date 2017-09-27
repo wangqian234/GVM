@@ -88,59 +88,77 @@ app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 
 	return services;
 } ]);
-app.controller('baseInfoController', [ '$scope', 'services', '$location',
-		function($scope, services, $location) {
-			var baseInfo = $scope;
+app
+		.controller(
+				'baseInfoController',
+				[
+						'$scope',
+						'services',
+						'$location',
+						function($scope, services, $location) {
+							var baseInfo = $scope;
+							baseInfo.selectBaseList = function() {
+								console.log("fsdfs");
+								console.log("fsdfs");
+								console.log("fsdfs");
+								console.log("fsdfs");
+								services
+										.selectBaseList({
+											name : "张群"
+										})
+										.success(
+												function(data) {
+													alert(data.list1);
+													console
+															.log("da"
+																	+ JSON
+																			.stringify(data.list));
+													baseInfo.list = data.list;
+												});
+							}
 
-			baseInfo.selectBaseList = function() {
-				services.selectBaseList({
+							baseInfo.show = function(data) {
+								alert("fsdf");
+							}
 
-				}).success(function(data) {
-					baseInfo.list=data.list;
-				});
-			}
+							baseInfo.change = function(index) {
+								var oObj = window.event.srcElement;
+								// alert(change.tagName.toLowerCase());
+								if (oObj.tagName.toLowerCase() == "td") {
+									var oTr = oObj.parentNode;
+									for (var i = 1; i < document.all.infoList.rows.length; i++) {
+										document.all.infoList.rows[i].style.backgroundColor = "";
+										document.all.infoList.rows[i].tag = false;
+									}
+									oTr.style.backgroundColor = "#EAEAEA";
+									oTr.tag = true;
+								}
+							}
 
-			baseInfo.show = function(data) {
-				alert("fsdf");
-			}
+							baseInfo.selectEquipList = function(data) {
 
-			baseInfo.change = function(index) {
-				var oObj = window.event.srcElement;
-				// alert(change.tagName.toLowerCase());
-				if (oObj.tagName.toLowerCase() == "td") {
-					var oTr = oObj.parentNode;
-					for (var i = 1; i < document.all.infoList.rows.length; i++) {
-						document.all.infoList.rows[i].style.backgroundColor = "";
-						document.all.infoList.rows[i].tag = false;
-					}
-					oTr.style.backgroundColor = "#EAEAEA";
-					oTr.tag = true;
-				}
-			}
+								alert(data);
+							}
+							// zq初始化
+							function initPage() {
+								console.log("初始化页面信息");
+								if ($location.path().indexOf('/testIndex') == 0) {
 
-			baseInfo.selectEquipList=function(data){
-				
-				alert(data);
-			}
-			// zq初始化
-			function initPage() {
-				console.log("初始化页面信息");
-				if ($location.path().indexOf('/testIndex') == 0) {
+								} else if ($location.path()
+										.indexOf('/qingyuan') == 0) {
+									baseInfo.show = {
+										isActive0 : true,
+										isActive1 : false,
+										isActive2 : false,
+										isActive3 : false,
+										isActive4 : false
 
-				} else if ($location.path().indexOf('/qingyuan') == 0) {
-					baseInfo.show = {
-						isActive0 : true,
-						isActive1 : false,
-						isActive2 : false,
-						isActive3 : false,
-						isActive4 : false
-
-					};
-					baseInfo.selectBaseList();
-				}
-			}
-			initPage();
-		} ]);
+									};
+									baseInfo.selectBaseList();
+								}
+							}
+							initPage();
+						} ]);
 
 // 时间的格式化的判断
 app.filter('dateType', function() {
