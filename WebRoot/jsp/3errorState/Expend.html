@@ -8,8 +8,7 @@
 				ng-model="limit.endTime" class="dfselect dateLayoutStyle" placeHolder="截止时间"
 				onFocus="WdatePicker(WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd',readOnly:'true',onpicked: function(){$(this).trigger('change')}})) "
 				required>
-				<input style="width: 60px"
-						type="button" value="查询" ng-click="selectErrorListpage()"></li>
+				<input style="width: 60px" type="button" value="查询" ng-click="selectErrorListpage()"></li>
 </form>
 <div class="row">
     <div class="col-xs-12">
@@ -35,7 +34,6 @@
                     </thead>
                     
                     <tbody>
-                     <tr ng-repeat="el in erroeList">
                         <tr>
                             <td>1</td>       
                             <td>报警了报警了报警了报警了报警了报警了报警了报警了报警了报警了报警了</td>
@@ -45,6 +43,7 @@
                             <td>$320,800</td>
                             <td>查看</td>
                         </tr>
+
                     </tbody>
                 </table>
            </div></div>
