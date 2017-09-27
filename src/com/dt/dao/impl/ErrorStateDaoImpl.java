@@ -32,10 +32,11 @@ public class ErrorStateDaoImpl extends HibernateDaoSupport implements ErrorState
 	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate) {
 		StringBuffer sql = new StringBuffer();
 		if(startDate !="" && endDate!= ""){
-			sql.append("from DetectorTriggerLog as d where d.Detector_TriggerLog_Time between '" + startDate + "' and '"+ endDate+ "' ");
+			sql.append("from DetectorTriggerLog where Detector_TriggerLog_Time between '" + startDate + "' and '"+ endDate+ "' ");
 		} else {
-			sql.append("from DetectorTriggerLog as d");
+			sql.append("from DetectorTriggerLog ");
 		}
+		sql.append("order by Detector_TriggerLog_Time desc ");
 		return getHibernateTemplate().find(sql.toString());
 	}
 
