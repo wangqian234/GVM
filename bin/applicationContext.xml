@@ -22,10 +22,8 @@
 
 	<!-- 加载外部的properties配置文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties" />
-
 	<bean
 		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
-
 	<!-- 配置SessionFactory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -78,7 +76,6 @@
 		<!--最大空闲时间,1800秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
 		<property name="maxIdleTime" value="1800"></property>
 	</bean>
-
 	
 	<!-- 采用transactional注解方式使用事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
