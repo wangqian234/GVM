@@ -11,7 +11,7 @@ import com.dt.util.Paging;
  */
 @Service("BaseInfoService")
 @Transactional
-public class BaseInfoService {
+public interface BaseInfoService {
 
 //	@Autowired
 //	private EntityDao entityDao;

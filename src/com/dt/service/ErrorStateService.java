@@ -10,14 +10,7 @@ import com.dt.dao.ErrorStateDao;
 
 @Service("ErrorStateService")
 @Transactional
-public class ErrorStateService {
-	
-	@Autowired
-	private ErrorStateDao errorStateDao;
-	
-	public List getErrorTotalRow(String startDate, String endDate){
-		List totalRow = errorStateDao.getErrorTotalRow(startDate, endDate);
-		return totalRow;
+public interface ErrorStateService {
 		
-	}
+	public List getErrorTotalRow(String startDate, String endDate);
 }
