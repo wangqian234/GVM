@@ -1,6 +1,8 @@
 package com.dt.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dt.dao.ErrorStateDao;
 import com.dt.entity.DetectorTriggerLog;
 import com.dt.service.ErrorStateService;
+
+import javassist.expr.NewArray;
 
 @Service("ErrorStateService")
 @Transactional
@@ -53,6 +57,20 @@ public class ErrorStateServiceImpl implements ErrorStateService{
 	public List<Map<String, String>> analyseErrorLine(String startDate, String endDate) {
 		List<Object> temp = errorStateDao.analyseErrorLine(startDate, endDate);
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, String> selectErrorDetails(String SensorId) {
+		List temp = errorStateDao.selectErrorDetails(SensorId);
+		Iterator<Object> it = temp.iterator();
+		Object[] obj = null;
+		obj = (Object[]) it.next();
+		Map<String, String> map = new HashMap();
+		map.put("Detector_Project_Name", String.valueOf(obj[0]));
+		map.put("Detector_Facility_Name", String.valueOf(obj[1]));
+		map.put("Detector_Equipment_Name", String.valueOf(obj[2]));
+		map.put("Detector_Sensor_Name", String.valueOf(obj[3]));
+		return map;
 	}
 
 }

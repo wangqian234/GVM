@@ -18,7 +18,7 @@ public class OperaStateServiceImpl implements OperaStateService {
 	
 	public List<Object> getbaseInfo(String project, String facility) {
 		List<Object> list = operaStateDao.getbaseInfo(project, facility);
-		return null;
+		return list;
 	}
 
 	
