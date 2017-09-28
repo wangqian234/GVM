@@ -18,7 +18,7 @@ public class BaseInfoDaoImpl extends HibernateDaoSupport implements BaseInfoDao 
 	public void setSessionFacotry(SessionFactory sessionFacotry) {
 		super.setSessionFactory(sessionFacotry);
 	}
-
+           
 	@SuppressWarnings("unchecked")
 	public List<Object> selectBaseList() {
 		// TODO Auto-generated method stub
