@@ -1,9 +1,11 @@
-.active{
+.active {
 	color: rgba(124, 189, 187, 1) !important
 }
-.inactive{
+
+.inactive {
 	color: rgba(124, 189, 187, 1) !important
 }
+
 .dfselect {
 	width: 280px;
 	height: 36px;
@@ -21,11 +23,13 @@
 	word-space: 2px;
 	margin: 8px 12px;
 }
+
 .dateLayoutStyle {
 	width: 280px;
 	height: 32px;
 	margin-left: 0px;
 }
+
 .tcdPageCode {
 	padding: 15px 20px;
 	text-align: right;
@@ -79,4 +83,17 @@
 	border: 1px solid #bfbfbf;
 	border-radius: 4px;
 	vertical-align: middle;
+}
+.activeSwitch{
+	background-image: url(/GVM/img/zhengque.png);
+	background-repeat:no-repeat;
+	background-position: 0 10px;
+}
+.inactiveSwitch{
+	background-image: url(/GVM/img/cuowu.png);
+	background-repeat:no-repeat;
+	background-position: 0 15px;
+}
+.tableActive {
+	background-color: "#EAEAEA" !important;
 }

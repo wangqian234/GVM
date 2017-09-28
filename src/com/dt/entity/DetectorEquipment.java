@@ -33,7 +33,7 @@ public class DetectorEquipment implements Serializable{
 	private String Detector_Equipment_Tel;
 	private String Detector_Equipment_Mobile;
 	private String Detector_Equipment_FactoryNo;
-	private Date Detector_Equipment_Lifetime;
+	private String Detector_Equipment_Lifetime;
 	private String Detector_Equipment_Director;
 	private String Detector_Equipment_UserID;
 	private Date Detector_Equipment_AddDate;
@@ -78,6 +78,12 @@ public class DetectorEquipment implements Serializable{
 		Detector_Equipment_Order = detector_Equipment_Order;
 	}
 
+	public String getDetector_Equipment_Lifetime() {
+		return Detector_Equipment_Lifetime;
+	}
+	public void setDetector_Equipment_Lifetime(String detector_Equipment_Lifetime) {
+		Detector_Equipment_Lifetime = detector_Equipment_Lifetime;
+	}
 	public String getDetector_EquipmentType() {
 		return Detector_EquipmentType;
 	}
@@ -157,12 +163,7 @@ public class DetectorEquipment implements Serializable{
 	public void setDetector_Equipment_FactoryNo(String detector_Equipment_FactoryNo) {
 		Detector_Equipment_FactoryNo = detector_Equipment_FactoryNo;
 	}
-	public Date getDetector_Equipment_Lifetime() {
-		return Detector_Equipment_Lifetime;
-	}
-	public void setDetector_Equipment_Lifetime(Date detector_Equipment_Lifetime) {
-		Detector_Equipment_Lifetime = detector_Equipment_Lifetime;
-	}
+
 	public String getDetector_Equipment_Director() {
 		return Detector_Equipment_Director;
 	}
@@ -195,6 +196,7 @@ public class DetectorEquipment implements Serializable{
 	public void setDetector_Equipment_Memo(String detector_Equipment_Memo) {
 		Detector_Equipment_Memo = detector_Equipment_Memo;
 	}
+
 	
 	//有用
 	public Date getDetector_Equipment_TroublesDate() {
