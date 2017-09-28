@@ -6,39 +6,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>合同信息管理</title>
 <!-- Fonts -->
-<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+<link
+	href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400'
+	rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900'
+	rel='stylesheet' type='text/css'>
 <!-- CSS Libs -->
-<link rel="stylesheet" type="text/css" href="/GVM/lib/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/GVM/lib/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/GVM/lib/css/animate.min.css">
-<link rel="stylesheet" type="text/css" href="/GVM/lib/css/bootstrap-switch.min.css">
-<link rel="stylesheet" type="text/css" href="/GVM/lib/css/checkbox3.min.css">
-<link rel="stylesheet" type="text/css" href="/GVM/lib/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="/GVM/lib/css/dataTables.bootstrap.css">
-<link rel="stylesheet" type="text/css" href="/GVM/lib/css/select2.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/lib/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/lib/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/lib/css/animate.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/lib/css/bootstrap-switch.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/lib/css/checkbox3.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/lib/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/lib/css/dataTables.bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/lib/css/select2.min.css">
 <!-- CSS App -->
 <link rel="stylesheet" type="text/css" href="/GVM/css/style.css">
 <link rel="stylesheet" type="text/css" href="/GVM/css/vmcss.css">
-<link rel="stylesheet" type="text/css" href="/GVM/css/themes/flat-blue.css">
+<link rel="stylesheet" type="text/css"
+	href="/GVM/css/themes/flat-blue.css">
 </head>
 
 <body class="flat-blue">
-	<div class="app-container">
+	<div id="container" class="app-container">
 		<div class="row content-container">
 			<nav class="navbar navbar-default navbar-fixed-top navbar-top">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<button type="button" class="navbar-expand-toggle">
+						<button type="button" class="navbar-expand-toggle" onclick="saveLeftState()">
 							<i class="fa fa-bars icon"></i>
 						</button>
-						<button type="button"
-							class="navbar-right-expand-toggle pull-right visible-xs">
+						<button type="button" 
+							class="navbar-right-expand-toggle pull-right visible-xs" onclick="saveLeftState()">
 							<i class="fa fa-th icon"></i>
 						</button>
-						<ol class="breadcrumb navbar-breadcrumb">
-							<li >Dashboard</li>
-							<li class="active">Tabs & Steps</li>
+						<ol id="bread" class="breadcrumb navbar-breadcrumb">
+							<li>首页</li>
+							<!-- <li class="active">Tabs & Steps</li> -->
 						</ol>
 					</div>
 					<ul class="nav navbar-nav navbar-right">
