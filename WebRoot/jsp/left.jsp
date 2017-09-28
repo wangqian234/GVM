@@ -178,7 +178,7 @@
 		var content = sessionStorage.getItem("bread");
 		var containerClass = sessionStorage.getItem("containerClass");
 		//保持面包屑的上一个原始状态
-		if (content != "") {
+		if (content != null) {
 			$("#bread").html(content)
 		}
 		//保持页面伸展上一个原始状态（左侧）
@@ -190,6 +190,13 @@
 	//获取容器的状态，左侧是否展开
 	function saveLeftState() {
 		var val = $("#container").attr("class");
-		sessionStorage.setItem("containerClass", val);
+		var arr = val.split(" ");
+		alert(arr);
+		if (arr.length == 1) {
+			sessionStorage.setItem("containerClass", "app-container expanded");
+		}else if(arr.length == 2){
+			sessionStorage.setItem("containerClass", "app-container");
+		}
+
 	}
 </script>

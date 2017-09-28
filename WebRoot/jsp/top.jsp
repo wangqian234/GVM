@@ -45,7 +45,7 @@
 							<i class="fa fa-bars icon"></i>
 						</button>
 						<button type="button" 
-							class="navbar-right-expand-toggle pull-right visible-xs">
+							class="navbar-right-expand-toggle pull-right visible-xs" onclick="saveLeftState()">
 							<i class="fa fa-th icon"></i>
 						</button>
 						<ol id="bread" class="breadcrumb navbar-breadcrumb">
