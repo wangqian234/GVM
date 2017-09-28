@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dt.dao.PreMainDao;
+import com.dt.entity.DetectorEquipment;
 import com.dt.entity.EquipmentInfo;
 import com.dt.service.PreMainService;
 
@@ -43,6 +44,11 @@ public class PreMainServiceImpl implements PreMainService{
 			listGoal.add(equipmentInfo);
 		}
 		return listGoal;
+	}
+
+	public List<DetectorEquipment> analyzeList(Integer preid) {
+		// TODO 自动生成的方法存根
+		return null;
 	}
 
 	

@@ -29,69 +29,23 @@
 									<tr>
 										<th>序号</th>
 										<th>设备名称</th>
-										<th>设备类型</th>
-										<th>下次维修日期</th>
-										<th>预测寿命</th>
-
+										<th>上次维护时间</th>
+										<th>上次故障日期</th>
+										<th>维护内容</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-click="change(1)" ng-repeat="e in list">
-										<th scope="row">{{e.equipment_No}}</th>
-										<td>{{e.equipment_Name}}</td>
-										<td>{{e.equipment_State}}</td>
-										<td>{{e.equipment_Type}}</td>
-										<td>{{e.equipment_Room}}</td>
-
+										<th scope="row">{{e.Detector_Equipment_No}}</th>
+										<td>{{e.Detector_Equipment_Name}}</td>
+										<td>{{e.Detector_Equipment_RepairsDate}}</td>
+										<td>{{e.Detector_Equipment_TroublesDate}}</td>
+										<td>{{e.Detector_Equipment_Memo}}</td>
+										<td>
+										   <a href="#/test" ng-click="pre(pre.Detector_Equipment_Id)" class="tablelink"
+										      has-permission='tPre'>分析</a>
+										</td>
 									</tr>
-									
-								</tbody>
-							</table>
-						</div>
-						<div class="col-sm-6">
-							<div class="sub-title">
-								设备详情<span class="description"></span>
-							</div>
-							<table class="table table-bordered" style="text-align: center">
-								<thead>
-									<!-- <tr>
-                                                        <th>3#变压器</th>
-                                                        <th>First Name</th>
-                                                        <th>Last Name</th>
-                                                        <th>Username</th>
-                                                    </tr> -->
-								</thead>
-								<tbody>
-									<tr>
-										<td>名称：</td>
-										<td>Mark</td>
-										<td>类型：</td>
-										<td>@mdo</td>
-									</tr>
-									<tr>
-										<td>场所：</td>
-										<td>Mark</td>
-										<td>版本：</td>
-										<td>@mdo</td>
-									</tr>
-									<tr>
-										<td>价格：</td>
-										<td>Mark</td>
-										<td>制造商：</td>
-										<td>@mdo</td>
-									</tr>
-									<!-- <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Jacob</td>
-                                                       <th scope="row">2</th>
-                                                        <td>@fat</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Larry</td>
-                                                       <th scope="row">2</th>
-                                                        <td>@twitter</td>
-                                                    </tr> -->
 								</tbody>
 							</table>
 						</div>

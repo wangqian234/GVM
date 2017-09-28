@@ -1,6 +1,6 @@
 var app = angular
 		.module(
-				'test',
+				'preMain',
 				[ 'ngRoute' ],
 				function($httpProvider) {// ngRoute引入路由依赖
 					$httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -19,10 +19,8 @@ var app = angular
 						var param = function(obj) {
 							var query = '';
 							var name, value, fullSubName, subName, subValue, innerObj, i;
-
 							for (name in obj) {
 								value = obj[name];
-
 								if (value instanceof Array) {
 									for (i = 0; i < value.length; ++i) {
 										subValue = value[i];
@@ -46,11 +44,9 @@ var app = angular
 											+ encodeURIComponent(value) + '&';
 								}
 							}
-
 							return query.length ? query.substr(0,
 									query.length - 1) : query;
 						};
-
 						return angular.isObject(data)
 								&& String(data) !== '[object File]' ? param(data)
 								: data;
@@ -65,24 +61,33 @@ app.run([ '$rootScope', '$location', function($rootScope, $location) {
 
 // 路由配置
 app.config([ '$routeProvider', function($routeProvider) {
-	$routeProvider.when('/testIndex', {
+	$routeProvider.when('/test', {
 		templateUrl : '/GVM/jsp/4preMain/test.html',
-		controller : 'equipInfoController'
+		controller : 'preMainController'
 	})
 	$routeProvider.when('/equipInfo', {
 		templateUrl : '/GVM/jsp/4preMain/equipInfo.html',
-		controller : 'equipInfoController'
+		controller : 'preMainController'
 	})
 } ]);
 
-app.constant('baseUrl', '/CVM/');
+app.constant('baseUrl', '/GVM/');
 app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 	var services = {};
-	// zq添加班车定制需求
+	// 设备列表
 	services.selectEquipList = function(data) {
 		return $http({
 			method : 'post',
-			url : baseUrl + 'busNeed/selectEquipList.do',
+			url : baseUrl + 'preMainController/selectEquipList.do',
+			data : data
+		});
+	};
+	
+	// 分析列表
+	services.analyzeList = function(data){
+		return $http({
+			method : 'post',
+			url : baseUrl + 'preMainController/analyzeList.do',
 			data : data
 		});
 	};
@@ -90,15 +95,16 @@ app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 	return services;
 } ]);
 app.controller(
-		'equipInfoController', 
+		'preMainController', 
 		[ 
 		  '$scope', 
 		  'services', 
 		  '$location',
 		function($scope, services, $location) {
-			var equipInfo = $scope;
+			var pre = $scope;
 
-			equipInfo.selectEquipList = function(){
+			//获取设备list
+			pre.selectEquipList = function(){
 				console.log("fsdfs");
 				console.log("fsdfs");
 				console.log("fsdfs");
@@ -108,32 +114,42 @@ app.controller(
 				}).success(function(data){
 							alert(data.list);
 							console.log("da" + JSON.stringify(data.list));
-							equipInfo.list = data.list;
+							pre.list = data.list;
 						});
 			}
 			
-			equipInfo.show = function(data) {
+			pre.show = function(data) {
 				alert("fsdf");
 			}
 			
-			equipInfo.selectEquipList = function(data) {
+			pre.selectEquipList = function(data) {
 				alert(data);
+			}
+			
+			//设备的分析list
+			pre.analyzeList = function(data){
+				alert("分析");
+				services.analyzeList({
+					name : "你猜"
+				}).success(function(data){
+					console.log("da" + JSON.stringify(data.list));
+				});
 			}
 			
 			// zq初始化
 			function initPage() {
 				console.log("初始化页面信息");
-				if ($location.path().indexOf('/testIndex') == 0) {
+				if ($location.path().indexOf('/equipInfo') == 0) {
 					
-				}else if($location.path().indexOf('/qingyuan')==0){
-					equipInfo.show = {
+				}else if($location.path().indexOf('/test')==0){
+					pre.show = {
 							isActive0 : true,
 							isActive1 : false,
 							isActive2 : false,
 							isActive3 : false,
 							isActive4 : false
 					};
-					equipInfo.selectEquipList();
+					pre.selectEquipList();
 				}
 			}
 			initPage();

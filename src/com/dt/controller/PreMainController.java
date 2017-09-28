@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dt.entity.DetectorEquipment;
 import com.dt.entity.EquipmentInfo;
 import com.dt.service.PreMainService;
 
@@ -21,6 +22,13 @@ public class PreMainController {
 	@Autowired
 	private PreMainService preMainService;
 	
+    //index
+	@RequestMapping("/toPrePage.do")
+	public String prePage(){
+		return "4preMain/index";
+	}
+	
+	//设备list
 	@RequestMapping("/selectEquipList")
 	public @ResponseBody String selectEquipList (HttpServletRequest request,HttpServletResponse response){
 		JSONObject jsonObject = new JSONObject();
@@ -28,8 +36,16 @@ public class PreMainController {
 		System.out.println("chengjiang_yu");
 		jsonObject.put("list", list);
 		jsonObject.put("list1", "chengjiang_yu");
-		
 		System.out.println(jsonObject.toString());
 		return jsonObject.toString();
 	}
+	
+	//分析list
+	@RequestMapping("/analyzeList.do")
+	public @ResponseBody List<DetectorEquipment> analyzeList (HttpServletRequest request , HttpServletResponse response){
+		Integer preid = Integer.valueOf(request.getParameter("equipId"));
+		List<DetectorEquipment> result = preMainService.analyzeList(preid);
+		return result;
+	}
+	
 }

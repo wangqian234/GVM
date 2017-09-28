@@ -29,6 +29,7 @@ public class DetectorEquipment implements Serializable{
 	private Date Detector_Equipment_UseDate;
 	private Integer Detector_Equipment_MaintenancePeriod;
 	private Date Detector_Equipment_RepairsDate;
+	private Date Detector_Equipment_TroublesDate;
 	private String Detector_Equipment_Tel;
 	private String Detector_Equipment_Mobile;
 	private String Detector_Equipment_FactoryNo;
@@ -37,7 +38,7 @@ public class DetectorEquipment implements Serializable{
 	private String Detector_Equipment_UserID;
 	private Date Detector_Equipment_AddDate;
 	private String Detector_Equipment_GUID;
-	private String Detector_Equipment_Memo;
+	private String Detector_Equipment_Memo;//维护备注
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -187,5 +188,11 @@ public class DetectorEquipment implements Serializable{
 	}
 	public void setDetector_Equipment_Memo(String detector_Equipment_Memo) {
 		Detector_Equipment_Memo = detector_Equipment_Memo;
+	}
+	public Date getDetector_Equipment_TroublesDate() {
+		return Detector_Equipment_TroublesDate;
+	}
+	public void setDetector_Equipment_TroublesDate(Date detector_Equipment_TroublesDate) {
+		Detector_Equipment_TroublesDate = detector_Equipment_TroublesDate;
 	}
 }
