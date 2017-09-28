@@ -33,7 +33,7 @@ public class ErrorStateServiceImpl implements ErrorStateService{
 	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate, Integer offset, Integer limit) {
 		List<DetectorTriggerLog> temp = errorStateDao.findErrorList(startDate, endDate);
 		List<DetectorTriggerLog> list = new ArrayList<DetectorTriggerLog>();
-		for(int i = offset; i<limit+offset; i++){
+		for(int i = offset; i<limit+offset&&i<temp.size(); i++){
 			DetectorTriggerLog listtemp = new DetectorTriggerLog();
 			listtemp.setDetector_TriggerLog_Id(temp.get(i).getDetector_TriggerLog_Id());
 			listtemp.setDetector_Sensor_Id(temp.get(i).getDetector_Sensor_Id());
