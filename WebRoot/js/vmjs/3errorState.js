@@ -93,6 +93,13 @@ app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 			data : data
 		});
 	};
+	services.selectErrorDetails = function(data){
+		return $http({
+			method : 'post',
+			url : baseUrl + 'errorState/selectErrorDetails.do',
+			data : data
+		});
+	};
 
 	return services;
 } ]);
@@ -608,6 +615,9 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				   json.plotOptions = plotOptions;
 				   $('#piechart').highcharts(json);  
 			}
+			$("#closeButten").click(function() {
+				$(".modal-content").hide();
+			});
 			function getLineDraw(){
 				var chart = {
 					      type: 'bar'
@@ -750,6 +760,15 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 					   $('#linechart').highcharts(json);
 			}
 			
+			errorState.selectErrorDetails = function(detector_Sensor_Id){
+				services.selectErrorDetails({
+					SensorId:detector_Sensor_Id
+				}).success(function(data){
+					errorState.errorDetileList = data.list;
+					$(".modal-content").show();
+				})
+			}
+			
 			// zq初始化
 			function initPage() {
 				console.log("初始化页面信息");
@@ -766,18 +785,18 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 								selectErrorListpage);
 					})
 				} else if ($location.path().indexOf('/Analyse') == 0) {
-					services.analyseError({
-						
-					}).success(function(data){
+//					services.analyseError({
+//						
+//					}).success(function(data){
 						getPieDraw();
 						getLineDraw();
 						$("#drawAnalyse").empty();
 						$("#drawAnalyse").append("分析结果：报警次数最多的设备为展会演示中的现场给排水设备，其最可能的原因是水压超高。");
-						errorAnalysePie = data.listPie;
-						errorAnalyseLine = data.listLine;
+//						errorAnalysePie = data.listPie;
+//						errorAnalyseLine = data.listLine;
 						//getPieData(errorAnalysePie,"","");
 						//getLineData(errorAnalyseLine,"","");
-					})
+//					})
 				}
 			}
 			initPage();

@@ -16,4 +16,5 @@ public interface ErrorStateService {
 	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate, Integer offset, Integer limit);
 	public List<List<Map<String, String>>> analyseErrorPie(String startDate, String endDate);
 	public List<Map<String, String>> analyseErrorLine(String startDate, String endDate);
+	public Map<String, String> selectErrorDetails(String SensorId);
 }

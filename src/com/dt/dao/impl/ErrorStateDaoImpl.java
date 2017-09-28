@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -60,6 +62,24 @@ public class ErrorStateDaoImpl extends HibernateDaoSupport implements ErrorState
 //		sql.append("ORDER BY COUNT(de.Detector_Equipment_Id) DESC");
 //		return getHibernateTemplate().find(sql.toString());
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List selectErrorDetails(String SensorId) {
+		final StringBuffer sql = new StringBuffer();
+		sql.append("SELECT dp.Detector_Project_Name,df.Detector_Facility_Name,de.Detector_Equipment_Name,ds.Detector_Sensor_Name ");
+		sql.append("FROM Detector_Sensor ds LEFT JOIN Detector_Equipment de ON ds.Detector_Equipment_Id = de.Detector_Equipment_Id ");
+		sql.append("LEFT JOIN Detector_EquipmentRoom der ON der.Detector_EquipmentRoom_Id = de.Detector_EquipmentRoom_Id ");
+		sql.append("LEFT JOIN Detector_Project dp ON dp.Detector_Project_Id = der.Detector_Project_Id ");
+		sql.append("LEFT JOIN Detector_Facility df ON df.Detector_Facility_Id = der.Detector_Facility_Id ");
+		sql.append("WHERE ds.Detector_Sensor_Id = '"+ SensorId+ "' ");
+		return (List) getHibernateTemplate().execute(new HibernateCallback<Object>() {
+			public Object doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException {
+				SQLQuery qObj = session.createSQLQuery(sql.toString());
+				List<Object> list = qObj.list();
+				return list;
+				}
+		});
 	}
 
 } 
