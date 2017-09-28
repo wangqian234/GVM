@@ -66,9 +66,12 @@ app.run([ '$rootScope', '$location', function($rootScope, $location) {
 // 路由配置
 app.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/testIndex', {
-		templateUrl : '/GVM/jsp/1baseInfo/test.html',
+		templateUrl : '/GVM/jsp/1baseInfo/baseInfo.html',
 		controller : 'baseInfoController'
 	}).when('/qingyuan', {
+		templateUrl : '/GVM/jsp/1baseInfo/baseInfo.html',
+		controller : 'baseInfoController'
+	}).when('/guangming', {
 		templateUrl : '/GVM/jsp/1baseInfo/baseInfo.html',
 		controller : 'baseInfoController'
 	})
@@ -181,7 +184,7 @@ app
 							// 点击不同的系统查询不同的设备
 							baseInfo.selectEquipList = function(f) {
 								baseInfo.limit.facility = f.detector_Facility_Id;
-								baseInfo.eInfo=null;
+								baseInfo.eInfo = null;
 								baseInfo.selectBaseList();
 							}
 							// zq初始化
@@ -192,15 +195,22 @@ app
 									project : sessionStorage
 											.getItem("projectId")
 								};
+								
 								// 给ul的第一个li显示样式
 								baseInfo.chosedIndex = 0;
 								console.log("初始化页面信息");
 								if ($location.path().indexOf('/testIndex') == 0) {
-
+									baseInfo
+									.selectFacilityList(baseInfo.selectBaseList);
 								} else if ($location.path()
 										.indexOf('/qingyuan') == 0) {
 									baseInfo
 											.selectFacilityList(baseInfo.selectBaseList);
+									
+								}else if($location.path()
+										.indexOf('/guangming') == 0){
+									baseInfo
+									.selectFacilityList(baseInfo.selectBaseList);
 								}
 							}
 
