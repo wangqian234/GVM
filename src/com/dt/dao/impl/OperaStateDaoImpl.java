@@ -24,7 +24,8 @@ public class OperaStateDaoImpl extends HibernateDaoSupport implements OperaState
 		sql.append("SELECT der.Detector_EquipmentRoom_Name, de.Detector_Equipment_Name, ");
 		sql.append("ds.Detector_Sensor_AlarmValueMin,ds.Detector_Sensor_AlarmValueMax, ");
 		sql.append("ds.Detector_Sensor_Name, dsd.Detector_SensorData_Value, ds.Detector_Sensor_Type, ds.Detector_Sensor_Id, ");
-		sql.append("dsd.Detector_SensorData_Time FROM Detector_SensorData dsd LEFT JOIN ");
+		sql.append("dsd.Detector_SensorData_Switch, dsd.Detector_SensorData_Latitude, dsd.Detector_SensorData_Latitude, ");
+		sql.append("dsd.Detector_SensorData_Time, ds.Detector_Sensor_Unit FROM Detector_SensorData dsd LEFT JOIN ");
 		sql.append("Detector_Sensor ds ON  dsd.Detector_Sensor_Id = ");
 		sql.append("ds.Detector_Sensor_Id LEFT JOIN Detector_Equipment de ON ");
 		sql.append("de.Detector_Equipment_Id = ds.Detector_Equipment_Id LEFT JOIN ");
