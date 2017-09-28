@@ -21,6 +21,6 @@
 
 </div>
 </div>
-<script src="${ctx}/js/vmjs/5evalState.js"></script>
+<script src="/GVM/js/vmjs/5evalState.js"></script>
 </body>
 </html>
