@@ -106,12 +106,10 @@ app.controller(
 			//获取设备list
 			pre.selectEquipList = function(){
 				console.log("fsdfs");
-				console.log("fsdfs");
-				console.log("fsdfs");
-				console.log("fsdfs");
 				services.selectEquipList({
-					name : "你猜"
+					name : "naem"
 				}).success(function(data){
+					alert("试试");
 							alert(data.list);
 							console.log("da" + JSON.stringify(data.list));
 							pre.list = data.list;
@@ -120,6 +118,20 @@ app.controller(
 			
 			pre.show = function(data) {
 				alert("fsdf");
+			}
+			
+			pre.change = function(index) {
+				var oObj = window.event.srcElement;
+				// alert(change.tagName.toLowerCase());
+				if (oObj.tagName.toLowerCase() == "td") {
+					var oTr = oObj.parentNode;
+					for (var i = 1; i < document.all.infoList.rows.length; i++) {
+						document.all.infoList.rows[i].style.backgroundColor = "";
+						document.all.infoList.rows[i].tag = false;
+					}
+					oTr.style.backgroundColor = "#EAEAEA";
+					oTr.tag = true;
+				}
 			}
 			
 			pre.selectEquipList = function(data) {
@@ -162,10 +174,10 @@ app.filter('dateType', function() {
 		if (input) {
 			type = new Date(input).toLocaleDateString().replace(/\//g, '-');
 		}
-
 		return type;
 	}
 });
+
 // 时间的格式化的判断
 app.filter('isOrNotNull', function() {
 	return function(input) {
@@ -175,7 +187,6 @@ app.filter('isOrNotNull', function() {
 		} else {
 			type = "无";
 		}
-
 		return type;
 	}
 });

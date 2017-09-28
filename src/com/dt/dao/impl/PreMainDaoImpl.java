@@ -20,6 +20,7 @@ public class PreMainDaoImpl extends HibernateDaoSupport implements PreMainDao{
 		super.setSessionFactory(sessionFacotry);
 	}
 	
+	//设备list
 	@SuppressWarnings("unchecked")
 	public List<Object> selectEquipList(){
 		return (List<Object>) getHibernateTemplate().execute(new HibernateCallback<Object>() {
@@ -31,5 +32,4 @@ public class PreMainDaoImpl extends HibernateDaoSupport implements PreMainDao{
 			}
 		});
 	}
-
 }

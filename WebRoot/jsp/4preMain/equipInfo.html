@@ -24,7 +24,7 @@
 							<div class="sub-title">
 								设备列表<span class="description"></span>
 							</div>
-							<table id="infoList" class="datatable table table-striped">
+							<table  id="infoList" class="datatable table table-striped">
 								<thead>
 									<tr>
 										<th>序号</th>
@@ -36,11 +36,11 @@
 								</thead>
 								<tbody>
 									<tr ng-click="change(1)" ng-repeat="e in list">
-										<th scope="row">{{e.Detector_Equipment_No}}</th>
-										<td>{{e.Detector_Equipment_Name}}</td>
-										<td>{{e.Detector_Equipment_RepairsDate}}</td>
-										<td>{{e.Detector_Equipment_TroublesDate}}</td>
-										<td>{{e.Detector_Equipment_Memo}}</td>
+										<th scope="row">{{e.equipment_No}}</th>
+										<td>{{e.equipment_Name}}</td>
+										<td>{{e.equipment_RepairsDate}}</td>
+										<td>{{e.equipment_TroublesDate}}</td>
+										<td>{{e.equipment_Memo}}</td>
 										<td>
 										   <a href="#/test" ng-click="pre(pre.Detector_Equipment_Id)" class="tablelink"
 										      has-permission='tPre'>分析</a>

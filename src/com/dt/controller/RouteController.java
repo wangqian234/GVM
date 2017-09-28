@@ -51,6 +51,7 @@ public class RouteController extends HttpServlet {
     }
     @RequestMapping("/toPrePage.do")
     public String toPrePage(){
+    	System.out.println("余成江");
     	return "4preMain/index";
     }
     @RequestMapping("/toEvalPage.do")

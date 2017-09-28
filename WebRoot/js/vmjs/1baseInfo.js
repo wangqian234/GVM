@@ -136,7 +136,6 @@ app
 							}
 
 							baseInfo.selectEquipList = function(data) {
-
 								alert(data);
 							}
 							// zq初始化

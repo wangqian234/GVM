@@ -19,6 +19,7 @@ public class PreMainServiceImpl implements PreMainService{
 	@Autowired
 	private PreMainDao preMainDao;
 	
+	//设备list
 	public List<EquipmentInfo> selectEquipList(){
 		List<Object> listSource = preMainDao.selectEquipList();
 		Iterator<Object> it = listSource.iterator();
@@ -26,6 +27,7 @@ public class PreMainServiceImpl implements PreMainService{
 		return listInfo;
 	}
 	
+	@SuppressWarnings("unused")
 	private List<EquipmentInfo> objToEquipmentInfo(Iterator<Object> it) {
 		Object[] obj = null;
 		EquipmentInfo equipmentInfo = null;
@@ -36,16 +38,14 @@ public class PreMainServiceImpl implements PreMainService{
 			obj = (Object[]) it.next();
 			equipmentInfo = new EquipmentInfo();
 
-			//equipmentInfo.setEquipment_No(obj[0].toString());
+			equipmentInfo.setEquipment_No(obj[0].toString());
 			equipmentInfo.setEquipment_Name(obj[1].toString());
-			//equipmentInfo.setEquipment_Room(obj[2].toString());
-			//equipmentInfo.setEquipment_Type(obj[3].toString());
-			
 			listGoal.add(equipmentInfo);
 		}
 		return listGoal;
 	}
 
+	//分析list
 	public List<DetectorEquipment> analyzeList(Integer preid) {
 		// TODO 自动生成的方法存根
 		return null;

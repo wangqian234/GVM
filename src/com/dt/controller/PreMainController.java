@@ -1,7 +1,9 @@
 package com.dt.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,16 +24,11 @@ public class PreMainController {
 	@Autowired
 	private PreMainService preMainService;
 	
-    //index
-	@RequestMapping("/toPrePage.do")
-	public String prePage(){
-		return "4preMain/index";
-	}
-	
 	//设备list
-	@RequestMapping("/selectEquipList")
-	public @ResponseBody String selectEquipList (HttpServletRequest request,HttpServletResponse response){
+	@RequestMapping(value = "/selectEquipList.do")
+	public @ResponseBody String selectEquipList (HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		JSONObject jsonObject = new JSONObject();
+		String name = request.getParameter("name");
 		List<EquipmentInfo> list = preMainService.selectEquipList();
 		System.out.println("chengjiang_yu");
 		jsonObject.put("list", list);
