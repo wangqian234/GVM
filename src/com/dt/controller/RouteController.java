@@ -31,14 +31,13 @@ public class RouteController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
      
-    @RequestMapping("/toLoginPage.do")
+    @RequestMapping("/toIndexPage.do")
  	public String toLoginPage() {
  		return "index";
  	}
     
     @RequestMapping("/toTestPage.do")
     public String toTestPage() {
-    	System.out.println("金黄色");
  		return "1baseInfo/index";
  	}
     @RequestMapping("/toOperaPage.do")

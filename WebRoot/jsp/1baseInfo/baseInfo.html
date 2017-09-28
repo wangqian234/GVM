@@ -6,16 +6,9 @@
 				<div role="tabpanel">
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
-						<li ng-click="selectEquipList(0)" role="presentation" class="active"><a href=""
-							aria-controls="home" role="tab" data-toggle="tab">供配电系统</a></li>
-						<li ng-click="selectEquipList(1)" role="presentation"><a ng-click="" href=""
-							aria-controls="profile" role="tab" data-toggle="tab">给排水系统</a></li>
-						<li ng-click="selectEquipList(2)" role="presentation"><a ng-click="" href=""
-							aria-controls="messages" role="tab" data-toggle="tab">中央空调系统</a></li>
-						<li ng-click="selectEquipList(3)" role="presentation"><a ng-click="" href=""
-							aria-controls="settings" role="tab" data-toggle="tab">电梯系统</a></li>
-						<li ng-click="selectEquipList(4)" role="presentation"><a ng-click="" href=""
-							aria-controls="settings" role="tab" data-toggle="tab">消防系统</a></li>
+						<li ng-click="selectEquipList(f)" role="presentation"
+							ng-class="{true:'active',false:''}[$index==chosedIndex]"  ng-repeat="f in facilityList"><a
+							href="" role="tab" data-toggle="tab">{{f.detector_Facility_Name}}</a></li>
 					</ul>
 					<!-- Tab panes -->
 					<div class="tab-content">
@@ -26,26 +19,29 @@
 							<table id="infoList" class="datatable table table-striped">
 								<thead>
 									<tr>
-										<th>序号</th>
+										<th>编号</th>
 										<th>设备名称</th>
 										<th>设备类型</th>
+										<th>设备区域</th>
 										<th>下次维修日期</th>
 										<th>预测寿命</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-click="change(1)" ng-repeat="e in list">
+									<tr ng-click="change(e,$index)" ng-repeat="e in list">
 										<th scope="row">{{e.equipment_No}}</th>
 										<td>{{e.equipment_Name}}</td>
-										<td>{{e.equipment_State}}</td>
 										<td>{{e.equipment_Type}}</td>
 										<td>{{e.equipment_Room}}</td>
+										<td>2019-15-12</td>
+										<td>5</td>
 
 									</tr>
-									
+
 								</tbody>
 							</table>
+							<div class="tcdPageCode">页码容器</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="sub-title">
@@ -62,35 +58,70 @@
 								</thead>
 								<tbody>
 									<tr>
+										<td>编号：</td>
+										<td>{{eInfo.equipment_No}}</td>
 										<td>名称：</td>
-										<td>Mark</td>
+										<td>{{eInfo.equipment_Name}}</td>
+									</tr>
+									<tr>
+										<td>状态：</td>
+										<td>{{eInfo.equipment_State}}</td>
+										<td>排序：</td>
+										<td>{{eInfo.equipment_Order}}</td>
+									</tr>
+									<tr>
 										<td>类型：</td>
-										<td>@mdo</td>
+										<td>{{eInfo.equipment_Type}}</td>
+										<td>设备房：</td>
+										<td>{{eInfo.equipment_Room}}</td>
 									</tr>
-									<tr>
-										<td>场所：</td>
-										<td>Mark</td>
-										<td>版本：</td>
-										<td>@mdo</td>
-									</tr>
-									<tr>
+										<tr>
+										<td>品牌型号：</td>
+										<td>{{eInfo.equipment_Version}}</td>
 										<td>价格：</td>
-										<td>Mark</td>
-										<td>制造商：</td>
-										<td>@mdo</td>
+										<td>{{eInfo.equipment_Price}}</td>
 									</tr>
-									<!-- <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Jacob</td>
-                                                       <th scope="row">2</th>
-                                                        <td>@fat</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Larry</td>
-                                                       <th scope="row">2</th>
-                                                        <td>@twitter</td>
-                                                    </tr> -->
+										<tr>
+										<td>技术参数：</td>
+										<td>{{eInfo.equipment_TP}}</td>
+										<td>生产厂家：</td>
+										<td>{{eInfo.equipment_Manufacturers}}</td>
+									</tr>
+										<tr>
+										<td>生产日期：</td>
+										<td>{{eInfo.equipment_ProductionDate}}</td>
+										<td>投入使用日期：</td>
+										<td>{{eInfo.equipment_UseDate}}</td>
+									</tr>
+										<tr>
+										<td>保养周期（天）：</td>
+										<td>{{eInfo.equipment_MaintenancePeriod}}</td>
+										<td>保修截止日期：</td>
+										<td>{{eInfo.equipment_RepairsDate}}</td>
+									</tr>
+										<tr>
+										<td>厂家电话：</td>
+										<td>{{eInfo.equipment_Tel}}</td>
+										<td>厂家手机：</td>
+										<td>{{eInfo.equipment_Mobile}}</td>
+									</tr>
+									<tr>
+										<td>出厂编号：</td>
+										<td>{{eInfo.equipment_FactoryNo}}</td>
+										<td>设备寿命（月）：</td>
+										<td>{{eInfo.equipment_Lifetime}}</td>
+									</tr>
+									<tr>
+										<td>负责人：</td>
+										<td>{{eInfo.equipment_Director}}</td>
+										<td>录入人员：</td>
+										<td>{{eInfo.equipment_UserID}}</td>
+									</tr>
+									<tr>
+										<td>备注：</td>
+										<td>{{eInfo.equipment_Memo}}</td>
+									</tr>
+									
 								</tbody>
 							</table>
 						</div>
