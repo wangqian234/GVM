@@ -1,16 +1,13 @@
 package com.dt.service;
 
+import java.text.ParseException;
 import java.util.List;
-
-import com.dt.entity.DetectorEquipment;
-import com.dt.entity.EquipmentInfo;
+import java.util.Map;
 
 public interface PreMainService {
 
-	List<EquipmentInfo> selectEquipList();
-	
-	List<DetectorEquipment> analyzeList(Integer preid);
+	List<Map<String, String>> selectEquipList();
 
-	
+	List<Map<String, String>> analyzeList() throws ParseException;
 
 }

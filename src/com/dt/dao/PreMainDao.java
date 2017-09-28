@@ -6,4 +6,6 @@ public interface PreMainDao {
 
 	List<Object> selectEquipList();
 
+	List<Object> analyzeList();
+
 }

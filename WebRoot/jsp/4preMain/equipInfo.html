@@ -27,7 +27,7 @@
 							<table  id="infoList" class="datatable table table-striped">
 								<thead>
 									<tr>
-										<th>序号</th>
+										<th>编号</th>
 										<th>设备名称</th>
 										<th>上次维护时间</th>
 										<th>上次故障日期</th>
@@ -35,14 +35,14 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-click="change(1)" ng-repeat="e in list">
-										<th scope="row">{{e.equipment_No}}</th>
-										<td>{{e.equipment_Name}}</td>
-										<td>{{e.equipment_RepairsDate}}</td>
-										<td>{{e.equipment_TroublesDate}}</td>
-										<td>{{e.equipment_Memo}}</td>
+									<tr ng-repeat="pre in list">
+										<th >{{$index + 1}}</th>
+										<td>{{pre.equipment_Name}}</td>
+										<td>{{pre.equipment_RepairsDate}}</td>
+										<td>{{pre.equipment_TroublesDate}}</td>
+										<td>{{pre.equipment_Memo}}</td>
 										<td>
-										   <a href="#/test" ng-click="pre(pre.Detector_Equipment_Id)" class="tablelink"
+										   <a href="#/test" ng-click="analyzeList(pre.equipment_Id)" class="tablelink"
 										      has-permission='tPre'>分析</a>
 										</td>
 									</tr>

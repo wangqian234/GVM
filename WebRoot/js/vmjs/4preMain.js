@@ -134,15 +134,12 @@ app.controller(
 				}
 			}
 			
-			pre.selectEquipList = function(data) {
-				alert(data);
-			}
-			
 			//设备的分析list
-			pre.analyzeList = function(data){
+			pre.analyzeList = function(equipment_Id){
 				alert("分析");
 				services.analyzeList({
-					name : "你猜"
+					name : "你猜",
+						equipmentId : equipment_Id
 				}).success(function(data){
 					console.log("da" + JSON.stringify(data.list));
 				});
@@ -152,7 +149,7 @@ app.controller(
 			function initPage() {
 				console.log("初始化页面信息");
 				if ($location.path().indexOf('/equipInfo') == 0) {
-					
+					pre.selectEquipList();
 				}else if($location.path().indexOf('/test')==0){
 					pre.show = {
 							isActive0 : true,

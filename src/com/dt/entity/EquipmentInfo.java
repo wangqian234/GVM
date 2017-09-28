@@ -16,7 +16,7 @@ public class EquipmentInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer Equipment_Id;//设备id，主键
 	private String Equipment_No;//设备编号
-	private String Equipment_Name;//设备名字
+	private String Equipment_Name;//设备名字                                                                            有用
 	private String Equipment_State;//探测器设备状态？
 	private String Equipment_Type;//探测器设备类型
 	private String Equipment_Room;//探测器设备房
@@ -28,16 +28,17 @@ public class EquipmentInfo implements Serializable{
 	private String Equipment_ProductionDate;//生产日期
 	private String Equipment_UseDate;//使用日期
 	private String Equipment_MaintenancePeriod;//保养周期（天）
-	private String Equipment_RepairsDate;//保修截止日期
-	private String Equipment_Tel;//厂家电话
+	private String Equipment_RepairsDate;//维护日期                                                                有用
+	private String Equipment_TroublesDate;//故障日期                                                              有用
+ 	private String Equipment_Tel;//厂家电话
 	private String Equipment_Mobile;//厂家手机
 	private String Equipment_FactoryNo;//出厂编号
-	private String Equipment_Lifetime;//设备寿命
+	private String Equipment_Lifetime;//设备寿命                                         
 	private String Equipment_Director;//设备负责人
 	private String Equipment_UserID;//录入人员ID
 	private String Equipment_AddDate;//添加时间
 	private String Equipment_GUID;//
-	private String Equipment_Memo;//备注
+	private String Equipment_Memo;//备注                                                                                             有用
 	
 	@Id
 	@Basic(optional = false)
@@ -185,6 +186,12 @@ public class EquipmentInfo implements Serializable{
 	}
 	public void setEquipment_Memo(String equipment_Memo) {
 		Equipment_Memo = equipment_Memo;
+	}
+	public String getEquipment_TroublesDate() {
+		return Equipment_TroublesDate;
+	}
+	public void setEquipment_TroublesDate(String equipment_TroublesDate) {
+		Equipment_TroublesDate = equipment_TroublesDate;
 	}
 	
 }

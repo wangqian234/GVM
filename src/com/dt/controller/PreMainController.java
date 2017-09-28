@@ -1,7 +1,9 @@
 package com.dt.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dt.entity.DetectorEquipment;
-import com.dt.entity.EquipmentInfo;
 import com.dt.service.PreMainService;
 
 @Controller
@@ -28,21 +28,20 @@ public class PreMainController {
 	@RequestMapping(value = "/selectEquipList.do")
 	public @ResponseBody String selectEquipList (HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		JSONObject jsonObject = new JSONObject();
-		String name = request.getParameter("name");
-		List<EquipmentInfo> list = preMainService.selectEquipList();
+		List<Map<String,String>> list = preMainService.selectEquipList();
 		System.out.println("chengjiang_yu");
 		jsonObject.put("list", list);
-		jsonObject.put("list1", "chengjiang_yu");
 		System.out.println(jsonObject.toString());
 		return jsonObject.toString();
 	}
 	
 	//分析list
 	@RequestMapping("/analyzeList.do")
-	public @ResponseBody List<DetectorEquipment> analyzeList (HttpServletRequest request , HttpServletResponse response){
-		Integer preid = Integer.valueOf(request.getParameter("equipId"));
-		List<DetectorEquipment> result = preMainService.analyzeList(preid);
-		return result;
+	public @ResponseBody String analyzeList (HttpServletRequest request , HttpServletResponse response) throws ParseException{
+		JSONObject jsonObject = new JSONObject();
+		List<Map<String,String>> list = preMainService.analyzeList();
+		jsonObject.put("list", list);
+		System.out.println(jsonObject.toString());
+		return jsonObject.toString();
 	}
-	
 }
