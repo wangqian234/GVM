@@ -54,27 +54,36 @@ public class ErrorStateController {
 		return json.toString();
 	}
 	
-	@RequestMapping(value="/analyseError.do")
-	public @ResponseBody String analyseError(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-		JSONObject jsonObject = JSONObject.fromObject(request.getParameter("limit"));
-		String startDate = "";
-		String endDate = "";
-		if (jsonObject.containsKey("startTime")) {
-			if (strIsNotEmpty(jsonObject.getString("startTime"))) {
-				startDate = dayFirstTime(jsonObject.getString("startTime"));
-			}
-		}
-		if (jsonObject.containsKey("endTime")) {
-			if (strIsNotEmpty(jsonObject.getString("endTime"))) {
-				endDate = dayLastTime(jsonObject.getString("endTime"));
-			}
-		}
-		
-		//List<List<Map<String, String>>> listPie = errorStateService.analyseErrorPie(startDate, endDate);
-		//List<Map<String, String>> listLine = errorStateService.analyseErrorLine(startDate, endDate);
+//	@RequestMapping(value="/analyseError.do")
+//	public @ResponseBody String analyseError(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+//		JSONObject jsonObject = JSONObject.fromObject(request.getParameter("limit"));
+//		String startDate = "";
+//		String endDate = "";
+//		if (jsonObject.containsKey("startTime")) {
+//			if (strIsNotEmpty(jsonObject.getString("startTime"))) {
+//				startDate = dayFirstTime(jsonObject.getString("startTime"));
+//			}
+//		}
+//		if (jsonObject.containsKey("endTime")) {
+//			if (strIsNotEmpty(jsonObject.getString("endTime"))) {
+//				endDate = dayLastTime(jsonObject.getString("endTime"));
+//			}
+//		}
+//		
+//		//List<List<Map<String, String>>> listPie = errorStateService.analyseErrorPie(startDate, endDate);
+//		//List<Map<String, String>> listLine = errorStateService.analyseErrorLine(startDate, endDate);
+//		JSONObject json = new JSONObject();
+//		json.put("listPie", "");
+//		json.put("listLine", "");
+//		return json.toString();
+//	}
+	
+	@RequestMapping(value="/selectErrorDetails.do")
+	public @ResponseBody String selectErrorDetails(HttpServletRequest request, HttpServletResponse response){
+		String SensorId = request.getParameter("SensorId");
+		Map<String, String> map = errorStateService.selectErrorDetails(SensorId);
 		JSONObject json = new JSONObject();
-		json.put("listPie", "");
-		json.put("listLine", "");
+		json.put("list", map);
 		return json.toString();
 	}
 	

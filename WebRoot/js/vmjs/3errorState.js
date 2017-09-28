@@ -93,6 +93,13 @@ app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 			data : data
 		});
 	};
+	services.selectErrorDetails = function(data){
+		return $http({
+			method : 'post',
+			url : baseUrl + 'errorState/selectErrorDetails.do',
+			data : data
+		});
+	};
 
 	return services;
 } ]);
@@ -102,7 +109,8 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 
 			// 换页
 			function pageTurn(totalPage, page, Func) {
-				/*var $pages = $(".tcdPageCode");
+				$(".tcdPageCode").empty();
+				var $pages = $(".tcdPageCode");
 				if ($pages.length != 0) {
 					$(".tcdPageCode").createPage({
 						pageCount : totalPage,
@@ -111,7 +119,7 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 							Func(p);
 						}
 					});
-				}*/
+				}
 			}
 			
 			errorState.limit = {
@@ -120,20 +128,6 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 			}
 			
 			function selectErrorListpage(p){
-				if (errorState.limit.startTime == "") {
-					alert("请选择开始时间！");
-					return false;
-				}
-				if (errorState.limit.endTime == "") {
-					alert("请选择截止时间！");
-					return false;
-				}
-				if (compareDateTime(
-						errorState.limit.startTime,
-						errorState.limit.endTime)) {
-					alert("截止时间不能大于开始时间！");
-					return false;
-				}
 				var expendErrorLimit = JSON.stringify(errorState.limit);
 				services.selectErrorList({
 					limit:expendErrorLimit,
@@ -170,7 +164,7 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 					pageTurn(
 							errorState.totalPage,
 							1,
-							selectErrorList);
+							selectErrorListPage);
 				})
 			}
 			
@@ -621,6 +615,9 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				   json.plotOptions = plotOptions;
 				   $('#piechart').highcharts(json);  
 			}
+			$("#closeButten").click(function() {
+				$(".modal-content").hide();
+			});
 			function getLineDraw(){
 				var chart = {
 					      type: 'bar'
@@ -763,6 +760,15 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 					   $('#linechart').highcharts(json);
 			}
 			
+			errorState.selectErrorDetails = function(detector_Sensor_Id){
+				services.selectErrorDetails({
+					SensorId:detector_Sensor_Id
+				}).success(function(data){
+					errorState.errorDetileList = data.list;
+					$(".modal-content").show();
+				})
+			}
+			
 			// zq初始化
 			function initPage() {
 				console.log("初始化页面信息");
@@ -779,18 +785,18 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 								selectErrorListpage);
 					})
 				} else if ($location.path().indexOf('/Analyse') == 0) {
-					services.analyseError({
-						
-					}).success(function(data){
+//					services.analyseError({
+//						
+//					}).success(function(data){
 						getPieDraw();
 						getLineDraw();
 						$("#drawAnalyse").empty();
 						$("#drawAnalyse").append("分析结果：报警次数最多的设备为展会演示中的现场给排水设备，其最可能的原因是水压超高。");
-						errorAnalysePie = data.listPie;
-						errorAnalyseLine = data.listLine;
+//						errorAnalysePie = data.listPie;
+//						errorAnalyseLine = data.listLine;
 						//getPieData(errorAnalysePie,"","");
 						//getLineData(errorAnalyseLine,"","");
-					})
+//					})
 				}
 			}
 			initPage();
@@ -798,11 +804,35 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 //时间的格式化的判断
 app.filter('dateType', function() {
 	return function(input) {
+		return input.substring(0,input.length-3);
+	}
+});
+//报警类型的判断
+app.filter('alertType', function() {
+	return function(input) {
 		var type = "";
-		if (input) {
-			type = new Date(input).toLocaleDateString().replace(/\//g, '-');
+		switch (input) {
+		case "1": type = "微信提醒";break;
+		case "2": type = "短信提醒";break;
+		case "3": type = "邮件提醒";break;
+		case "4": type = "提交工单";break;
+		case "5": type = "平台告警";break;
+		case "6": type = "预警";break;
+		default: type = "无"; break;
 		}
 
+		return type;
+	}
+});
+//报警类型的判断
+app.filter('alertState', function() {
+	return function(input) {
+		var type = "";
+		switch (input) {
+		case "0": type = "已解除";break;
+		case "1": type = "报警中";break;
+		default: break;
+		}
 		return type;
 	}
 });
