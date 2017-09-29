@@ -40,6 +40,8 @@ public class DetectorEquipment implements Serializable{
 	private String Detector_Equipment_Memo;
 	private String Detector_EquipmentRoom_Name;
 	private String Detector_TriggerLog_Id;
+	private String Detector_EquipmentRoom_name;
+	private String Detector_EquipmentType_name;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "Detector_Equipment_Id",unique = true, nullable = false, length = 11)
@@ -201,6 +203,18 @@ public class DetectorEquipment implements Serializable{
 	}
 	public void setDetector_TriggerLog_Id(String detector_TriggerLog_Id) {
 		Detector_TriggerLog_Id = detector_TriggerLog_Id;
+	}
+	public String getDetector_EquipmentRoom_name() {
+		return Detector_EquipmentRoom_name;
+	}
+	public void setDetector_EquipmentRoom_name(String detector_EquipmentRoom_name) {
+		Detector_EquipmentRoom_name = detector_EquipmentRoom_name;
+	}
+	public String getDetector_EquipmentType_name() {
+		return Detector_EquipmentType_name;
+	}
+	public void setDetector_EquipmentType_name(String detector_EquipmentType_name) {
+		Detector_EquipmentType_name = detector_EquipmentType_name;
 	}
 	
 }
