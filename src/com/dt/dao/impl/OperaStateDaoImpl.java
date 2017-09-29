@@ -43,6 +43,20 @@ public class OperaStateDaoImpl extends HibernateDaoSupport implements OperaState
 				}
 		});
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object> getOperaDetails(String sensorId) {
+		final StringBuilder sql = new StringBuilder();
+		sql.append("select dsd.Detector_SensorData_Time, dsd.Detector_SensorData_Value FROM Detector_SensorData dsd ");
+		sql.append("WHERE dsd.Detector_Sensor_Id = '"+sensorId+"' ORDER BY dsd.Detector_SensorData_Time DESC ");
+		return (List<Object>) getHibernateTemplate().execute(new HibernateCallback<Object>() {
+			public Object doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException {
+				SQLQuery qObj = session.createSQLQuery(sql.toString());
+				List<Object> list = qObj.list();
+				return list;
+				}
+		});
+	}
 }
 
 

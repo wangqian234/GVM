@@ -142,4 +142,160 @@ Dial.prototype.init = function () {
     });
 }
 
+var Line = function (data) {
+	this.elementId = data.elementId;
+    this.xAxisUnit = data.xAxisUnit;//X轴数组
+    this.yAxisUnit = data.yAxisUnit;//Y轴名称
+    this.title = data.title;//标题
+    this.name = data.name;//折线名称
+    this.value = data.value;//折线数据
+}
+
+Line.prototype.init = function () {
+	var _this = this;
+	   var title = {
+	      text: _this.title   
+	   };
+	   var subtitle = {
+	      text: ''
+	   };
+	   var xAxis = {
+	      categories: _this.xAxisUnit
+	   };
+	   var yAxis = {
+	      title: {
+	         text: _this.yAxisUnit
+	      },
+	      plotLines: [{
+	         value: 0,
+	         width: 1,
+	         color: '#808080'
+	      }]
+	   };   
+
+	   var tooltip = {
+	      valueSuffix: ''
+	   }
+
+	   var legend = {
+	      layout: 'vertical',
+	      align: 'right',
+	      verticalAlign: 'middle',
+	      borderWidth: 0
+	   };
+
+	   var series =  [
+	      {
+	         name: _this.name,
+	         data: _this.value
+	      }
+	   ];
+
+	   var json = {};
+
+	   json.title = title;
+	   json.subtitle = subtitle;
+	   json.xAxis = xAxis;
+	   json.yAxis = yAxis;
+	   json.tooltip = tooltip;
+	   json.legend = legend;
+	   json.series = series;
+
+	   $(this.elementId).highcharts(json);
+	}
+
+
+
+//散点图造假
+var Scatter = function (data) {
+	this.value = data.value;
+	this.title = data.title;
+	this.elementId = data.elementId;
+	this.height = data.height
+	this.width = data.width
+}
+
+Scatter.prototype.init = function () {
+	var _this = this;
+	$(document).ready(function() {  
+		   var chart = {
+		      type: 'scatter',
+			  zoomType: 'xy',
+			  height: _this.height,
+	          width: _this.width
+		   };
+		   var title = {
+		      text: _this.title   
+		   };
+		   var subtitle = {
+		      text: ''  
+		   };
+		   var xAxis = {
+		      title: {
+		      enabled: true,
+		         text: 'Longitude'
+		      },
+		      startOnTick: true,
+		      endOnTick: true,
+		      showLastLabel: true
+		   };
+		   var yAxis = {
+		      title: {
+		         text: 'Latitude'
+		      }
+		   };
+		   var legend = {   
+		      layout: 'vertical',
+		      align: 'left',
+		      verticalAlign: 'top',
+		      x: 100,
+		      y: 70,
+		      floating: true,
+		      backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+		      borderWidth: 1
+		   }  
+		   var plotOptions = {
+		      scatter: {
+		         marker: {
+		            radius: 5,
+		            states: {
+		               hover: {
+		                  enabled: true,
+		                  lineColor: 'rgb(100,100,100)'
+		               }
+		            }
+		         },
+		         states: {
+		            hover: {
+		               marker: {
+		                  enabled: false
+		               }
+		            }
+		         },
+		         tooltip: {
+		            headerFormat: '',
+		            pointFormat: '{point.x} , {point.y} '
+		         }
+		      }
+		   };
+		   var series= [{
+		            color: 'rgba(223, 83, 83, .5)',
+		            data: _this.value
+
+		        }
+		   ];     
+		      
+		   var json = {};   
+		   json.chart = chart; 
+		   json.title = title;   
+		   json.subtitle = subtitle; 
+		   json.legend = legend;
+		   json.xAxis = xAxis;
+		   json.yAxis = yAxis;  
+		   json.series = series;
+		   json.plotOptions = plotOptions;
+		   $(_this.elementId).highcharts(json);
+		  
+		});
+}
 

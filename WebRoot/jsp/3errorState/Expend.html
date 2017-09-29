@@ -27,7 +27,11 @@
 				ng-model="limit.endTime" class="dfselect dateLayoutStyle" placeHolder="截止时间"
 				onFocus="WdatePicker(WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd',readOnly:'true',onpicked: function(){$(this).trigger('change')}})) "
 				required>
-				<input style="width: 60px" type="button" value="查询" ng-click="selectErrorListpage()"></li>
+			<input style="width: 60px" type="button" value="查询" ng-click="selectErrorListpage()" ></li>
+			<select class="select-box" ng-model="limits.state" ng-change="selectErrorListpage()">
+			   <option value="0">报警中</option>
+			   <option value="1">已解除</option>		
+            </select>
 </form>
 <div class="row">
     <div class="col-xs-12">
@@ -48,7 +52,7 @@
                             <th>报警平台</th>
                             <th>报警方式</th>
                             <th>状态</th>
-                            <th>查看</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     
