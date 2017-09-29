@@ -129,8 +129,12 @@ public class ErrorStateController {
 	public @ResponseBody String selectErrorNum(HttpServletRequest request, HttpServletResponse response){
 		
 		JSONObject jsonObject = new JSONObject();
-		/*int alertTotalNum = errorStateService.getErrorTotalRow(0);
-		jsonObject.put("alertTotalNum", alertTotalNum);*/
+		List alertTotalNum = errorStateService.getErrorTotalRow("","","0");
+		if(alertTotalNum.size()==0){
+			jsonObject.put("alertTotalNum", 0);
+		}else{
+			jsonObject.put("alertTotalNum", Integer.parseInt(alertTotalNum.get(0).toString()));
+		}
 		return jsonObject.toString();
 	}
 }

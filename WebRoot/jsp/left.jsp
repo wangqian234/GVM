@@ -196,7 +196,6 @@
 	function saveLeftState() {
 		var val = $("#container").attr("class");
 		var arr = val.split(" ");
-		alert(arr);
 		if (arr.length == 1) {
 			sessionStorage.setItem("containerClass", "app-container expanded");
 		} else if (arr.length == 2) {

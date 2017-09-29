@@ -193,6 +193,8 @@ app.controller('baseInfoController', [ '$scope', 'services', '$location',
 					evalState.selectFacilityList(evalState.selectEquipList);
 				}else if ($location.path().indexOf('/guangming')==0){					
 					evalState.selectFacilityList(evalState.selectEquipList);
+					var radar=new Radar();
+					radar.init();
 				}
 			}
 			initPage();

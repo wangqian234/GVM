@@ -149,11 +149,11 @@
 									sessionStorage.setItem("alertTotalNum",
 											data.alertTotalNum);
 
-								})
+								}) 
 					}
 					initData();
 				/* 	window.setInterval(showalert, 1000 * 60 * 5); */
-				window.setInterval(showalert,  200 * 5);
+				window.setInterval(showalert,  2000 * 5); 
 					function showalert() {
 					
 						var lastMsgCnt = sessionStorage
