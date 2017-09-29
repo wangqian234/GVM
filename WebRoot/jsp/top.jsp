@@ -143,7 +143,7 @@
 					}
 					//初始化报警数据
 					function initData() {
-						$.getJSON("/GVM/errorState/selectErrorList.do", {},
+						$.getJSON("/GVM/errorState/selectErrorNum.do", {},
 								function(data) {
 									$("#alertNum").text(data.alertTotalNum);
 									sessionStorage.setItem("alertTotalNum",
@@ -158,7 +158,7 @@
 					
 						var lastMsgCnt = sessionStorage
 								.getItem("alertTotalNum");
-						$.getJSON("/GVM/errorState/selectErrorList.do", {},
+						$.getJSON("/GVM/errorState/selectErrorNum.do", {},
 								function(data) {
 									$("#alertNum").text(data.alertTotalNum);
 									sessionStorage.setItem("alertTotalNum",
