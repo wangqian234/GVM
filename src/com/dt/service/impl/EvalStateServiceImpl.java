@@ -30,27 +30,20 @@ public class EvalStateServiceImpl implements EvalStateService{
 	@Autowired
 	EvalStateDao evalStateDao;
 	//设备查询
-	public List<DetectorEquipment> selectEquipment(Integer detector_Facility_Id) {
-		List<Object> listSource = evalStateDao.findEquipment(detector_Facility_Id);		
-		Iterator<Object> it = listSource.iterator();
-		List<DetectorEquipment> listInfo = objToDetectorEquipment(it);
-		return listInfo;
-	}
-	// List<Object>类型转换成List<DetectorEquipment>
-	private List<DetectorEquipment> objToDetectorEquipment(Iterator<Object> it) {
-		Object[] obj = null;
-		DetectorEquipment detectorEquipment = null;
+	public List<DetectorEquipment> selectEquipment(String project, String facility, int offset, int limit) {
+		List<Object> listSource = evalStateDao.findEquipment(Integer.parseInt(project),Integer.parseInt(facility),offset,limit);
 		List<DetectorEquipment> listGoal = new ArrayList<DetectorEquipment>();
-		int i = 0;
-		while (it.hasNext()) {
-			i++;
-			obj = (Object[]) it.next();
-			detectorEquipment = new DetectorEquipment();			
-			detectorEquipment.setDetector_Equipment_Name(obj[0].toString());
-			detectorEquipment.setDetector_Equipment_Id(Integer.parseInt(obj[1].toString()));			
+		for(int i = offset; i<limit+offset && i< listSource.size(); i++){
+			DetectorEquipment detectorEquipment = new DetectorEquipment();
+			Object[] obj = (Object[]) listSource.get(i);
+			detectorEquipment.setDetector_Equipment_Id(Integer.parseInt(obj[0].toString()));
+			detectorEquipment.setDetector_Equipment_No(obj[1].toString());
+			detectorEquipment.setDetector_EquipmentRoom_name(obj[2].toString());
+			detectorEquipment.setDetector_EquipmentType_name(obj[3].toString());
+			detectorEquipment.setDetector_Equipment_Name(obj[4].toString());				
 			listGoal.add(detectorEquipment);
 		}
-		return listGoal;		
+		return listGoal;
 	}
 	
 	//查询分析设备的数据(UseDate,lifeTime)
@@ -94,7 +87,12 @@ public class EvalStateServiceImpl implements EvalStateService{
 	    int service = month + monthyear + monthday;
 	    Double failarenum = Double.parseDouble(failare);
 	    Integer lifeTime = Integer.parseInt(obj[1].toString());
-	    Double life = 1-(service/(lifeTime*(1-failarenum)));	
+	    Double life;
+	    if(lifeTime==0||(1-failarenum)==0){
+	    	life = 0.0;
+	    }else{
+	    	life = 1-(service/(lifeTime*(1-failarenum)));
+	    }	    	
 	    Double Safety = 1-(failarenum*0.9);
 	    Double Maintenance = failarenum*0.9;
 	    Double Replacement = (life*0.6)+((1-Maintenance)*0.4);
@@ -114,6 +112,12 @@ public class EvalStateServiceImpl implements EvalStateService{
 		Double  Failure = (6*num)/(24*30);		
 		return Failure.toString();
 	}
+	//查询列表的总行数
+	public List<Object> getbaseTotalRow(String project, String facility) {
+		List<Object> list = evalStateDao.getbaseTotalRow(Integer.parseInt(project),Integer.parseInt(facility));
+		return list;
+	}
+
 
 
 }

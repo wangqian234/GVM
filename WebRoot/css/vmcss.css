@@ -84,7 +84,16 @@
 	border-radius: 4px;
 	vertical-align: middle;
 }
-
+.activeSwitch{
+	background-image: url(/GVM/img/zhengque.png);
+	background-repeat:no-repeat;
+	background-position: 0 10px;
+}
+.inactiveSwitch{
+	background-image: url(/GVM/img/cuowu.png);
+	background-repeat:no-repeat;
+	background-position: 0 15px;
+}
 .tableActive {
 	background-color: "#EAEAEA" !important;
 }

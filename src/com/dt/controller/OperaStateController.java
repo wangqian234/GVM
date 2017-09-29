@@ -32,10 +32,7 @@ public class OperaStateController {
 	public @ResponseBody String getBaseInfo(HttpServletRequest request, HttpServletResponse response){
 		String project = request.getParameter("project");
 		String facility = request.getParameter("facility");
-		JSONObject jsonObject = new JSONObject();
-		List<Map<String, String>> listObject = operaStateService.getbaseInfo(project, facility);
-		jsonObject.put("list", listObject);
-		System.out.println(jsonObject.toString());
-		return jsonObject.toString();
+		String listObject = operaStateService.getbaseInfo(project, facility);
+		return listObject;
 	}
 }

@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dt.dao.OperaStateDao;
 import com.dt.service.OperaStateService;
 
+import net.sf.json.JSONObject;
+
 @Service("OperaStateService")
 @Transactional
 public class OperaStateServiceImpl implements OperaStateService {
@@ -23,13 +25,12 @@ public class OperaStateServiceImpl implements OperaStateService {
 	private OperaStateDao operaStateDao;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List<Map<String, String>> getbaseInfo(String project, String facility) {
+	public String getbaseInfo(String project, String facility) {
 		List<Object> list = operaStateDao.getbaseInfo(project, facility);
 		Object[] obj = null;
-//		List<List<Map<String, String>>> listGoal =  new ArrayList<List<Map<String, String>>>();
-//		List<Map<String, String>> listGoalMap =  new ArrayList<Map<String, String>>();
-//		List<Map<String, String>> temp = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> listmap = new ArrayList<Map<String, String>>();
+		List<Map<String, String>> listNum = new ArrayList<Map<String, String>>();//数值型传感器
+		List<Map<String, String>> listOth = new ArrayList<Map<String, String>>();//开关型传感器
 		Iterator<Object> it = list.iterator();
 
 		if(it.hasNext()){
@@ -43,7 +44,11 @@ public class OperaStateServiceImpl implements OperaStateService {
 			map1.put("Detector_SensorData_Value", obj[5].toString());
 			map1.put("Detector_SensorData_Type", obj[6].toString());
 			map1.put("Detector_Sensor_Id", obj[7].toString());
-			map1.put("Detector_SensorData_Time", obj[8].toString());
+			map1.put("Detector_SensorData_Switch", obj[8].toString());
+			map1.put("Detector_SensorData_Latitude", obj[9].toString());
+			map1.put("Detector_SensorData_Latitude", obj[10].toString());
+			map1.put("Detector_SensorData_Time", obj[11].toString());
+			map1.put("Detector_Sensor_Unit", obj[12].toString());
 			listmap.add(map1);
 		}
 			
@@ -61,12 +66,28 @@ public class OperaStateServiceImpl implements OperaStateService {
 				map.put("Detector_SensorData_Value", obj[5].toString());
 				map.put("Detector_SensorData_Type", obj[6].toString());
 				map.put("Detector_Sensor_Id", obj[7].toString());
-				map.put("Detector_SensorData_Time", obj[8].toString());
+				map.put("Detector_SensorData_Switch", obj[8].toString());
+				map.put("Detector_SensorData_Latitude", obj[9].toString());
+				map.put("Detector_SensorData_Latitude", obj[10].toString());
+				map.put("Detector_SensorData_Time", obj[11].toString());
+				map.put("Detector_Sensor_Unit", obj[12].toString());
 				listmap.add(map);
 			}
 		}
 		
-		return listmap;
+		for(int i=0;i<listmap.size();i++){
+			if(listmap.get(i).get("Detector_SensorData_Type").equals("1")){
+				listNum.add(listmap.get(i));
+			}else{
+				listOth.add(listmap.get(i));
+			}
+		}
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("list", listNum);
+		jsonObject.put("listOth", listOth);
+		
+		return jsonObject.toString();
 	}
 
 	

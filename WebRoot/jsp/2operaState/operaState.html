@@ -30,12 +30,13 @@
 									<div class="title">设备实时运行状态信息</div>
 								</div>
 							</div>
+							<h3 id="nolist" style="display:none">&nbsp;&nbsp;&nbsp;对不起，暂无数据！</h3>
 							<div id="getDraw">
-								<div class="col-sm-3" style="margin-top:10px;width: 250px;" ng-repeat="ol in operaList">
+								<div class="col-sm-3" style="margin-top:10px;width: 250px;heigh:150px" ng-repeat="ol in operaList">
 		                              <div class="pricing-table green">
 		                                  <div class="pt-header">
 		                                      <div class="plan-pricing">
-		                                      <div id={{$index}} style="width: 550px; height: 400px; margin: 0 auto"></div>
+		                                      <div id={{$index}}></div>
 		                                      </div>
 		                                  </div>
 		                                  <div class="pt-body">
@@ -44,7 +45,27 @@
 		                              </div>
 		                          </div>
 							</div>
+							
+							<div id="getSwitch">
+								<table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>名称</th>
+                                                <th>状态</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="olo in operaListOth">
+                                                <th scope="row">{{$index+1}}</th>
+                                                <td style="font-size:15px">{{olo.Detector_EquipmentRoom_Name}}{{olo.Detector_Equipment_Name}}{{olo.Detector_Sensor_Name}}</td>
+                                                <td ng-class="{true:'activeSwitch',false:'inactiveSwitch'}[{{olo.Detector_SensorData_Switch}}]"></td>
+                                            </tr>
+                                        </tbody>
+                                 </table>
+                             </div>
 						</div>
+						
 					</div>
 				</div> 
 				
@@ -53,6 +74,3 @@
 		</div>
 	</div>
 </div>
-<div id="zq"></div>
-<div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
-<h2 id="nolist" style="display:none">对不起，暂无数据！</h2>
