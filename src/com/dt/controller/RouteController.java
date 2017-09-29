@@ -31,13 +31,14 @@ public class RouteController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
      
-    @RequestMapping("/toIndexPage.do")
+    @RequestMapping("/toLoginPage.do")
  	public String toLoginPage() {
  		return "index";
  	}
     
     @RequestMapping("/toTestPage.do")
     public String toTestPage() {
+    	System.out.println("金黄色");
  		return "1baseInfo/index";
  	}
     @RequestMapping("/toOperaPage.do")
@@ -50,7 +51,6 @@ public class RouteController extends HttpServlet {
     }
     @RequestMapping("/toPrePage.do")
     public String toPrePage(){
-    	System.out.println("余成江");
     	return "4preMain/index";
     }
     @RequestMapping("/toEvalPage.do")

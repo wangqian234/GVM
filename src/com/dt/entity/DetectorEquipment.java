@@ -28,17 +28,16 @@ public class DetectorEquipment implements Serializable{
 	private Date Detector_Equipment_ProductionDate;
 	private Date Detector_Equipment_UseDate;
 	private Integer Detector_Equipment_MaintenancePeriod;
-	private Date Detector_Equipment_RepairsDate;//维护日期
-	private Date Detector_Equipment_TroublesDate;//故障日期
+	private Date Detector_Equipment_RepairsDate;
 	private String Detector_Equipment_Tel;
 	private String Detector_Equipment_Mobile;
 	private String Detector_Equipment_FactoryNo;
-	private String Detector_Equipment_Lifetime;
+	private Date Detector_Equipment_Lifetime;
 	private String Detector_Equipment_Director;
 	private String Detector_Equipment_UserID;
 	private Date Detector_Equipment_AddDate;
 	private String Detector_Equipment_GUID;
-	private String Detector_Equipment_Memo;//维护备注
+	private String Detector_Equipment_Memo;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -55,16 +54,12 @@ public class DetectorEquipment implements Serializable{
 	public void setDetector_Equipment_No(String detector_Equipment_No) {
 		Detector_Equipment_No = detector_Equipment_No;
 	}
-	
-	//有用
 	public String getDetector_Equipment_Name() {
 		return Detector_Equipment_Name;
 	}
 	public void setDetector_Equipment_Name(String detector_Equipment_Name) {
 		Detector_Equipment_Name = detector_Equipment_Name;
 	}
-	
-	
 	public Integer getDetector_Equipment_State() {
 		return Detector_Equipment_State;
 	}
@@ -78,12 +73,6 @@ public class DetectorEquipment implements Serializable{
 		Detector_Equipment_Order = detector_Equipment_Order;
 	}
 
-	public String getDetector_Equipment_Lifetime() {
-		return Detector_Equipment_Lifetime;
-	}
-	public void setDetector_Equipment_Lifetime(String detector_Equipment_Lifetime) {
-		Detector_Equipment_Lifetime = detector_Equipment_Lifetime;
-	}
 	public String getDetector_EquipmentType() {
 		return Detector_EquipmentType;
 	}
@@ -163,7 +152,12 @@ public class DetectorEquipment implements Serializable{
 	public void setDetector_Equipment_FactoryNo(String detector_Equipment_FactoryNo) {
 		Detector_Equipment_FactoryNo = detector_Equipment_FactoryNo;
 	}
-
+	public Date getDetector_Equipment_Lifetime() {
+		return Detector_Equipment_Lifetime;
+	}
+	public void setDetector_Equipment_Lifetime(Date detector_Equipment_Lifetime) {
+		Detector_Equipment_Lifetime = detector_Equipment_Lifetime;
+	}
 	public String getDetector_Equipment_Director() {
 		return Detector_Equipment_Director;
 	}
@@ -188,21 +182,10 @@ public class DetectorEquipment implements Serializable{
 	public void setDetector_Equipment_GUID(String detector_Equipment_GUID) {
 		Detector_Equipment_GUID = detector_Equipment_GUID;
 	}
-	
-	//有用
 	public String getDetector_Equipment_Memo() {
 		return Detector_Equipment_Memo;
 	}
 	public void setDetector_Equipment_Memo(String detector_Equipment_Memo) {
 		Detector_Equipment_Memo = detector_Equipment_Memo;
-	}
-
-	
-	//有用
-	public Date getDetector_Equipment_TroublesDate() {
-		return Detector_Equipment_TroublesDate;
-	}
-	public void setDetector_Equipment_TroublesDate(Date detector_Equipment_TroublesDate) {
-		Detector_Equipment_TroublesDate = detector_Equipment_TroublesDate;
 	}
 }

@@ -110,10 +110,8 @@ app.controller(
 					name : "naem"
 				}).success(function(data){
 					alert("试试");
-							alert(data.list);
-							console.log("da" + JSON.stringify(data.list));
-							pre.list = data.list;
-						});
+					pre.list = data.list;
+				});
 			}
 			
 			pre.show = function(data) {
@@ -139,9 +137,10 @@ app.controller(
 				alert("分析");
 				services.analyzeList({
 					name : "你猜",
-						equipmentId : equipment_Id
+					preId : equipment_Id
 				}).success(function(data){
-					console.log("da" + JSON.stringify(data.list));
+					alert("分析试试");
+					pre.list = data.list;
 				});
 			}
 			

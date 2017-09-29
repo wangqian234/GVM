@@ -38,9 +38,9 @@
 									<tr ng-repeat="pre in list">
 										<th >{{$index + 1}}</th>
 										<td>{{pre.equipment_Name}}</td>
-										<td>{{pre.equipment_RepairsDate}}</td>
-										<td>{{pre.equipment_TroublesDate}}</td>
-										<td>{{pre.equipment_Memo}}</td>
+										<td>{{pre.maintenanceLog_EndDate}}</td>
+										<td>{{pre.triggerLog_Time}}</td>
+										<td>{{pre.maintenanceLog_Content}}</td>
 										<td>
 										   <a href="#/test" ng-click="analyzeList(pre.equipment_Id)" class="tablelink"
 										      has-permission='tPre'>分析</a>

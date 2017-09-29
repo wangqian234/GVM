@@ -2,12 +2,14 @@ package com.dt.service;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
+
+import com.dt.entity.PreInfo;
+
 
 public interface PreMainService {
 
-	List<Map<String, String>> selectEquipList();
+	List<PreInfo> selectEquipList();
 
-	List<Map<String, String>> analyzeList() throws ParseException;
+	String analyzeList(Integer preId,Object[] obj) throws ParseException;
 
 }
