@@ -18,7 +18,8 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a
-					href="/GVM/routeController/toIndexPage.do"> <span
+					href="/GVM/routeController/toIndexPage.do"
+					onclick="setProjectId()"> <span
 						class="icon fa fa-tachometer"></span><span class="title">首页</span>
 				</a></li>
 				<li class="panel panel-default dropdown"
@@ -141,6 +142,8 @@
 		case 5:
 			typeText = "设备健康状态评估";
 			break;
+		default:
+			typeText = "";
 		}
 		;
 		switch (projectId) {
@@ -159,6 +162,8 @@
 		case 5:
 			project = "异常分析";
 			break;
+		default:
+			project = "";
 		}
 		;
 
@@ -191,10 +196,9 @@
 	function saveLeftState() {
 		var val = $("#container").attr("class");
 		var arr = val.split(" ");
-		alert(arr);
 		if (arr.length == 1) {
 			sessionStorage.setItem("containerClass", "app-container expanded");
-		}else if(arr.length == 2){
+		} else if (arr.length == 2) {
 			sessionStorage.setItem("containerClass", "app-container");
 		}
 

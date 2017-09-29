@@ -299,3 +299,55 @@ Scatter.prototype.init = function () {
 		});
 }
 
+function Radar(data) {
+	/*this.elementId = data.elementId;
+	this.title = data.title;
+	this.name = data.name;
+	this.data = data.data;
+	this.subtitle=data.subtitle;*/
+}
+
+Radar.prototype.init = function() {
+	$(radarChart)
+			.highcharts(
+					{
+				        chart: {
+				            polar: true
+				        },
+				        title: {
+				            text: this.title
+				        },
+				        pane: {
+				            startAngle: 0,
+				            endAngle: 360
+				        },
+				        xAxis: {
+				            tickInterval: 72,
+				            min: 0,
+				            max: 360,
+				            labels: {
+				                formatter: function () {
+				                    return this.value + '°';
+				                }
+				            }
+				        },
+				        yAxis: {
+				            min: 0
+				        },
+				        plotOptions: {
+				            series: {
+				                pointStart: 0,
+				                pointInterval: 72
+				            },
+				            column: {
+				                pointPadding: 0,
+				                groupPadding: 0
+				            }
+				        },
+				        series: [ {
+				            type: 'area',
+				            name: '面积',
+				            data: [1, 8, 2, 7, 3]
+				        }]
+				    });
+}
