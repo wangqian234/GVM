@@ -24,14 +24,14 @@ public class ErrorStateServiceImpl implements ErrorStateService{
 	private ErrorStateDao errorStateDao;
 	
 	@SuppressWarnings("rawtypes")
-	public List getErrorTotalRow(String startDate, String endDate){
-		List totalRow = errorStateDao.getErrorTotalRow(startDate, endDate);
+	public List getErrorTotalRow(String startDate, String endDate, String state){
+		List totalRow = errorStateDao.getErrorTotalRow(startDate, endDate, state);
 		return totalRow;
 		
 	}
 
-	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate, Integer offset, Integer limit) {
-		List<DetectorTriggerLog> temp = errorStateDao.findErrorList(startDate, endDate);
+	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate, Integer offset, Integer limit, String state) {
+		List<DetectorTriggerLog> temp = errorStateDao.findErrorList(startDate, endDate, state);
 		List<DetectorTriggerLog> list = new ArrayList<DetectorTriggerLog>();
 		for(int i = offset; i<limit+offset&&i<temp.size(); i++){
 			DetectorTriggerLog listtemp = new DetectorTriggerLog();

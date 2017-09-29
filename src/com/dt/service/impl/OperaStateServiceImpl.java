@@ -90,5 +90,22 @@ public class OperaStateServiceImpl implements OperaStateService {
 		return jsonObject.toString();
 	}
 
+	public List<Map<String, String>> getOperaDetails(String sensorId) {
+		List<Object> list = operaStateDao.getOperaDetails(sensorId);
+		List<Map<String, String>> listmap = new ArrayList<Map<String, String>>();
+		Iterator<Object> it = list.iterator();
+		Object[] obj = null;
+		
+		while (it.hasNext()) {
+			Map<String, String> map = new HashMap<String, String>();
+			obj = (Object[]) it.next();
+			map.put("Detector_SensorData_Time", obj[0].toString());
+			map.put("Detector_SensorData_Value", obj[1].toString());
+			listmap.add(map);
+		}
+		
+		return listmap;
+	}
+
 	
 }

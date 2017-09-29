@@ -35,4 +35,13 @@ public class OperaStateController {
 		String listObject = operaStateService.getbaseInfo(project, facility);
 		return listObject;
 	}
+	
+	@RequestMapping("/getOperaDetails.do")
+	public @ResponseBody String getOperaDetails(HttpServletRequest request, HttpServletResponse response){
+		String sensorId = request.getParameter("sensorId");
+		List<Map<String, String>> list = operaStateService.getOperaDetails(sensorId);
+		JSONObject obj = new JSONObject();
+		obj.put("list", list);
+		return obj.toString();
+	}
 }

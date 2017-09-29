@@ -85,12 +85,12 @@
 	vertical-align: middle;
 }
 .activeSwitch{
-	background-image: url(/GVM/img/zhengque.png);
+	background-image: url(/GVM/img/closedeng.png);
 	background-repeat:no-repeat;
 	background-position: 0 10px;
 }
 .inactiveSwitch{
-	background-image: url(/GVM/img/cuowu.png);
+	background-image: url(/GVM/img/opendeng.png);
 	background-repeat:no-repeat;
 	background-position: 0 15px;
 }
