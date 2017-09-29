@@ -1,6 +1,6 @@
 var app = angular
 		.module(
-				'test',
+				'preMain',
 				[ 'ngRoute' ],
 				function($httpProvider) {// ngRoute引入路由依赖
 					$httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -19,10 +19,8 @@ var app = angular
 						var param = function(obj) {
 							var query = '';
 							var name, value, fullSubName, subName, subValue, innerObj, i;
-
 							for (name in obj) {
 								value = obj[name];
-
 								if (value instanceof Array) {
 									for (i = 0; i < value.length; ++i) {
 										subValue = value[i];
@@ -46,11 +44,9 @@ var app = angular
 											+ encodeURIComponent(value) + '&';
 								}
 							}
-
 							return query.length ? query.substr(0,
 									query.length - 1) : query;
 						};
-
 						return angular.isObject(data)
 								&& String(data) !== '[object File]' ? param(data)
 								: data;
@@ -65,35 +61,103 @@ app.run([ '$rootScope', '$location', function($rootScope, $location) {
 
 // 路由配置
 app.config([ '$routeProvider', function($routeProvider) {
-	$routeProvider.when('/testIndex', {
-		templateUrl : '/VM/jsp/baseInfo/test.html',
-		controller : 'baseInfoController'
+	$routeProvider.when('/test', {
+		templateUrl : '/GVM/jsp/4preMain/test.html',
+		controller : 'preMainController'
+	})
+	$routeProvider.when('/equipInfo', {
+		templateUrl : '/GVM/jsp/4preMain/equipInfo.html',
+		controller : 'preMainController'
 	})
 } ]);
 
-app.constant('baseUrl', '/lckywx/');
+app.constant('baseUrl', '/GVM/');
 app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 	var services = {};
-	// zq添加班车定制需求
-	services.addBusNeed = function(data) {
+	// 设备列表
+	services.selectEquipList = function(data) {
 		return $http({
 			method : 'post',
-			url : baseUrl + 'busNeed/addBusNeed.do',
+			url : baseUrl + 'preMainController/selectEquipList.do',
+			data : data
+		});
+	};
+	
+	// 分析列表
+	services.analyzeList = function(data){
+		return $http({
+			method : 'post',
+			url : baseUrl + 'preMainController/analyzeList.do',
 			data : data
 		});
 	};
 
 	return services;
 } ]);
-app.controller('baseInfoController', [ '$scope', 'services', '$location',
+app.controller(
+		'preMainController', 
+		[ 
+		  '$scope', 
+		  'services', 
+		  '$location',
 		function($scope, services, $location) {
-			var baseInfo = $scope;
+			var pre = $scope;
 
+			//获取设备list
+			pre.selectEquipList = function(){
+				console.log("fsdfs");
+				services.selectEquipList({
+					name : "naem"
+				}).success(function(data){
+					alert("试试");
+					pre.list = data.list;
+				});
+			}
+			
+			pre.show = function(data) {
+				alert("fsdf");
+			}
+			
+			pre.change = function(index) {
+				var oObj = window.event.srcElement;
+				// alert(change.tagName.toLowerCase());
+				if (oObj.tagName.toLowerCase() == "td") {
+					var oTr = oObj.parentNode;
+					for (var i = 1; i < document.all.infoList.rows.length; i++) {
+						document.all.infoList.rows[i].style.backgroundColor = "";
+						document.all.infoList.rows[i].tag = false;
+					}
+					oTr.style.backgroundColor = "#EAEAEA";
+					oTr.tag = true;
+				}
+			}
+			
+			//设备的分析list
+			pre.analyzeList = function(equipment_Id){
+				alert("分析");
+				services.analyzeList({
+					name : "你猜",
+					preId : equipment_Id
+				}).success(function(data){
+					alert("分析试试");
+					pre.list = data.list;
+				});
+			}
+			
 			// zq初始化
 			function initPage() {
 				console.log("初始化页面信息");
-				if ($location.path().indexOf('/testIndex') == 0) {
-					
+				if ($location.path().indexOf('/equipInfo') == 0) {
+					pre.selectEquipList();
+				}else if($location.path().indexOf('/test')==0){
+					pre.show = {
+							isActive0 : true,
+							isActive1 : false,
+							isActive2 : false,
+							isActive3 : false,
+							isActive4 : false
+					};
+					pre.selectEquipList();
 				}
 			}
 			initPage();
@@ -106,10 +170,10 @@ app.filter('dateType', function() {
 		if (input) {
 			type = new Date(input).toLocaleDateString().replace(/\//g, '-');
 		}
-
 		return type;
 	}
 });
+
 // 时间的格式化的判断
 app.filter('isOrNotNull', function() {
 	return function(input) {
@@ -119,7 +183,6 @@ app.filter('isOrNotNull', function() {
 		} else {
 			type = "无";
 		}
-
 		return type;
 	}
 });

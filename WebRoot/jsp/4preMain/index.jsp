@@ -9,7 +9,8 @@
 <jsp:include page="/jsp/left.jsp" />
 <div class="container-fluid">
 	<div class="side-body padding-top">
-	<section id="test" class="row"  ng-app="test" style="min-height: 40px;">
+	<section id="test" class="row"  ng-app="preMain" style="min-height: 40px;">
+	<!-- ng-app="preMain" 和 js里的module保持一致 -->
 	<div ng-view></div>
 	</section> 
 	</div>
@@ -20,6 +21,6 @@
 
 </div>
 </div>
-<script src="${ctx}/js/vmjs/4preMain.js"></script>
+<script src="/GVM/js/vmjs/4preMain.js"></script>
 </body>
 </html>

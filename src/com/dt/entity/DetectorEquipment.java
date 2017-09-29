@@ -32,14 +32,13 @@ public class DetectorEquipment implements Serializable{
 	private String Detector_Equipment_Tel;
 	private String Detector_Equipment_Mobile;
 	private String Detector_Equipment_FactoryNo;
-	private String Detector_Equipment_Lifetime;
+	private Date Detector_Equipment_Lifetime;
 	private String Detector_Equipment_Director;
 	private String Detector_Equipment_UserID;
 	private Date Detector_Equipment_AddDate;
 	private String Detector_Equipment_GUID;
 	private String Detector_Equipment_Memo;
-	private String Detector_EquipmentRoom_Name;
-	private String Detector_TriggerLog_Id;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "Detector_Equipment_Id",unique = true, nullable = false, length = 11)
@@ -74,12 +73,6 @@ public class DetectorEquipment implements Serializable{
 		Detector_Equipment_Order = detector_Equipment_Order;
 	}
 
-	public String getDetector_Equipment_Lifetime() {
-		return Detector_Equipment_Lifetime;
-	}
-	public void setDetector_Equipment_Lifetime(String detector_Equipment_Lifetime) {
-		Detector_Equipment_Lifetime = detector_Equipment_Lifetime;
-	}
 	public String getDetector_EquipmentType() {
 		return Detector_EquipmentType;
 	}
@@ -159,7 +152,12 @@ public class DetectorEquipment implements Serializable{
 	public void setDetector_Equipment_FactoryNo(String detector_Equipment_FactoryNo) {
 		Detector_Equipment_FactoryNo = detector_Equipment_FactoryNo;
 	}
-
+	public Date getDetector_Equipment_Lifetime() {
+		return Detector_Equipment_Lifetime;
+	}
+	public void setDetector_Equipment_Lifetime(Date detector_Equipment_Lifetime) {
+		Detector_Equipment_Lifetime = detector_Equipment_Lifetime;
+	}
 	public String getDetector_Equipment_Director() {
 		return Detector_Equipment_Director;
 	}
@@ -190,17 +188,4 @@ public class DetectorEquipment implements Serializable{
 	public void setDetector_Equipment_Memo(String detector_Equipment_Memo) {
 		Detector_Equipment_Memo = detector_Equipment_Memo;
 	}
-	public String getDetector_EquipmentRoom_Name() {
-		return Detector_EquipmentRoom_Name;
-	}
-	public void setDetector_EquipmentRoom_Name(String detector_EquipmentRoom_Name) {
-		Detector_EquipmentRoom_Name = detector_EquipmentRoom_Name;
-	}
-	public String getDetector_TriggerLog_Id() {
-		return Detector_TriggerLog_Id;
-	}
-	public void setDetector_TriggerLog_Id(String detector_TriggerLog_Id) {
-		Detector_TriggerLog_Id = detector_TriggerLog_Id;
-	}
-	
 }

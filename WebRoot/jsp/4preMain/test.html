@@ -1,0 +1,39 @@
+!Templates.html5.content!
+<div class="row">
+	<div class="col-xs-12">
+		<div class="card">
+
+			<div class="card-body no-padding">
+				<div role="tabpanel">
+					<div class="tab-content">
+						<div class="col-sm-6">
+							<table id="pre" class="datatable table table-striped">
+								<thead>
+									<tr>
+										<th>序号</th>
+										<th>设备名称</th>
+										<th>预测维护时间</th>
+										<th>维护内容</th>
+										<th>维护工具</th>
+										<th>维护人员</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-click="preMain" ng-repeat="pre in list">
+										<th>{{$index + 1 }}</th>
+										<td>{{pre.equipment_Name}}</td>
+										<td>{{pre.preDate}}</td>
+										<td>{{pre.preContent}}</td>
+										<td>{{pre.preTools}}</td>
+										<td>{{pre.preWorkers}}</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
