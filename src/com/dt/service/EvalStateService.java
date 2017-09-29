@@ -10,10 +10,13 @@ import com.dt.entity.DetectorEquipment;
 @Transactional
 public interface EvalStateService {
 	//设备查询
-	List<DetectorEquipment> selectEquipment(Integer detector_Facility_Id);
+	List<DetectorEquipment> selectEquipment(String project, String facility, int offset, int limit);
 	//查询分析设备的数据
 	String analysisEquipment(Integer detector_Equipment_Id, String failare);
 	String findEquipment(Integer detector_Equipment_Id);
+	//查询的列表总行数
+	List<Object> getbaseTotalRow(String project, String facility);
+	
 
 	
 	
