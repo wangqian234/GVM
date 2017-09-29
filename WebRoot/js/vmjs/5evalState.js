@@ -66,9 +66,12 @@ app.run([ '$rootScope', '$location', function($rootScope, $location) {
 // 路由配置
 app.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/testIndex', {
-		templateUrl : '/GVM/jsp/5evalState/test.html',
+		templateUrl : '/GVM/jsp/5evalState/equipment.html',
 		controller : 'baseInfoController'
 	}).when('/qingyuan', {
+		templateUrl : '/GVM/jsp/5evalState/equipment.html',
+		controller : 'baseInfoController'
+	}).when('/guangming', {
 		templateUrl : '/GVM/jsp/5evalState/equipment.html',
 		controller : 'baseInfoController'
 	})
@@ -93,19 +96,55 @@ app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 			data:data
 		});
 	};
+	//查询facility类型列表
+	services.selectFacilityList = function(data) {
+		return $http({
+			method : 'post',
+			url : baseUrl + 'publicController/selectFacilityList.do',
+			data : data
+		});
+	}
 	return services;
 } ]);
 app.controller('baseInfoController', [ '$scope', 'services', '$location',
 		function($scope, services, $location) {
-			var evalState = $scope;	
-			//查询设备
-			evalState.selectEquipList = function (data){
-				alert(data)
+			var evalState = $scope;
+			// 换页函数
+			function pageTurn(totalPage, page, Func) {
+				$(".tcdPageCode").empty();
+				var $pages = $(".tcdPageCode");
+				if ($pages.length != 0) {
+					$(".tcdPageCode").createPage({
+						pageCount : totalPage,
+						current : page,
+						backFn : function(p) {
+							Func(p);
+						}
+					});
+				}
+			}
+			//用于基本信息换页查询
+			function selectEquipList (page){
 				services.selectEquipment({
-					Detector_Facility_Id : data
+					page : page,
+					limit : JSON.stringify(evalState.limit)
 				}).success(function(data){
 					evalState.list = data.list;
 				})
+			}
+			//查询设备
+			evalState.selectEquipList = function (){				
+				services.selectEquipment({
+					page : 1,
+					limit : JSON.stringify(evalState.limit)
+				}).success(function(data){
+					pageTurn(data.totalPage,1,selectEquipList);				
+					evalState.list = data.list;
+				})
+			}
+			evalState.selectEList = function (f){
+				evalState.limit.facility = f.detector_Facility_Id;
+				evalState.selectEquipList();
 			}
 			//查询分析设备的数据
 			evalState.analysisEquipment = function (detector_Equipment_Id){
@@ -129,20 +168,31 @@ app.controller('baseInfoController', [ '$scope', 'services', '$location',
 					oTr.tag = true;
 				}
 			}*/
+			//查询facility类型列表
+			evalState.selectFacilityList = function(fun){
+				services.selectFacilityList({
+					
+				}).success(function(data){
+					 evalState.facilityList = data.list;
+					 evalState.limit.facility = data.list[0].detector_Facility_Id;
+				 	 fun();
+						})
+			}
 			// zq初始化
 			function initPage() {
+				//初始化小区和系统的参数
+				evalState.limit = {
+						facility : " ",
+						project : sessionStorage.getItem("projectId")
+				};
+				evalState.chosedIndex=0;
 				console.log("初始化页面信息");
 				if ($location.path().indexOf('/testIndex') == 0) {
-					
-				}else if ($location.path().indexOf('/qingyuan')==0){
-					evalState.show= {
-							isActive0 : true,
-							isActive1 : false,
-							isActive2 : false,
-							isActive3 : false,
-							isActive4 : false
-					};
-					evalState.selectEquipList (1);
+					evalState.selectFacilityList(evalState.selectEquipList);
+				}else if ($location.path().indexOf('/qingyuan')==0){					
+					evalState.selectFacilityList(evalState.selectEquipList);
+				}else if ($location.path().indexOf('/guangming')==0){					
+					evalState.selectFacilityList(evalState.selectEquipList);
 				}
 			}
 			initPage();

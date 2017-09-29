@@ -12,8 +12,8 @@ import com.dt.entity.DetectorTriggerLog;
 @Transactional
 public interface ErrorStateService {
 		
-	public List getErrorTotalRow(String startDate, String endDate);
-	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate, Integer offset, Integer limit);
+	public List getErrorTotalRow(String startDate, String endDate, String state);
+	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate, Integer offset, Integer limit, String state);
 	public List<List<Map<String, String>>> analyseErrorPie(String startDate, String endDate);
 	public List<Map<String, String>> analyseErrorLine(String startDate, String endDate);
 	public Map<String, String> selectErrorDetails(String SensorId);

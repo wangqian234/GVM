@@ -21,22 +21,26 @@ public class ErrorStateDaoImpl extends HibernateDaoSupport implements ErrorState
         super.setSessionFactory(sessionFacotry);  
     }
 	
-	public List getErrorTotalRow(String startDate, String endDate) {
+	public List getErrorTotalRow(String startDate, String endDate, String state) {
 		StringBuffer sql = new StringBuffer();
+		sql.append("select count (*) from DetectorTriggerLog ");
 		if(startDate !="" && endDate!= ""){
-			sql.append("select count (*) from DetectorTriggerLog where Detector_TriggerLog_Time between '" + startDate + "' and '"+ endDate+ "' ");
-		} else {
-			sql.append("select count (*) from DetectorTriggerLog");
+			sql.append(" where Detector_TriggerLog_Time between '" + startDate + "' and '"+ endDate+ "' ");
+			sql.append(" and Detector_TriggerLog_State = '"+ state+ "' ");
+		}else{
+			sql.append(" where Detector_TriggerLog_State = '"+ state+ "' ");
 		}
 		return getHibernateTemplate().find(sql.toString());
 	}
 
-	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate) {
+	public List<DetectorTriggerLog> findErrorList(String startDate, String endDate, String state) {
 		StringBuffer sql = new StringBuffer();
+		sql.append("from DetectorTriggerLog ");
 		if(startDate !="" && endDate!= ""){
-			sql.append("from DetectorTriggerLog where Detector_TriggerLog_Time between '" + startDate + "' and '"+ endDate+ "' ");
+			sql.append(" where Detector_TriggerLog_Time between '" + startDate + "' and '"+ endDate+ "' ");
+			sql.append(" and Detector_TriggerLog_State = '"+ state+ "' ");
 		} else {
-			sql.append("from DetectorTriggerLog ");
+			sql.append(" where Detector_TriggerLog_State = '"+ state+ "' ");
 		}
 		sql.append("order by Detector_TriggerLog_Time desc ");
 		return getHibernateTemplate().find(sql.toString());

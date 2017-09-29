@@ -36,23 +36,35 @@ public class EvalStateDaoImpl extends HibernateDaoSupport implements EvalStateDa
     }
 	//查询设备
 	@SuppressWarnings("unchecked")
-	public List<Object> findEquipment(final Integer detector_Facility_Id) {		
+	public List<Object> findEquipment(Integer project, Integer facility, Integer offset, Integer limit) {
+		final StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT e.Detector_Equipment_Id,e.Detector_Equipment_No ,er.Detector_EquipmentRoom_name,et.Detector_EquipmentType_name ,e.Detector_Equipment_Name FROM Detector_Equipment e ");
+		sql.append(" LEFT JOIN Detector_EquipmentRoom  er ON er.Detector_EquipmentRoom_Id=e.Detector_EquipmentRoom_Id");
+		sql.append(" LEFT JOIN Detector_EquipmentType et ON et.Detector_EquipmentType_Id=e.Detector_EquipmentType_Id");
+		sql.append(" LEFT JOIN Detector_Facility f on f.Detector_Facility_Id=et.Detector_Facility_Id ");			
+		sql.append(" where er.Detector_Project_Id= " + project+ " and f.Detector_Facility_Id= " + facility );
 		return (List<Object>) getHibernateTemplate().execute(new HibernateCallback<Object>() {
-
-			public List<Object> doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException, SQLException {
-				Integer detectorFacilityId = detector_Facility_Id;
-				StringBuilder sql = new StringBuilder();
-				sql.append(" SELECT Detector_Equipment.Detector_Equipment_Name ,Detector_Equipment.Detector_Equipment_Id  FROM Detector_Equipment ");
-				sql.append(" LEFT JOIN Detector_EquipmentRoom ON Detector_EquipmentRoom.Detector_EquipmentRoom_Id=Detector_Equipment.Detector_EquipmentRoom_Id");
-				sql.append(" LEFT JOIN Detector_EquipmentType ON Detector_EquipmentType.Detector_EquipmentType_Id=Detector_Equipment.Detector_EquipmentType_Id");
-				sql.append(" LEFT JOIN Detector_Facility on Detector_Facility.Detector_Facility_Id=Detector_EquipmentType.Detector_Facility_Id ");			
-				sql.append(" where Detector_Facility.Detector_Facility_Id="+detectorFacilityId+"");
-				SQLQuery qobj = session.createSQLQuery(sql.toString());			
-				List<Object> list = qobj.list();		
-				System.out.println(list.toString());
-				return list;	
-			}			
-		});
+			public Object doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException {
+				SQLQuery qObj = session.createSQLQuery(sql.toString());
+				List<Object> list = qObj.list();
+				return list;
+			}
+		});		
+	}
+	//查询总行数
+	@SuppressWarnings("unchecked")
+	public List<Object> getbaseTotalRow(Integer project, Integer facility) {
+		final StringBuilder sql = new StringBuilder();
+		sql.append("select count(*) from Detector_Equipment e LEFT JOIN  Detector_EquipmentRoom er ON ");
+		sql.append("  e.Detector_EquipmentRoom_Id= er.Detector_EquipmentRoom_Id where er.Detector_Project_Id = " + project);
+		sql.append(" and er.Detector_Facility_Id= " + facility);
+		return (List<Object>) getHibernateTemplate().execute(new HibernateCallback<Object>(){
+			public Object doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException {
+				SQLQuery qobj =session.createSQLQuery(sql.toString());
+				List<Object> list = qobj.list();
+				return list;
+			}
+		});	
 	}
 	//查询分析设备的数据(UseDate,lifeTime)
 	@SuppressWarnings("unchecked")
@@ -89,4 +101,6 @@ public class EvalStateDaoImpl extends HibernateDaoSupport implements EvalStateDa
 			}		
 		});		
 	}
+
+
 }

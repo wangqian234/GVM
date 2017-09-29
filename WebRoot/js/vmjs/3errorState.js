@@ -126,6 +126,9 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 					startTime : "",
 					endTime : ""
 			}
+			errorState.limits = {
+					state:"0"
+			}
 			
 			function selectErrorListpage(p){
 				var expendErrorLimit = JSON.stringify(errorState.limit);
@@ -139,25 +142,29 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 			}
 			
 			errorState.selectErrorListpage = function(){
-				if (errorState.limit.startTime == "") {
-					alert("请选择开始时间！");
-					return false;
-				}
-				if (errorState.limit.endTime == "") {
-					alert("请选择截止时间！");
-					return false;
-				}
-				if (compareDateTime(
-						errorState.limit.startTime,
-						errorState.limit.endTime)) {
-					alert("截止时间不能大于开始时间！");
-					return false;
+				if(errorState.limit!=""){
+					if (errorState.limit.startTime == "") {
+						alert("请选择开始时间！");
+						return false;
+					}
+					if (errorState.limit.endTime == "") {
+						alert("请选择截止时间！");
+						return false;
+					}
+					if (compareDateTime(
+							errorState.limit.startTime,
+							errorState.limit.endTime)) {
+						alert("截止时间不能大于开始时间！");
+						return false;
+					}
 				}
 				var expendErrorLimit = JSON.stringify(errorState.limit);
 				services.selectErrorList({
 					limit:expendErrorLimit,
+					state:errorState.limits.state,
 					page : 1
 				}).success(function(data){
+					$(".tcdPageCode").empty();
 					errorState.errorList = data.list;
 					console.log(data.list);
 					errorState.totalPage = data.totalPage;
@@ -774,6 +781,7 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 				console.log("初始化页面信息");
 				if ($location.path().indexOf('/Expend') == 0) {
 					services.selectErrorList({
+						state:0,
 						page:1
 					}).success(function(data){
 						errorState.errorList = data.list;
@@ -829,8 +837,8 @@ app.filter('alertState', function() {
 	return function(input) {
 		var type = "";
 		switch (input) {
-		case "0": type = "已解除";break;
-		case "1": type = "报警中";break;
+		case "0": type = "报警中";break;
+		case "1": type = "已解除";break;
 		default: break;
 		}
 		return type;

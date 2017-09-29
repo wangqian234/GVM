@@ -26,11 +26,15 @@ public class ErrorStateController {
 	@Autowired
 	ErrorStateService errorStateService;
 	
-	@RequestMapping(value="/selectErrorList")
+	@RequestMapping(value="/selectErrorList.do")
 	public @ResponseBody String selectErrorList(HttpServletRequest request, HttpServletResponse response, HttpSession session){
 		JSONObject jsonObject = JSONObject.fromObject(request.getParameter("limit"));
+		String state = "";
 		String startDate = "";
 		String endDate = "";
+		if(request.getParameter("state") != null){
+			state = request.getParameter("state");
+		}
 		if (jsonObject.containsKey("startTime")) {
 			if (strIsNotEmpty(jsonObject.getString("startTime"))) {
 				startDate = dayFirstTime(jsonObject.getString("startTime"));
@@ -41,12 +45,12 @@ public class ErrorStateController {
 				endDate = dayLastTime(jsonObject.getString("endTime"));
 			}
 		}
-		List totalRow = errorStateService.getErrorTotalRow(startDate, endDate);
+		List totalRow = errorStateService.getErrorTotalRow(startDate, endDate, state);
 		Pager pager = new Pager();
 		pager.setPage(Integer.parseInt(request.getParameter("page")));// 指定页码
 		pager.setTotalRow(Integer.parseInt(totalRow.get(0).toString()));
 		
-		List<DetectorTriggerLog> list = errorStateService.findErrorList(startDate, endDate, pager.getOffset(), pager.getLimit());
+		List<DetectorTriggerLog> list = errorStateService.findErrorList(startDate, endDate, pager.getOffset(), pager.getLimit(), state);
 		JSONObject json = new JSONObject();
 		json.put("totalPage", pager.getTotalPage());
 		json.put("list", list);
