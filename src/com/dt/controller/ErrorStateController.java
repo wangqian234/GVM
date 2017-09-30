@@ -118,4 +118,23 @@ public class ErrorStateController {
 	public String dayLastTime(String str) {
 		return str + " 23:59:59";
 	}
+	
+	/**
+	 *
+	 * 
+	 * @param zq查询报警个数
+	 * @return Integer num
+	 */
+	@RequestMapping(value="/selectErrorNum.do")
+	public @ResponseBody String selectErrorNum(HttpServletRequest request, HttpServletResponse response){
+		
+		JSONObject jsonObject = new JSONObject();
+		List alertTotalNum = errorStateService.getErrorTotalRow("","","0");
+		if(alertTotalNum.size()==0){
+			jsonObject.put("alertTotalNum", 0);
+		}else{
+			jsonObject.put("alertTotalNum", Integer.parseInt(alertTotalNum.get(0).toString()));
+		}
+		return jsonObject.toString();
+	}
 }
