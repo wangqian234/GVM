@@ -9,7 +9,7 @@
 					<div class="icon">
 						<img src="/GVM/img/lg2-50.png" height="25" width="25" />
 					</div>
-					<div class="title">公元物业管理平台</div>
+					<div class="title">物业设备管理系统</div>
 				</a>
 				<button type="button"
 					class="navbar-expand-toggle pull-right visible-xs">
@@ -118,7 +118,7 @@
 		<!-- /.navbar-collapse -->
 	</nav>
 </div>
-<script type="text/javascript">
+ <script type="text/javascript">
 	//左侧栏菜单改变时修改题头面包屑
 	function setProjectId(type, projectId) {
 

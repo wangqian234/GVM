@@ -102,14 +102,14 @@ public class EvalStateServiceImpl implements EvalStateService{
         jsonObject.put("life", life);
         jsonObject.put("Maintenance", Maintenance);
         jsonObject.put("Replacement", Replacement);
-        System.out.println("张群"+jsonObject.toString());
+        System.out.println("zq"+jsonObject.toString());
 		return jsonObject.toString();
 	}
 	//查询分析设备的数据(Triggler)
 	public String findEquipment(Integer detector_Equipment_Id) {
 		List<Object> listSource = evalStateDao.findTrigglerlogs(detector_Equipment_Id);
 		Double num = Double.parseDouble(listSource.get(0).toString());		
-		Double  Failure = (6*num)/(24*30);		
+		Double  Failure = (0.6*num)/(24*30);		
 		return Failure.toString();
 	}
 	//查询列表的总行数

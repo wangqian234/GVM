@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/GVM/lib/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="/GVM/lib/css/font-awesome.min.css">
+	href="/GVM/lib/css/font-awesome.min.css">k
 <link rel="stylesheet" type="text/css"
 	href="/GVM/lib/css/animate.min.css">
 <link rel="stylesheet" type="text/css"
@@ -100,7 +100,7 @@
 				</audio>
 			</nav>
 			<section>
-				<script type="text/javascript">
+				 <script type="text/javascript">
 					//消息闪烁
 					var show = function() { //有新消息时在title处闪烁提示
 						var step = 0, _title = document.title;
@@ -151,6 +151,7 @@
 
 								}) 
 					}
+					var title = document.title;
 					initData();
 				/* 	window.setInterval(showalert, 1000 * 60 * 5); */
 				window.setInterval(showalert,  2000 * 5); 
@@ -163,6 +164,7 @@
 									$("#alertNum").text(data.alertTotalNum);
 									sessionStorage.setItem("alertTotalNum",
 											data.alertTotalNum);
+									//lastMsgCnt
 									if (data.alertTotalNum > lastMsgCnt) {
 										//todo--提示爆闪
 										var timerArr = show();
@@ -176,4 +178,4 @@
 
 								});
 					}
-				</script>
+				</script> 

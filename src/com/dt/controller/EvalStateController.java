@@ -79,7 +79,6 @@ public class EvalStateController {
 		Integer Detector_Equipment_Id = Integer.parseInt(request.getParameter("detector_Equipment_Id"));
 	    String Failare= evalStateService.findEquipment(Detector_Equipment_Id);
 		String listInfo  = evalStateService.analysisEquipment(Detector_Equipment_Id,Failare);	
-		System.out.println("ss"+listInfo);
 		return listInfo;
 	}
 }
