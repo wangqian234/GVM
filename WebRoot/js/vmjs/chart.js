@@ -233,7 +233,7 @@ Scatter.prototype.init = function () {
 		   var xAxis = {
 		      title: {
 		      enabled: true,
-		         text: 'Longitude'
+		         text: 'x轴坐标'
 		      },
 		      startOnTick: true,
 		      endOnTick: true,
@@ -241,7 +241,7 @@ Scatter.prototype.init = function () {
 		   };
 		   var yAxis = {
 		      title: {
-		         text: 'Latitude'
+		         text: 'y轴坐标'
 		      }
 		   };
 		   var legend = {   
