@@ -7,8 +7,9 @@
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li ng-click="selectEList(f)" role="presentation"
-							ng-class="{true:'active',false:''}[$index==chosedIndex]"  ng-repeat="f in facilityList"><a
-							href="" role="tab" data-toggle="tab">{{f.detector_Facility_Name}}</a></li>
+							ng-class="{true:'active',false:''}[$index==chosedIndex]"
+							ng-repeat="f in facilityList"><a href="" role="tab"
+							data-toggle="tab">{{f.detector_Facility_Name}}</a></li>
 					</ul>
 					<!-- Tab panes -->
 					<div class="tab-content">
@@ -16,7 +17,7 @@
 							<div class="sub-title">
 								设备列表<span class="description"></span>
 							</div>
-							<table id="infoList" class="datatable table table-striped" ">
+							<table id="infoList" class="datatable table table-striped"">
 								<thead>
 									<tr>
 										<th>设备编号</th>
@@ -41,54 +42,15 @@
 							</table>
 							<div class="tcdPageCode">页码容器</div>
 						</div>
-						<div></div>
-						<!-- 						<div class="col-sm-6">
+						<div class="col-sm-6">
 							<div class="sub-title">
-								设备详情<span class="description"></span>
+								雷达分析图<span class="description"></span>
 							</div>
-							<table class="table table-bordered" style="text-align: center">
-								<thead>
-									<tr>
-                                                        <th>3#变压器</th>
-                                                        <th>First Name</th>
-                                                        <th>Last Name</th>
-                                                        <th>Username</th>
-                                                    </tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>名称：</td>
-										<td>Mark</td>
-										<td>类型：</td>
-										<td>@mdo</td>
-									</tr>
-									<tr>
-										<td>场所：</td>
-										<td>Mark</td>
-										<td>版本：</td>
-										<td>@mdo</td>
-									</tr>
-									<tr>
-										<td>价格：</td>
-										<td>Mark</td>
-										<td>制造商：</td>
-										<td>@mdo</td>
-									</tr>
-									<tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Jacob</td>
-                                                       <th scope="row">2</th>
-                                                        <td>@fat</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Larry</td>
-                                                       <th scope="row">2</th>
-                                                        <td>@twitter</td>
-                                                    </tr>
-								</tbody>
-							</table>
-						</div> -->
+							<div id="radarChart"
+							style="min-width: 310px; max-width: 400px; height: 400px; margin: 0 auto"></div>
+						</div>
+						
+
 					</div>
 				</div>
 			</div>

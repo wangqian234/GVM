@@ -86,14 +86,25 @@
 }
 .activeSwitch{
 	background-image: url(/GVM/img/closedeng.png);
+	background-size:30px 30px;
 	background-repeat:no-repeat;
-	background-position: 0 10px;
 }
 .inactiveSwitch{
 	background-image: url(/GVM/img/opendeng.png);
+	background-size:30px 30px;
 	background-repeat:no-repeat;
-	background-position: 0 15px;
 }
 .tableActive {
 	background-color: "#EAEAEA" !important;
+}
+.select-box{
+	margin-left:15px;
+	border: 1px solid #bebebe;
+	padding: 0.1rem;
+	line-height: 1.2rem;
+	height: 30px;
+	width: 230px;
+	padding-left:10px;
+	border-radius: 3px;
+	background: url(../images/inputbg.gif) repeat-x;
 }

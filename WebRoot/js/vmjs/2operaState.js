@@ -130,7 +130,27 @@ app.controller('operaStateController', [ '$scope', 'services', '$location',
 				     line.init();
 				})
 			}
-			
+
+			operaState.changeDraw = function(type){
+				sessionStorage.setItem("type",type);
+				switch (type){
+					case 1: 
+						$("#shuzhi").show();
+						$("#kaiguan").hide();
+						$("#weizhi").hide();
+						break;
+					case 2:
+						$("#shuzhi").hide();
+						$("#kaiguan").show();
+						$("#weizhi").hide();
+						break;
+					case 3:
+						$("#shuzhi").hide();
+						$("#kaiguan").hide();
+						$("#weizhi").show();
+						break;
+				}
+			}
 			operaState.getWhereDraw1 = function(){
 				$(".modal-content").show();
 				var dataS1 = {
@@ -324,6 +344,7 @@ app.controller('operaStateController', [ '$scope', 'services', '$location',
 							 var dial = new Dial(data);
 						     dial.init();
 						} }},0);
+					 setTimeout(operaState.changeDraw(sessionStorage.getItem("type")),1);;
 				});
 				
 				$("#closeButten").click(function() {
@@ -359,10 +380,7 @@ app.controller('operaStateController', [ '$scope', 'services', '$location',
 					sessionStorage.setItem("project", 9);
 				} else if ($location.path().indexOf('/guangming') == 0) {
 					sessionStorage.setItem("project", 13);
-				} 
-//				else if ($location.path().indexOf('/getOperaDetails') == 0){
-//					getOperaDetailsDraw();
-//				}
+				}
 				if($location.path().indexOf('/testIndex') == 0 || $location.path().indexOf('/qingyuan') == 0 || $location.path().indexOf('/guangming') == 0){
 					sessionStorage.setItem("state",1);
 				services.getoperaState({
@@ -379,8 +397,7 @@ app.controller('operaStateController', [ '$scope', 'services', '$location',
 					}else{
 						$("#nolist").hide();
 					};
-					
-					 setTimeout(function(){
+					setTimeout(function(){
 							for(var i=0;i<operaState.operaList.length;i++){
 								var maxValue;
 							if(operaState.operaList[i].Detector_Sensor_Unit == "℃"){
@@ -439,5 +456,4 @@ app.filter('alertState', function() {
 		return type;
 	}
 });
-
 
