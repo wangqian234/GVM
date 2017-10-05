@@ -18,7 +18,7 @@
 
 
 <form action="" method="post" enctype="multipart/form-data">
-			<li>请选择起始时间
+			<li style="display:inline">请选择起始时间
 			<input type="text" name="startTime" 
 				ng-model="limit.startTime" class="dfselect dateLayoutStyle" placeHolder="起始时间"
 				onFocus="WdatePicker(WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd',readOnly:'true',onpicked: function(){$(this).trigger('change')}})) "
@@ -64,7 +64,7 @@
                             <td>{{el.detector_Trigger_AlarmUser}}</td><!-- 警报平台登录名/手机号码/邮箱等 -->
                             <td>{{el.detector_Trigger_AlarmMode|alertType}}</td><!-- 触发器警报方式（1微信提醒，2短信提醒，3邮件提醒，4提交工单，5平台告警，6预警） -->
                             <td>{{el.detector_TriggerLog_State|alertState}}</td><!-- 0=报警中，1=已解除 -->
-                            <td><a Style="color:blue" ng-click="selectErrorDetails(el.detector_Sensor_Id)">查看</a></td>
+                            <td><a Style="color:blue;cursor:pointer;" ng-click="selectErrorDetails(el.detector_Sensor_Id)">查看</a></td>
                         </tr>
 
                     </tbody>

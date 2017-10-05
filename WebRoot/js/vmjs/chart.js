@@ -285,6 +285,7 @@ Scatter.prototype.init = function() {
 
 						} ];
 
+
 						var json = {};
 						json.chart = chart;
 						json.title = title;

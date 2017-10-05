@@ -355,7 +355,7 @@ app.controller('errorStateController', [ '$scope', 'services', '$location',
 					                    return this.y > 5 ? this.point.name : null;
 					                },
 					                color: 'white',
-					                distance: -30
+					                distance: -50
 					            }
 					        }, {
 					            name: '数量',
