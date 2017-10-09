@@ -8,5 +8,5 @@ public interface PublicDao {
 
 	List<Object> selectFacilityList();
 	
-	
+	List<Object> selectProjectList();
 }

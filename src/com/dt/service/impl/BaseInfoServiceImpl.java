@@ -23,17 +23,19 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 	@Autowired
 	private BaseInfoDao baseInfoDao;
 
-	public List<EquipmentInfo> selectBaseList() {
+	public List<EquipmentInfo> selectBaseList(String project, String facility) {
 		// TODO Auto-generated method stub
-
-		List<Object> listSource = baseInfoDao.selectBaseList();
+		List<Object> listSource=null;
+		if (project != "" && facility != "") {
+			listSource = baseInfoDao.selectBaseList(Integer.parseInt(project), Integer.parseInt(facility));
+		}
 
 		Iterator<Object> it = listSource.iterator();
 		List<EquipmentInfo> listInfo = objToEquipmentInfo(it);
 		return listInfo;
 	}
 
-	// List<Object>类型转换成List<CheckHouse>
+	// List<Object>类型转换成List<Equipment>
 	private List<EquipmentInfo> objToEquipmentInfo(Iterator<Object> it) {
 		Object[] obj = null;
 		EquipmentInfo equipmentInfo = null;
@@ -49,6 +51,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 			equipmentInfo.setEquipment_Name(obj[2].toString());
 			equipmentInfo.setEquipment_Room(obj[3].toString());
 			equipmentInfo.setEquipment_Type(obj[4].toString());
+			equipmentInfo.setEquipment_Project(obj[5].toString());
 			listGoal.add(equipmentInfo);
 		}
 		return listGoal;
@@ -81,7 +84,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
 
 	public EquipmentInfo selectEquipmentById(Integer equipmentId) {
 		// TODO Auto-generated method stub
-		List<Object> listSource=baseInfoDao.selectEquipmentById(equipmentId);
+		List<Object> listSource = baseInfoDao.selectEquipmentById(equipmentId);
 		Object[] obj = (Object[]) listSource.get(0);
 		EquipmentInfo eInfo = new EquipmentInfo();
 		eInfo.setEquipment_Id(Integer.parseInt(obj[0].toString()));

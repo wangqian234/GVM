@@ -7,19 +7,19 @@
 
 <jsp:include page="/jsp/top.jsp" />
 <jsp:include page="/jsp/left.jsp" />
-<div class="container-fluid" >
+<div class="container-fluid">
 	<div class="side-body  padding-top" >
-	<section id="test" class="row"  ng-app="test" style="min-height: 40px;">
+	<section id="index" class="row"  ng-app="index" style="min-height: 40px;">
 	<div ng-view></div>
 	</section> 
 	</div>
-
+</div>
 </div>
 <jsp:include page="/jsp/footer.jsp" />
 </div>
 
 </div>
 </div>
-<script src="/GVM/js/vmjs/3errorState.js"></script>
+<script src="/GVM//js/vmjs/0index.js"></script>
 </body>
 </html>

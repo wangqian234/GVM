@@ -2,11 +2,9 @@ package com.dt.dao;
 
 import java.util.List;
 
-import com.dt.entity.EquipmentInfo;
-
 public interface BaseInfoDao {
 
-	List<Object> selectBaseList();
+	List<Object> selectBaseList(Integer project, Integer facility);
 
 	List<Object> getbaseTotalRow(Integer project, Integer facility);
 

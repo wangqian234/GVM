@@ -285,7 +285,6 @@ Scatter.prototype.init = function() {
 
 						} ];
 
-
 						var json = {};
 						json.chart = chart;
 						json.title = title;
@@ -305,7 +304,7 @@ function Radar(data) {
 	this.title = data.title;
 	this.name = data.name;
 	this.data = data.data;
-	this.xAxis=data.xAxis;
+	this.xAxis = data.xAxis;
 }
 
 Radar.prototype.init = function() {
@@ -315,21 +314,21 @@ Radar.prototype.init = function() {
 						chart : {
 							polar : true,
 							type : 'line',
-							width:550,
-							height:450
+							width : 500,
+							height : 300
 						},
 						title : {
 							text : this.title,
 							x : -50
 						},
-						subtitle:{
-								text : ' '
-							},
+						subtitle : {
+							text : ' '
+						},
 						pane : {
 							size : '80%'
 						},
 						xAxis : {
-							categories :this.xAxis,
+							categories : this.xAxis,
 							tickmarkPlacement : 'on',
 							lineWidth : 0
 						},
@@ -348,14 +347,84 @@ Radar.prototype.init = function() {
 							y : 70,
 							layout : 'vertical',
 							itemStyle : {
-						        'fontSize' : '14px'
-						    }
+								'fontSize' : '14px'
+							}
 						},
-						series : [
-								{
-									name : this.name,
-									data : this.data,
-									pointPlacement : 'on'
-								}]
+						series : [ {
+							name : this.name,
+							data : this.data,
+							pointPlacement : 'on'
+						} ]
+					});
+}
+
+function LineColumn(data) {
+	this.elementId = data.elementId;
+	this.title = data.title;
+	this.name = data.name;
+	this.data = data.data;
+	this.xAxis = data.xAxis;
+	this.unit=data.unit;
+	this.yAxis=data.yAxis;
+}
+LineColumn.prototype.init = function() {
+	$(this.elementId)
+			.highcharts(
+					{
+						chart : {
+							type : 'bar'
+						},
+						title : {
+							text : this.title
+						},
+						subtitle : {
+							text : ''
+						},
+						xAxis : {
+							categories :this.xAxis,
+							title : {
+								text : null
+							}
+						},
+						yAxis : {
+							min : 0,
+							title : {
+								text : this.yAxis,
+								align : 'high'
+							},
+							labels : {
+								overflow : 'justify'
+							}
+						},
+						tooltip : {
+							valueSuffix : this.unit
+						},
+						plotOptions : {
+							bar : {
+								dataLabels : {
+									enabled : true
+								}
+							}
+						},
+						legend : {
+							layout : 'vertical',
+							align : 'right',
+							verticalAlign : 'top',
+							x : -40,
+							y : 100,
+							floating : true,
+							borderWidth : 1,
+							backgroundColor : ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+							shadow : true
+						},
+						credits : {
+							enabled : false
+						},
+
+						series : [ {
+							name : this.name,
+							data : this.data
+						} ]
+
 					});
 }

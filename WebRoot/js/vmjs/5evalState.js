@@ -104,6 +104,15 @@ app.factory('services', [ '$http', 'baseUrl', function($http, baseUrl) {
 			data : data
 		});
 	}
+
+	// 获取故障日期、维护日期等
+	services.selectEquipDateById = function(data) {
+		return $http({
+			method : 'post',
+			url : baseUrl + 'preMainController/selectEquipDateById.do',
+			data : data
+		});
+	}
 	return services;
 } ]);
 app
@@ -136,6 +145,7 @@ app
 									limit : JSON.stringify(evalState.limit)
 								}).success(function(data) {
 									evalState.list = data.list;
+									showFirstInfo(data.list[0]);
 								})
 							}
 							// 查询设备
@@ -148,15 +158,51 @@ app
 											pageTurn(data.totalPage, 1,
 													selectEquipList);
 											evalState.list = data.list;
+											showFirstInfo(data.list[0]);
 										})
 							}
 							evalState.selectEList = function(f) {
 								evalState.limit.facility = f.detector_Facility_Id;
 								evalState.selectEquipList();
 							}
+							function showFirstInfo(e){
+								$("#radarAnalyse").css("display", "block");
+								$("#analyse").css("display", "block");
+								evalState.Equipment_Id = e.detector_Equipment_Id;
+								evalState.EquipmentType_Id = e.detector_EquipmentType_Id;
+								services
+										.analysisEquipment(
+												{
+													detector_Equipment_Id : e.detector_Equipment_Id
+												})
+										.success(
+												function(data) {
+													var arr = [
+															changeNumType(data.failarenum),
+															changeNumType(data.Safety),
+															changeNumType(data.life),
+															changeNumType(data.Maintenance),
+															changeNumType(data.Replacement) ];
+													var xAxis = [ "故障概率",
+															"安全性能", "寿命周期",
+															"维护成本", "更换概率", ];
+													drawRadar(
+															"#radarChart",
+															e.detector_Equipment_Name
+																	+ "健康状态评估",
+															"单项", arr, xAxis)
+													evalState.resultFail = data.resultFail;
+													evalState.resultLife = data.resultLife;
+													evalState.resultReplace = data.resultReplace;
+													evalState.resultMaintance = data.resultMaintance;
+													evalState.resultSafe = data.resultSafe;
+													evalState.conclude = data.conclude;
+												});
+							}
+							
+							
 							// 查询分析设备的数据
-							evalState.analysisEquipment = function(
-									e) {
+							evalState.analysisEquipment = function(e) {
 								var oObj = window.event.srcElement;
 								if (oObj.tagName.toLowerCase() == "td") {
 									var oTr = oObj.parentNode;
@@ -167,34 +213,41 @@ app
 									oTr.style.backgroundColor = "#EAEAEA";
 									oTr.tag = true;
 								}
+								evalState.tableIndex=100;
+								$("#radarAnalyse").css("display", "block");
+								$("#analyse").css("display", "block");
+								evalState.Equipment_Id = e.detector_Equipment_Id;
+								evalState.EquipmentType_Id = e.detector_EquipmentType_Id;
 								services
 										.analysisEquipment(
 												{
 													detector_Equipment_Id : e.detector_Equipment_Id
-												}).success(
-												function(data) {
-													var arr=[data.failarenum,data.Safety,data.life,data.Maintenance,data.Replacement];
-													var xAxis=["故障概率","安全性能","寿命周期","维护成本","更换概率",];
-													drawRadar("#radarChart", e.detector_Equipment_Name+"健康状态评估",
-															"单项", arr,xAxis)
-													/*
-													 * evalState.evlist =
-													 * data.list;
-													 */
 												})
+										.success(
+												function(data) {
+													var arr = [
+															changeNumType(data.failarenum),
+															changeNumType(data.Safety),
+															changeNumType(data.life),
+															changeNumType(data.Maintenance),
+															changeNumType(data.Replacement) ];
+													var xAxis = [ "故障概率",
+															"安全性能", "寿命周期",
+															"维护成本", "更换概率", ];
+													drawRadar(
+															"#radarChart",
+															e.detector_Equipment_Name
+																	+ "健康状态评估",
+															"单项", arr, xAxis)
+													evalState.resultFail = data.resultFail;
+													evalState.resultLife = data.resultLife;
+													evalState.resultReplace = data.resultReplace;
+													evalState.resultMaintance = data.resultMaintance;
+													evalState.resultSafe = data.resultSafe;
+													evalState.conclude = data.conclude;
+												});
 							}
-							/*
-							 * evalState.change = function(index) { var oObj =
-							 * window.event.srcElement; //
-							 * alert(change.tagName.toLowerCase()); if
-							 * (oObj.tagName.toLowerCase() == "td") { var oTr =
-							 * oObj.parentNode; for (var i = 1; i <
-							 * document.all.infoList.rows.length; i++) {
-							 * document.all.infoList.rows[i].style.backgroundColor =
-							 * ""; document.all.infoList.rows[i].tag = false; }
-							 * oTr.style.backgroundColor = "#EAEAEA"; oTr.tag =
-							 * true; } }
-							 */
+							
 							// 查询facility类型列表
 							evalState.selectFacilityList = function(fun) {
 								services
@@ -209,20 +262,51 @@ app
 												})
 							}
 							// 绘制雷达图
-							function drawRadar(elementId, title, name, info,xAxis) {
+							function drawRadar(elementId, title, name, info,
+									xAxis) {
 								var data = {
 									elementId : elementId,
 									title : title,
 									name : name,
 									data : info,
-									xAxis:xAxis
+									xAxis : xAxis
 								};
 								var radar = new Radar(data);
 
 								radar.init();
 							}
+							// zq显示详情
+							evalState.showDetail = function() {
+								$(".modal-content").show();
+								services
+										.selectEquipDateById(
+												{
+													equipmentId : evalState.Equipment_Id,
+													equipmentTypeId : evalState.EquipmentType_Id
+												}).success(function(data) {
+											evalState.preInfo = data.preInfo;
+
+										});
+							}
+							$("#closeButten").click(function() {
+								$(".modal-content").hide();
+							});
+							// zq将小数保留两位小数
+							function changeNumType(number) {
+								if (!number) {
+									var defaultNum = 0;
+									var num = parseFloat(parseFloat(defaultNum)
+											.toFixed(2));
+								} else {
+									var num = parseFloat(parseFloat(number)
+											.toFixed(2));
+								}
+								return num;
+							}
 							// zq初始化
 							function initPage() {
+								$("#radarAnalyse").css("display", "none");
+								$("#analyse").css("display", "none");
 								// 初始化小区和系统的参数
 								evalState.limit = {
 									facility : " ",
@@ -230,6 +314,7 @@ app
 											.getItem("projectId")
 								};
 								evalState.chosedIndex = 0;
+								evalState.tableIndex=0;
 								console.log("初始化页面信息");
 								if ($location.path().indexOf('/testIndex') == 0) {
 									evalState

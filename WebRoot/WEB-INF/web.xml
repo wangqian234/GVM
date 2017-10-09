@@ -55,6 +55,6 @@
 	</filter-mapping>
 
 	<welcome-file-list>
-		<welcome-file>routeController/toTestPage.do</welcome-file>
+		<welcome-file>routeController/toIndexPage.do</welcome-file>
 	</welcome-file-list>
 </web-app>

@@ -1,4 +1,55 @@
+
 <div class="row">
+	<div class="modal-content  ng-scope"
+		style="position: fixed; z-index: 100; height: 400px; width: 600px; top: 20%; left: 50%; margin-left: -300px; margin_top: -250px; display: none">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-label="Close"></button>
+			<h3 class="modal-title">设备维修预测</h3>
+		</div>
+		<div class="modal-body" style="background-color: #FFF4C6">
+			<table class="table table-bordered" style="text-align: center">
+				<tbody>
+					<tr>
+						<td>上次故障日期：</td>
+						<td>{{preInfo.maintenanceLog_StartDate}}</td>
+
+					</tr>
+					<tr>
+						<td>上次维修日期：</td>
+						<td>{{preInfo.maintenanceLog_EndDate}}</td>
+
+					</tr>
+					<tr>
+						<td>预测维修时间：</td>
+						<td>{{preInfo.preDate}}</td>
+
+					</tr>
+					<tr>
+						<td>维护内容：</td>
+						<td>{{preInfo.preLog_Content}}</td>
+
+					</tr>
+					<tr>
+						<td>维护工具：</td>
+						<td>{{preInfo.preLog_Tools}}</td>
+
+					</tr>
+					<tr>
+						<td>维护人员：</td>
+						<td>{{preInfo.preLog_Workers}}</td>
+
+					</tr>
+
+
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal"
+				id="closeButten">关闭</button>
+		</div>
+	</div>
 	<div class="col-xs-12">
 		<div class="card">
 
@@ -7,13 +58,14 @@
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li ng-click="selectEList(f)" role="presentation"
-							ng-class="{true:'active',false:''}[$index==chosedIndex]"
+							ng-class="{true:'active',false:''}[$index==tableIndex]"
 							ng-repeat="f in facilityList"><a href="" role="tab"
 							data-toggle="tab">{{f.detector_Facility_Name}}</a></li>
 					</ul>
 					<!-- Tab panes -->
 					<div class="tab-content">
 						<div class="col-sm-6">
+
 							<div class="sub-title">
 								设备列表<span class="description"></span>
 							</div>
@@ -27,8 +79,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-click="analysisEquipment(e)"
-										ng-repeat="e in list">
+									<tr ng-class="{true:'active',false:''}[$index==chosedIndex]" ng-click="analysisEquipment(e)" ng-repeat="e in list">
 										<th scope="row">{{e.detector_Equipment_No}}</th>
 										<td>{{e.detector_EquipmentRoom_name}}</td>
 										<td>{{e.detector_EquipmentType_name}}</td>
@@ -43,13 +94,19 @@
 							<div class="tcdPageCode">页码容器</div>
 						</div>
 						<div class="col-sm-6">
-							<div class="sub-title">
-								雷达分析图<span class="description"></span>
-							</div>
+							<div class="sub-title">雷达分析图 <span style="float:right;display:none" id="analyse" ng-click="showDetail()"><a  style="color:blue;text-decoration: underline" href="">查看该设备维修预测</a></span></div>
 							<div id="radarChart"
-							style="min-width: 310px; max-width: 400px; height: 400px; margin: 0 auto"></div>
+								style="min-width: 310px; max-width: 400px; height: 300px;"></div>
+							<div style="margin-top: 10px" id="radarAnalyse"
+								style="display:none">
+								<span><strong>安全性能：</strong></span><span style="color: red">{{resultSafe}}</span><br>
+								<span><strong>故障概率：</strong></span><span style="color: red">{{resultFail}}</span><br>
+								<span><strong>更换概率：</strong></span><span style="color: red">{{resultReplace}}</span><br>
+								<span><strong>寿命周期：</strong></span><span style="color: red">{{resultLife}}</span><br>
+								<span><strong>维护成本：</strong></span><span style="color: red">{{resultMaintance}}</span><br>
+								<span><span style="color: red">{{conclude}}</span>
+							</div>
 						</div>
-						
 
 					</div>
 				</div>

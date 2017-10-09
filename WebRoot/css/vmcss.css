@@ -1,5 +1,5 @@
 .active {
-	color: rgba(124, 189, 187, 1) !important
+	color: #333 !important
 }
 
 .inactive {
@@ -84,27 +84,32 @@
 	border-radius: 4px;
 	vertical-align: middle;
 }
-.activeSwitch{
+
+.activeSwitch {
 	background-image: url(/GVM/img/closedeng.png);
-	background-size:30px 30px;
-	background-repeat:no-repeat;
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
 }
-.inactiveSwitch{
+
+.inactiveSwitch {
 	background-image: url(/GVM/img/opendeng.png);
-	background-size:30px 30px;
-	background-repeat:no-repeat;
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
 }
+
 .tableActive {
 	background-color: "#EAEAEA" !important;
+	color:"#333 !important"
 }
-.select-box{
-	margin-left:15px;
+
+.select-box {
+	margin-left: 15px;
 	border: 1px solid #bebebe;
 	padding: 0.1rem;
 	line-height: 1.2rem;
 	height: 30px;
 	width: 230px;
-	padding-left:10px;
+	padding-left: 10px;
 	border-radius: 3px;
 	background: url(../images/inputbg.gif) repeat-x;
 }

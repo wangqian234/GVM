@@ -1,0 +1,85 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="card">
+
+			<div class="card-body no-padding">
+				<div role="tabpanel">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li ng-click="selectEquipList(f)" role="presentation"
+							ng-class="{true:'active',false:''}[$index==chosedIndex]"  ng-repeat="f in facilityList"><a
+							href="" role="tab" data-toggle="tab">{{f.detector_Facility_Name}}</a></li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div class="col-sm-6">
+							<div class="sub-title">
+								设备列表<span class="description"></span>
+							</div>
+							<table id="infoList" class="datatable table table-striped">
+								<thead>
+									<tr>
+										<th>设备编号</th>
+										<th>设备名称</th>
+										<th>上次维护类型</th>
+										<th>设备状态</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-class="{true:'active',false:''}[$index==tableIndex]" ng-click="change(pre,$index)" ng-repeat="pre in list">
+										<td>{{pre.equipment_No}}</td>
+										<td>{{pre.equipment_Name}}</td>
+										<td>{{pre.maintenanceLog_Type | mainType}}</td>
+										<td>{{pre.equipment_State | mainState}}</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="tcdPageCode">页码容器</div>
+						</div>
+							<div class="col-sm-6">
+							<div class="sub-title">
+								设备维修预测<span class="description"></span>
+							</div>
+							<table class="table table-bordered" style="text-align: center">
+								<tbody>
+								<tr>
+										<td>上次故障日期：</td>
+										<td>{{preInfo.maintenanceLog_StartDate}}</td>
+										
+									</tr>
+									<tr>
+										<td>上次维修日期：</td>
+										<td>{{preInfo.maintenanceLog_EndDate}}</td>
+										
+									</tr>
+									<tr>
+										<td>预测维修时间：</td>
+										<td>{{preInfo.preDate}}</td>
+										
+									</tr>
+									<tr>
+										<td>维护内容：</td>
+										<td>{{preInfo.preLog_Content}}</td>
+										
+									</tr>
+									<tr>
+										<td>维护工具：</td>
+										<td>{{preInfo.preLog_Tools}}</td>
+										
+									</tr>
+									<tr>
+										<td>维护人员：</td>
+										<td>{{preInfo.preLog_Workers}}</td>
+										
+									</tr>
+									
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

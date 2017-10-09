@@ -21,7 +21,7 @@ public class OperaStateDaoImpl extends HibernateDaoSupport implements OperaState
 	@SuppressWarnings("unchecked")
 	public List<Object> getbaseInfo(String project, String facility) {
 		final StringBuilder sql = new StringBuilder();
-		sql.append("SELECT der.Detector_EquipmentRoom_Name, de.Detector_Equipment_Name, ");
+		sql.append("SELECT top 8000 der.Detector_EquipmentRoom_Name, de.Detector_Equipment_Name, ");
 		sql.append("ds.Detector_Sensor_AlarmValueMin,ds.Detector_Sensor_AlarmValueMax, ");
 		sql.append("ds.Detector_Sensor_Name, dsd.Detector_SensorData_Value, ds.Detector_Sensor_Type, ds.Detector_Sensor_Id, ");
 		sql.append("dsd.Detector_SensorData_Switch, dsd.Detector_SensorData_Latitude, dsd.Detector_SensorData_Latitude, ");
@@ -48,7 +48,30 @@ public class OperaStateDaoImpl extends HibernateDaoSupport implements OperaState
 	public List<Object> getOperaDetails(String sensorId) {
 		final StringBuilder sql = new StringBuilder();
 		sql.append("select dsd.Detector_SensorData_Time, dsd.Detector_SensorData_Value FROM Detector_SensorData dsd ");
-		sql.append("WHERE dsd.Detector_Sensor_Id = '"+sensorId+"' ORDER BY dsd.Detector_SensorData_Time DESC ");
+		sql.append("WHERE dsd.Detector_Sensor_Id = '"+sensorId+"' ORDER BY dsd.Detector_SensorData_Time ");
+		return (List<Object>) getHibernateTemplate().execute(new HibernateCallback<Object>() {
+			public Object doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException {
+				SQLQuery qObj = session.createSQLQuery(sql.toString());
+				List<Object> list = qObj.list();
+				return list;
+				}
+		});
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object> getTypeTotalRow(String project, String facility,Integer type) {
+		// TODO Auto-generated method stub
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT distinct dsd.Detector_Sensor_Id FROM Detector_SensorData dsd LEFT JOIN ");
+		sql.append("Detector_Sensor ds ON  dsd.Detector_Sensor_Id = ");
+		sql.append("ds.Detector_Sensor_Id LEFT JOIN Detector_Equipment de ON ");
+		sql.append("de.Detector_Equipment_Id = ds.Detector_Equipment_Id LEFT JOIN ");
+		sql.append("Detector_EquipmentRoom der ON de.Detector_EquipmentRoom_Id = ");
+		sql.append("der.Detector_EquipmentRoom_Id LEFT JOIN Detector_Facility df ON ");
+		sql.append("df.Detector_Facility_Id = der.Detector_Facility_Id LEFT JOIN ");
+		sql.append("Detector_Project dp ON dp.Detector_Project_Id = ");
+		sql.append("der.Detector_Project_Id WHERE df.Detector_Facility_Id = '"+facility+"'");
+		sql.append(" AND dp.Detector_Project_Id = '"+project+"' AND ds.Detector_Sensor_Type="+type);
 		return (List<Object>) getHibernateTemplate().execute(new HibernateCallback<Object>() {
 			public Object doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException {
 				SQLQuery qObj = session.createSQLQuery(sql.toString());
