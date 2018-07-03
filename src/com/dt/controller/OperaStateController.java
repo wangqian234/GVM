@@ -12,32 +12,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dt.service.OperaStateService;
+import com.dt.util.Pager;
 
 import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/operaState")
 public class OperaStateController {
-	
+
 	@Autowired
 	OperaStateService operaStateService;
 
 	/**
-	 * 获取设备运行状态信息
-	 * request：project、facility
-	 * return：设备状态、设备信息
+	 * 获取设备运行状态信息 request：project、facility return：设备状态、设备信息
 	 * 
-	 * */
+	 */
 	@RequestMapping("/getOperaState.do")
-	public @ResponseBody String getBaseInfo(HttpServletRequest request, HttpServletResponse response){
+	public @ResponseBody String getBaseInfo(HttpServletRequest request, HttpServletResponse response) {
 		String project = request.getParameter("project");
 		String facility = request.getParameter("facility");
 		String listObject = operaStateService.getbaseInfo(project, facility);
 		return listObject;
 	}
-	
+
 	@RequestMapping("/getOperaDetails.do")
-	public @ResponseBody String getOperaDetails(HttpServletRequest request, HttpServletResponse response){
+	public @ResponseBody String getOperaDetails(HttpServletRequest request, HttpServletResponse response) {
 		String sensorId = request.getParameter("sensorId");
 		List<Map<String, String>> list = operaStateService.getOperaDetails(sensorId);
 		JSONObject obj = new JSONObject();

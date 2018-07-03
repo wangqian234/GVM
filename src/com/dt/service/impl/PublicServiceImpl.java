@@ -13,6 +13,7 @@ import com.dt.dao.PublicDao;
 import com.dt.entity.DetectorFacility;
 import com.dt.entity.DetectorTriggerLog;
 import com.dt.entity.EquipmentInfo;
+import com.dt.entity.Project;
 import com.dt.service.PublicService;
 
 
@@ -58,4 +59,33 @@ public class PublicServiceImpl implements PublicService {
 		}
 		return listGoal;
 	}
+
+
+
+	public List<Project> selectProjectList() {
+		// TODO Auto-generated method stub
+		List<Object> listSource=publicDao.selectProjectList();
+		Iterator<Object> it=listSource.iterator();
+		List<Project> list=objToProject(it);
+		return list;
+	}
+	
+	// List<Object>类型转换成List<DetectorFacility>
+		private List<Project> objToProject(Iterator<Object> it) {
+			Object[] obj = null;
+			Project project = null;
+
+			List<Project> listGoal = new ArrayList<Project>();
+			int i = 0;
+			while (it.hasNext()) {
+				i++;
+				obj = (Object[]) it.next();
+				project = new Project();
+				project.setProject_Id(Integer.parseInt(obj[0].toString()));
+				project.setProject_Name(obj[1].toString());
+				listGoal.add(project);
+			}
+			return listGoal;
+		}
+
 }

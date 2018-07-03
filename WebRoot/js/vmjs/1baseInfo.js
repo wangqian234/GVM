@@ -65,7 +65,10 @@ app.run([ '$rootScope', '$location', function($rootScope, $location) {
 
 // 路由配置
 app.config([ '$routeProvider', function($routeProvider) {
-	$routeProvider.when('/testIndex', {
+	$routeProvider.when('/', {
+		templateUrl : '/GVM/jsp/1baseInfo/baseInfo.html',
+		controller : 'baseInfoController'
+	}).when('/testIndex', {
 		templateUrl : '/GVM/jsp/1baseInfo/baseInfo.html',
 		controller : 'baseInfoController'
 	}).when('/qingyuan', {
@@ -132,15 +135,24 @@ app
 
 							// zq查询设备基本信息列表
 							baseInfo.selectBaseList = function() {
-								services.selectBaseList({
-									page : 1,
-									limit : JSON.stringify(baseInfo.limit)
-								}).success(
-										function(data) {
-											pageTurn(data.totalPage, 1,
-													selectBaseList);
-											baseInfo.list = data.list;
-										});
+								console.log("zq"
+										+ JSON.stringify(baseInfo.limit));
+								services
+										.selectBaseList(
+												{
+													page : 1,
+													limit : JSON
+															.stringify(baseInfo.limit)
+												})
+										.success(
+												function(data) {
+													baseInfo.list = data.list;
+													getFirstInfo(data.list[0].equipment_Id);
+													pageTurn(data.totalPage, 1,
+															selectBaseList);
+													
+													
+												});
 							}
 							// zq用于基本信息换页查询
 							function selectBaseList(page) {
@@ -149,9 +161,16 @@ app
 									limit : JSON.stringify(baseInfo.limit)
 								}).success(function(data) {
 									baseInfo.list = data.list;
+									getFirstInfo(data.list[0].equipment_Id);
 								});
 							}
-
+							function getFirstInfo(equipment_Id) {
+								services.selectEquipmentById({
+									equipmentId : equipment_Id
+								}).success(function(data) {
+									baseInfo.eInfo = data.equipmentInfo;
+								});
+							}
 							// zq点击表格的每一行变色
 							baseInfo.change = function(e, index) {
 								var oObj = window.event.srcElement;
@@ -164,12 +183,14 @@ app
 									oTr.style.backgroundColor = "#EAEAEA";
 									oTr.tag = true;
 								}
+								baseInfo.tableIndex=100;
 								services.selectEquipmentById({
 									equipmentId : e.equipment_Id
 								}).success(function(data) {
 									baseInfo.eInfo = data.equipmentInfo;
 								});
 							}
+
 							// 查询系统类型列表
 							baseInfo.selectFacilityList = function(fun) {
 								services
@@ -190,27 +211,38 @@ app
 							// zq初始化
 							function initPage() {
 								// zq查询设备基本信息小区和系统的参数初始化
+
+								if (sessionStorage.getItem("projectId") == "undefined"
+										|| sessionStorage.getItem("projectId") == null
+										|| sessionStorage.getItem("projectId") == "") {
+									sessionStorage.setItem("projectId", '1');
+								}
+
 								baseInfo.limit = {
 									facility : "",
 									project : sessionStorage
 											.getItem("projectId")
 								};
-								
+
 								// 给ul的第一个li显示样式
 								baseInfo.chosedIndex = 0;
+								baseInfo.tableIndex = 0;
 								console.log("初始化页面信息");
 								if ($location.path().indexOf('/testIndex') == 0) {
 									baseInfo
-									.selectFacilityList(baseInfo.selectBaseList);
+											.selectFacilityList(baseInfo.selectBaseList);
 								} else if ($location.path()
 										.indexOf('/qingyuan') == 0) {
 									baseInfo
 											.selectFacilityList(baseInfo.selectBaseList);
-									
-								}else if($location.path()
-										.indexOf('/guangming') == 0){
+
+								} else if ($location.path().indexOf(
+										'/guangming') == 0) {
 									baseInfo
-									.selectFacilityList(baseInfo.selectBaseList);
+											.selectFacilityList(baseInfo.selectBaseList);
+								} else {
+									baseInfo
+											.selectFacilityList(baseInfo.selectBaseList);
 								}
 							}
 

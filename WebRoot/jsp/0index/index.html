@@ -1,0 +1,202 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" style="width: 220px">
+			<a href="/GVM/routeController/toErrorPage.do#/Expend"
+				ng-click="jumpAlarmJsp(6)">
+				<div class="card blue summary-inline">
+					<div class="card-body">
+						<i class="icon fa fa-share-alt fa-4x"></i>
+						<div class="content">
+							<div class="title">{{result.preAlarmNum}}</div>
+							<div class="sub-title">预报警</div>
+						</div>
+						<div class="clear-both"></div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" style="width: 220px">
+			<a href="/GVM/routeController/toErrorPage.do#/Expend"
+				ng-click="jumpAlarmJsp(5)">
+				<div class="card red summary-inline">
+					<div class="card-body">
+						<i class="icon fa fa-inbox fa-4x"></i>
+						<div class="content">
+							<div class="title">{{result.alarmNum5}}</div>
+							<div class="sub-title">平台报警</div>
+						</div>
+						<div class="clear-both"></div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" style="width: 220px">
+			<a href="/GVM/routeController/toErrorPage.do#/Expend"
+				ng-click="jumpAlarmJsp(1)">
+				<div class="card yellow summary-inline">
+					<div class="card-body">
+						<i class="icon fa fa-comments fa-4x"></i>
+						<div class="content">
+							<div class="title">{{result.alarmNum1}}</div>
+							<div class="sub-title">微信报警</div>
+						</div>
+						<div class="clear-both"></div>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" style="width: 220px">
+			<a href="/GVM/routeController/toErrorPage.do#/Expend"
+				ng-click="jumpAlarmJsp(2)">
+				<div class="card green summary-inline">
+					<div class="card-body">
+						<i class="icon fa fa-tags fa-4x"></i>
+						<div class="content">
+							<div class="title">{{result.alarmNum2}}</div>
+							<div class="sub-title">短信报警</div>
+						</div>
+						<div class="clear-both"></div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" style="width: 220px">
+			<a href="/GVM/routeController/toErrorPage.do#/Expend"
+				ng-click="jumpAlarmJsp(3)">
+				<div class="card blue summary-inline">
+					<div class="card-body">
+						<i class="icon fa fa-share-alt fa-4x"></i>
+						<div class="content">
+							<div class="title">{{result.alarmNum3}}</div>
+							<div class="sub-title">邮件报警</div>
+						</div>
+						<div class="clear-both"></div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<!-- <div class="col-xs-12"> -->
+		<div class="card" style="width: 100%">
+			<div class="card-header">
+				<div class="card-title">
+					<div class="title">物业设备管理数据分析</div>
+					<div class="description">系统对公司管理下的所有设备进行数据分析，得到以下有效结果</div>
+				</div>
+				<div class="pull-right card-action">
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-link" data-toggle="modal"
+							data-target="#modalCardJumbotronExample"></button>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-body" style="padding: 0px">
+				<div class="row no-margin">
+					<div class="col-sm-6" style="box-shadow: none;">
+						<div class="card primary">
+
+							<div id="LineColumnChart"
+								style="min-width: 310px; max-width: 400px; height: 300px; margin: 0 auto"></div>
+
+							<div class="card-body">
+								<h4 style="color: red">提示：</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+									style="color: red">{{result1}}</span>项目的设备故障率最高，其次是<span
+									style="color: red">{{result2}}</span>项目，最后是<span
+									style="color: red">{{result3}}</span>。建议对<span
+									style="color: red">{{result1}}</span>项目的设备进行健康维护，促进物业有效管理！<br />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;故障概率最高的三个设备是<span
+									style="color: red">{{result0}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card primary">
+
+							<table id="infoList" class="datatable table table-striped">
+								<thead>
+									<tr>
+										<th>编号</th>
+										<th>设备名称</th>
+										<th>预测维修日期</th>
+										<th>所属项目</th>
+
+
+									</tr>
+								</thead>
+								<tbody>
+									<!-- <tr ng-repeat="p in preList |orderBy: 'preDate' :'desc' |limitTo: 10"> -->
+									<tr ng-repeat="p in preList |limitTo: 7">
+										<th scope="row">{{$index+1}}</th>
+										<td>{{p.equipment_Name}}</td>
+										<td>{{p.preDate}}</td>
+										<td>{{p.project}}</td>
+										<!-- <td>2019-15-12</td>
+										<td>5</td> -->
+
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+						<div class="card-body">
+							<h4 style="color: red">设备预测维修：</h4>
+
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;近期<span
+								style="color: red">{{result4}}</span>项目需要维修的设备最多，其次是<span
+								style="color: red">{{result5}}</span>项目，最后是<span
+								style="color: red">{{result6}}</span>。建议对<span
+								style="color: red">{{result1}}</span>尽快派遣人员检修。近期预测需要维修的设备比较多，请及时安排人员进行设备维护！
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!-- <div class="row  no-margin-bottom">
+		<div class="card card-success">
+			<div class="card-header">
+				<div class="card-title">
+					<div class="title">
+						<i class="fa fa-comments-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;预测近期需维护设备
+					</div>
+				</div>
+				<div class="clear-both"></div>
+			</div>
+			<div class="card-body no-padding">
+				<table id="infoList" class="datatable table table-striped">
+					<thead>
+						<tr>
+							<th>编号</th>
+							<th>设备名称</th>
+							<th>下次维修日期</th>
+							<th>设备小区</th>
+							<th>设备区域</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="e in list">
+							<th scope="row">{{e.equipment_No}}</th>
+							<td>{{e.equipment_Name}}</td>
+							<td>{{e.equipment_Type}}</td>
+							<td>{{e.equipment_Room}}</td>
+							<td>2019-15-12</td>
+										<td>5</td>
+
+						</tr>
+
+					</tbody>
+				</table>
+			
+			</div>
+		</div>
+	</div> -->
+<!-- </div> -->
+</div>

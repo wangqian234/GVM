@@ -36,4 +36,21 @@ public class PublicDaoImpl extends HibernateDaoSupport implements PublicDao {
 		});
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Object> selectProjectList() {
+		// TODO Auto-generated method stub
+		return (List<Object>) getHibernateTemplate().execute(new HibernateCallback<Object>() {
+
+			public Object doInHibernate(org.hibernate.Session session) throws org.hibernate.HibernateException {
+				StringBuilder sb = new StringBuilder();
+				sb.append(
+						"select p.Detector_Project_Id,p.Detector_Project_Name from Detector_Project p");
+				
+				SQLQuery qObj = session.createSQLQuery(sb.toString());
+				List<Object> list = qObj.list();
+				return list;
+			}
+		});
+	}
+
 }

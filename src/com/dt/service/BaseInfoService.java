@@ -6,7 +6,7 @@ import com.dt.entity.EquipmentInfo;
 
 public interface BaseInfoService {
 
-	List<EquipmentInfo> selectBaseList();
+	List<EquipmentInfo> selectBaseList(String project, String facility);
 
 	List<Object> getbaseTotalRow(String project, String facility);
 

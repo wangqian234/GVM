@@ -2,7 +2,6 @@ package com.dt.dao;
 
 import java.util.List;
 
-import com.dt.entity.DetectorEquipment;
 
 public interface EvalStateDao {
 	//设备查询

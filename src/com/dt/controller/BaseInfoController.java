@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.sf.json.JSONObject;
 
-import com.dt.entity.DetectorTriggerLog;
 import com.dt.entity.EquipmentInfo;
 import com.dt.service.BaseInfoService;
 import com.dt.util.Pager;
@@ -55,8 +53,6 @@ public class BaseInfoController {
 		JSONObject jo = new JSONObject();
 		jo.put("list", list);
 		jo.put("totalPage", pager.getTotalPage());
-		System.out.println(list.size());
-		System.out.println(jo.toString());
 		return jo.toString();
 	}
 	

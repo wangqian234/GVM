@@ -401,8 +401,6 @@ public class DateUtil {
 
 		// System.out.println(DateUtil.date2String(new java.util.Date(), "hh"));
 		// System.out.println(DateUtil.date2String(new Date(), "ss"));
-		System.out.println(date2String(new Date(), "yyyy/MM/dd/"));
-		System.out.println(date2GregorianCalendarString(new Date()));
 	}
 	
 	/**

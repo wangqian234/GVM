@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.poi.util.TempFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +31,12 @@ public class ErrorStateController {
 		String state = "";
 		String startDate = "";
 		String endDate = "";
+		String type="";
 		if(request.getParameter("state") != null){
 			state = request.getParameter("state");
+		}
+		if(request.getParameter("type") != null){
+			type = request.getParameter("type");
 		}
 		if (jsonObject.containsKey("startTime")) {
 			if (strIsNotEmpty(jsonObject.getString("startTime"))) {
@@ -45,42 +48,17 @@ public class ErrorStateController {
 				endDate = dayLastTime(jsonObject.getString("endTime"));
 			}
 		}
-		List totalRow = errorStateService.getErrorTotalRow(startDate, endDate, state);
+		List totalRow = errorStateService.getErrorTotalRow(startDate, endDate, state,type);
 		Pager pager = new Pager();
 		pager.setPage(Integer.parseInt(request.getParameter("page")));// 指定页码
 		pager.setTotalRow(Integer.parseInt(totalRow.get(0).toString()));
 		
-		List<DetectorTriggerLog> list = errorStateService.findErrorList(startDate, endDate, pager.getOffset(), pager.getLimit(), state);
+		List<DetectorTriggerLog> list = errorStateService.findErrorList(startDate, endDate, pager.getOffset(), pager.getLimit(), state,type);
 		JSONObject json = new JSONObject();
 		json.put("totalPage", pager.getTotalPage());
 		json.put("list", list);
-		System.out.println(json);
 		return json.toString();
 	}
-	
-//	@RequestMapping(value="/analyseError.do")
-//	public @ResponseBody String analyseError(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-//		JSONObject jsonObject = JSONObject.fromObject(request.getParameter("limit"));
-//		String startDate = "";
-//		String endDate = "";
-//		if (jsonObject.containsKey("startTime")) {
-//			if (strIsNotEmpty(jsonObject.getString("startTime"))) {
-//				startDate = dayFirstTime(jsonObject.getString("startTime"));
-//			}
-//		}
-//		if (jsonObject.containsKey("endTime")) {
-//			if (strIsNotEmpty(jsonObject.getString("endTime"))) {
-//				endDate = dayLastTime(jsonObject.getString("endTime"));
-//			}
-//		}
-//		
-//		//List<List<Map<String, String>>> listPie = errorStateService.analyseErrorPie(startDate, endDate);
-//		//List<Map<String, String>> listLine = errorStateService.analyseErrorLine(startDate, endDate);
-//		JSONObject json = new JSONObject();
-//		json.put("listPie", "");
-//		json.put("listLine", "");
-//		return json.toString();
-//	}
 	
 	@RequestMapping(value="/selectErrorDetails.do")
 	public @ResponseBody String selectErrorDetails(HttpServletRequest request, HttpServletResponse response){
@@ -129,7 +107,7 @@ public class ErrorStateController {
 	public @ResponseBody String selectErrorNum(HttpServletRequest request, HttpServletResponse response){
 		
 		JSONObject jsonObject = new JSONObject();
-		List alertTotalNum = errorStateService.getErrorTotalRow("","","0");
+		List alertTotalNum = errorStateService.getErrorTotalRow("","","0","0");
 		if(alertTotalNum.size()==0){
 			jsonObject.put("alertTotalNum", 0);
 		}else{

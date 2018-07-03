@@ -38,7 +38,7 @@ public class EvalStateDaoImpl extends HibernateDaoSupport implements EvalStateDa
 	@SuppressWarnings("unchecked")
 	public List<Object> findEquipment(Integer project, Integer facility, Integer offset, Integer limit) {
 		final StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT e.Detector_Equipment_Id,e.Detector_Equipment_No ,er.Detector_EquipmentRoom_name,et.Detector_EquipmentType_name ,e.Detector_Equipment_Name FROM Detector_Equipment e ");
+		sql.append(" SELECT e.Detector_Equipment_Id,e.Detector_Equipment_No ,er.Detector_EquipmentRoom_name,et.Detector_EquipmentType_name ,e.Detector_Equipment_Name,et.Detector_EquipmentType_Id FROM Detector_Equipment e ");
 		sql.append(" LEFT JOIN Detector_EquipmentRoom  er ON er.Detector_EquipmentRoom_Id=e.Detector_EquipmentRoom_Id");
 		sql.append(" LEFT JOIN Detector_EquipmentType et ON et.Detector_EquipmentType_Id=e.Detector_EquipmentType_Id");
 		sql.append(" LEFT JOIN Detector_Facility f on f.Detector_Facility_Id=et.Detector_Facility_Id ");			
@@ -77,7 +77,6 @@ public class EvalStateDaoImpl extends HibernateDaoSupport implements EvalStateDa
 						+ " where Detector_Equipment.Detector_Equipment_Id ="+detectorEquipmentId+"";
 				 SQLQuery qobj = session.createSQLQuery(sql);
 				 List<Object> list = qobj.list();
-				 System.out.println(list.toString());
 				return list;
 			}			
 		});	
@@ -96,7 +95,6 @@ public class EvalStateDaoImpl extends HibernateDaoSupport implements EvalStateDa
 				sql.append(" WHERE Detector_Equipment.Detector_Equipment_Id = "+detectorEquipmentId+""); 
 				SQLQuery qobj =session.createSQLQuery(sql.toString());
 				List<Object> list = qobj.list();
-				System.out.println(list.toString());
 				return list;
 			}		
 		});		

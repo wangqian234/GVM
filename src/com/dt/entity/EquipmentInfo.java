@@ -14,11 +14,13 @@ import javax.persistence.Table;
 @Entity
 public class EquipmentInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
+	private Integer Equipment_Num;//排序序号
 	private Integer Equipment_Id;//设备id，主键
 	private String Equipment_No;//设备编号
 	private String Equipment_Name;//设备名字
 	private String Equipment_State;//探测器设备状态？
 	private String Equipment_Type;//探测器设备类型
+	private String Equipment_Project;//小区
 	private String Equipment_Room;//探测器设备房
 	private String Equipment_Order;//设备排序
 	private String Equipment_Version;//探测设备视图
@@ -38,6 +40,7 @@ public class EquipmentInfo implements Serializable{
 	private String Equipment_AddDate;//添加时间
 	private String Equipment_GUID;//
 	private String Equipment_Memo;//备注
+	private Float  Equipment_Fault;//故障率
 	
 	@Id
 	@Basic(optional = false)
@@ -185,6 +188,24 @@ public class EquipmentInfo implements Serializable{
 	}
 	public void setEquipment_Memo(String equipment_Memo) {
 		Equipment_Memo = equipment_Memo;
+	}
+	public Float getEquipment_Fault() {
+		return Equipment_Fault;
+	}
+	public void setEquipment_Fault(Float equipment_Fault) {
+		Equipment_Fault = equipment_Fault;
+	}
+	public Integer getEquipment_Num() {
+		return Equipment_Num;
+	}
+	public void setEquipment_Num(Integer equipment_Num) {
+		Equipment_Num = equipment_Num;
+	}
+	public String getEquipment_Project() {
+		return Equipment_Project;
+	}
+	public void setEquipment_Project(String equipment_Project) {
+		Equipment_Project = equipment_Project;
 	}
 	
 }

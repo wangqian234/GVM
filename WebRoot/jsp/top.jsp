@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>合同信息管理</title>
+<title>物业设备管理分析系统</title>
 <!-- Fonts -->
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400'
@@ -37,9 +37,10 @@
 </head>
 
 <body class="flat-blue">
-	<div id="container" class="app-container">
+	<div id="container" class="app-container" style="padding-bottom:0px">
 		<div class="row content-container">
-			<nav class="navbar navbar-default navbar-fixed-top navbar-top">
+
+		<nav class="navbar navbar-default navbar-fixed-top navbar-top">
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<button type="button" class="navbar-expand-toggle"
@@ -64,30 +65,18 @@
 
 						<li class="dropdown danger"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown" role="button"
-							aria-expanded="false"><i class="fa fa-star-half-o"></i> 4</a>
+							aria-expanded="false"><i class="fa fa-star-half-o"></i> ！</a>
 							<ul class="dropdown-menu danger  animated fadeInDown">
-								<!-- <li class="title">Notification <span
+								<!-- 	<li class="title">Notification <span
 									class="badge pull-right">4</span>
 								</li> -->
 								<li>
 									<ul class="list-group notifications">
-										<!-- <a href="#">
-											<li class="list-group-item"><span class="badge">1</span>
-												<i class="fa fa-exclamation-circle icon"></i> new
-												registration</li>
-										</a>
-										<a href="#">
-											<li class="list-group-item"><span class="badge success">1</span>
-												<i class="fa fa-check icon"></i> new orders</li>
-										</a> -->
 										<a href="/GVM/routeController/toErrorPage.do#/Expend">
 											<li class="list-group-item" onclick="setBread()"><span
-												id="alertNum" class="badge danger">2</span> <i
+												id="alertNum" class="badge danger">0</span> <i
 												class="fa fa-comments icon"></i>设备报警</li>
 										</a>
-										<!-- <a href="#">
-											<li class="list-group-item message">view all</li>
-										</a> -->
 									</ul>
 								</li>
 							</ul></li>
@@ -99,7 +88,7 @@
 					<source src="/GVM/audio/msg.wav"></source>
 				</audio>
 			</nav>
-			<section>
+
 				<script type="text/javascript">
 					//消息闪烁
 					var show = function() { //有新消息时在title处闪烁提示
@@ -149,13 +138,14 @@
 									sessionStorage.setItem("alertTotalNum",
 											data.alertTotalNum);
 
-								}) 
+								})
 					}
+					var title = document.title;
 					initData();
-				/* 	window.setInterval(showalert, 1000 * 60 * 5); */
-				window.setInterval(showalert,  2000 * 5); 
+					/* 	window.setInterval(showalert, 1000 * 60 * 5); */
+					/* window.setInterval(showalert, 2000 * 5); */
 					function showalert() {
-					
+
 						var lastMsgCnt = sessionStorage
 								.getItem("alertTotalNum");
 						$.getJSON("/GVM/errorState/selectErrorNum.do", {},
@@ -163,6 +153,7 @@
 									$("#alertNum").text(data.alertTotalNum);
 									sessionStorage.setItem("alertTotalNum",
 											data.alertTotalNum);
+									//lastMsgCnt
 									if (data.alertTotalNum > lastMsgCnt) {
 										//todo--提示爆闪
 										var timerArr = show();

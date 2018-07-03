@@ -9,7 +9,7 @@
 					<div class="icon">
 						<img src="/GVM/img/lg2-50.png" height="25" width="25" />
 					</div>
-					<div class="title">公元物业管理平台</div>
+					<div class="title">物业设备管理分析平台</div>
 				</a>
 				<button type="button"
 					class="navbar-expand-toggle pull-right visible-xs">
@@ -17,7 +17,7 @@
 				</button>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a
+				 <li class="active"><a
 					href="/GVM/routeController/toIndexPage.do"
 					onclick="setProjectId()"> <span
 						class="icon fa fa-tachometer"></span><span class="title">首页</span>
@@ -32,30 +32,30 @@
 							<ul class="nav navbar-nav">
 								<li onclick="setProjectId(1,1)"><a
 									href="/GVM/routeController/toTestPage.do#/testIndex">展会演示</a></li>
-								<li onclick="setProjectId(1,9)"><a
+								<li onclick="setProjectId(1,7)"><a
 									href="/GVM/routeController/toTestPage.do#/qingyuan">清远凤城郦都</a></li>
-								<li onclick="setProjectId(1,13)"><a
+								<li onclick="setProjectId(1,32)"><a
 									href="/GVM/routeController/toTestPage.do#/guangming">光明迈瑞</a></li>
 							</ul>
 						</div>
 					</div></li>
-				<li class="panel panel-default dropdown"
+				<!-- <li class="panel panel-default dropdown"
 					onclick="changeBread('设备运行状态信息')"><a data-toggle="collapse"
 					href="#dropdown-table"> <span class="icon fa fa-table"></span><span
 						class="title">设备运行状态信息</span>
-				</a> <!-- Dropdown level 1 -->
+				</a> Dropdown level 1
 					<div id="dropdown-table" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
 								<li onclick="setProjectId(2,1)"><a
 									href="/GVM/routeController/toOperaPage.do#/testIndex">展会演示</a></li>
-								<li onclick="setProjectId(2,9)"><a
+								<li onclick="setProjectId(2,7)"><a
 									href="/GVM/routeController/toOperaPage.do#/qingyuan">清远凤城郦都</a></li>
-								<li onclick="setProjectId(2,13)"><a
+								<li onclick="setProjectId(2,32)"><a
 									href="/GVM/routeController/toOperaPage.do#/guangming">光明迈瑞</a></li>
 							</ul>
 						</div>
-					</div></li>
+					</div></li> -->
 				<li class="panel panel-default dropdown"
 					onclick="changeBread('设备异常状态报警')"><a data-toggle="collapse"
 					href="#dropdown-form"> <span
@@ -84,9 +84,9 @@
 							<ul class="nav navbar-nav">
 								<li onclick="setProjectId(4,1)"><a
 									href="/GVM/routeController/toPrePage.do#/testIndex">展会演示</a></li>
-								<li onclick="setProjectId(4,9)"><a
+								<li onclick="setProjectId(4,7)"><a
 									href="/GVM/routeController/toPrePage.do#/qingyuan">清远凤城郦都</a></li>
-								<li onclick="setProjectId(4,13)"><a
+								<li onclick="setProjectId(4,32)"><a
 									href="/GVM/routeController/toPrePage.do#/guangming">光明迈瑞</a></li>
 							</ul>
 						</div>
@@ -102,9 +102,9 @@
 							<ul class="nav navbar-nav">
 								<li onclick="setProjectId(5,1)"><a
 									href="/GVM/routeController/toEvalPage.do#/testIndex">展会演示</a></li>
-								<li onclick="setProjectId(5,9)"><a
+								<li onclick="setProjectId(5,7)"><a
 									href="/GVM/routeController/toEvalPage.do#/qingyuan">清远凤城郦都</a></li>
-								<li onclick="setProjectId(5,13)"><a
+								<li onclick="setProjectId(5,32)"><a
 									href="/GVM/routeController/toEvalPage.do#/guangming">光明迈瑞</a></li>
 							</ul>
 						</div>
@@ -150,10 +150,10 @@
 		case 1:
 			project = "展会演示";
 			break;
-		case 9:
+		case 7:
 			project = "清远凤城郦都";
 			break;
-		case 13:
+		case 32:
 			project = "光明迈瑞";
 			break;
 		case 4:
@@ -198,7 +198,7 @@
 		var arr = val.split(" ");
 		if (arr.length == 1) {
 			sessionStorage.setItem("containerClass", "app-container expanded");
-		} else if (arr.length == 2) {
+		}else if(arr.length == 2){
 			sessionStorage.setItem("containerClass", "app-container");
 		}
 
